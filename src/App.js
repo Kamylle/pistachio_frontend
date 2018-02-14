@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
-import { Router, Switch } from 'react-router';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-import logo from './logo.svg';
+import { Switch, Route } from 'react-router';
+import LoginPage from './components/LoginPage';
+import HomePage from './components/HomePage';
+import RecipePage from './components/RecipePage';
+import CreateRecipePage from './components/CreateRecipePage';
 import './App.css';
 
-class LoginPage extends Component {
-  render() {
-    return (
-      <div className="LoginPage">
-        Login Page!
-      </div>
-    )
-  }
-}
-
-class HomePage extends Component {
-  render() {
-    return (
-      <div className="LoginPage">
-        Home Page!
-      </div>
-    )
-  }
-}
-
-class RecipePage extends Component {
-  render() {
-    return (
-      <div className="LoginPage">
-        Recipe Page!
-      </div>
-    )
-  }
-}
-
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        It's working!
+        <Switch>
+          <Route 
+            exact path="/" 
+            component={HomePage} 
+          />
+          <Route 
+            path="/login"
+            render={(routeProps) => (
+              <LoginPage/>
+            )}
+          />
+          <Route 
+            path="/home"
+            render={(routeProps) => (
+              <HomePage/>
+            )}
+          />
+          <Route 
+            path="/recipe"
+            render={(routeProps) => (
+              <RecipePage/>
+            )}
+          />
+          <Route 
+            path="/add"
+            render={(routeProps) => (
+              <CreateRecipePage/>
+            )}
+          />
+			  </Switch>
       </div>
     );
   }
