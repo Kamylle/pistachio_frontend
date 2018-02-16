@@ -1,0 +1,64 @@
+@import "style/reset.scss";
+@import "style/variables.scss";
+@import "style/mixins.scss";
+@import "style/fonts.scss";
+
+html, body, #root{
+  width: 100%;
+  height: 100%;
+  color: black;
+  font-family: 'Source Sans Pro', sans-serif;
+  //font-family: 'Source Serif Pro', serif;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  background-color: gray;
+  display: flex;
+
+  header {
+    height: $header-height;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: aqua;
+    @include bp-small {
+      background-color: purple;
+    }
+  }
+
+  aside{
+    width: 15em;
+    flex: none;
+    padding-top: $header-height * 1.2;
+    background-color: yellowgreen;
+  }
+
+  #main {
+      background-color: deeppink;
+      padding-top: $header-height * 1.2;
+  }
+
+  .Home {
+  }
+}
+
+.flexContain {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 4;
+  justify-content: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  .card {
+    background-color: white;
+    padding: 2em;
+    margin: 0.5em;
+    flex: 1;
+    flex-grow: 1;
+    min-width: 12em;
+    max-width: 16em;
+  }
+}

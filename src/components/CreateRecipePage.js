@@ -4,12 +4,14 @@ import React, { Component } from 'react';
 class CreateRecipePage extends Component {
     render() {
       return (
-        <div className="CreateRecipe">
-          Recipe Page!
+        <div id="main" className="CreateRecipe">
+          <form>
+
+          </form>
         </div>
       )
     }
   }
-  
+
 
   export default CreateRecipePage;

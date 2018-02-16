@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class RecipePage extends Component {
     render() {
       return (
-        <div className="Recipe">
+        <div id="main" className="Recipe">
           This is a recipe!
         </div>
       )
