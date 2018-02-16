@@ -20,12 +20,16 @@ html, body, #root{
   header {
     height: $header-height;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: aqua;
     @include bp-small {
       background-color: purple;
+
+    }
+    p {
+      color: blue;
     }
   }
 
@@ -37,19 +41,23 @@ html, body, #root{
   }
 
   #main {
-      background-color: deeppink;
-      padding-top: $header-height * 1.2;
+    background-color: deeppink;
+    padding-top: $header-height * 1.2;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 4;
   }
 
   .Home {
+      justify-content: center;
+  }
+
+  .Add {
+      justify-content: left;
   }
 }
 
 .flexContain {
-  display: flex;
-  flex-wrap: wrap;
-  flex-grow: 4;
-  justify-content: center;
   padding-left: 1em;
   padding-right: 1em;
   .card {
@@ -61,4 +69,24 @@ html, body, #root{
     min-width: 12em;
     max-width: 16em;
   }
+}
+
+form {
+    h2, h3 {
+        padding: 0.5em;
+    }
+    input, textarea, select {
+        display: block;
+        padding: 0.5em;
+        margin:  0.5em;
+    }
+    label {
+        display: block;
+        padding: 0.5em;
+    }
+    .ingredient {
+      input, textarea, select, label {
+        display: inline-block;
+      }
+    }
 }

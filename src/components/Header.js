@@ -5,7 +5,7 @@ class Header extends Component {
     render() {
       return (
         <header>
-          Header!
+          <p>paragraph!</p>
         </header>
       )
     }
