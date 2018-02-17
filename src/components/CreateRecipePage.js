@@ -7,13 +7,7 @@ import React, { Component } from 'react';
       this.state = {
         recipe: "",
         cookbook: "",
-        ingr: [
-          {
-            qty: "",
-            unit:"",
-            ingr:"",
-          }
-        ],
+        ingredients: [{ ingr: '' }],
         prep: [],
       };
 
@@ -34,6 +28,25 @@ import React, { Component } from 'react';
     //alert('A recipe was submitted: ' + this.state.recipe);
     console.log("Recipe sent")
     event.preventDefault();
+  }
+
+//dynamic forms from: https://goshakkk.name/array-form-inputs/
+
+  handleIngredientChange = (idx) => (evt) => {
+    const newIngredients = this.state.ingredients.map((ingredient, sidx) => {
+      if (idx !== sidx) return ingredient;
+      return { ...ingredient, ingr: evt.target.value };
+    });
+
+    this.setState({ ingredients: newIngredients });
+  }
+
+  handleAddIngredient = () => {
+    this.setState({ ingredients: this.state.ingredients.concat([{ ingr: '' }]) });
+  }
+
+  handleRemoveIngredient = (idx) => () => {
+    this.setState({ ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx) });
   }
 
   render() {
@@ -70,39 +83,20 @@ import React, { Component } from 'react';
             </label>
 
             <h3>Ingredients</h3>
-            <div className="ingredient">
-              <label>
+            {this.state.ingredients.map((ingredient, idx) => (
+              <div className="ingredient">
                 <input
-                  name="qty"
                   type="text"
-                  placeholder="Quantity"
-                  value={this.state.ingr[0].qty}
-                  onChange={this.handleInputChange}
+                  placeholder={`Ingredient #${idx + 1}`}
+                  value={ingredient.ingr}
+                  onChange={this.handleIngredientChange(idx, "ingr")}
                 />
-              </label>
-              <select
-                name="unit1"
-                type="text"
-                value={this.state.ingr[0].unit}
-                onChange={this.handleInputChange}>
-                  <option value="Select a Mesurement">Select a recipe</option>
-                  <option value="g">Grapefruit</option>
-                  <option value="ml">Lime</option>
-                  <option value="cups">Coconut</option>
-                  <option value="tbs">Mango</option>
-                  <option value="tsp">Mango</option>
-                  <option value="pinch">Mango</option>
-              </select>
-              <label>
-                <input
-                  name="ingr"
-                  type="text"
-                  placeholder="Ingredient"
-                  value={this.state.ingr[0].ingr}
-                  onChange={this.handleInputChange}
-                />
-              </label>
-            </div>
+                
+                <button type="button" onClick={this.handleRemoveIngredient(idx)} className="small">-</button>
+              </div>
+            ))}
+            <button type="button" onClick={this.handleAddIngredient} className="small">Add Ingredient</button>
+
 
             <h3>Preparation</h3>
             <label>
