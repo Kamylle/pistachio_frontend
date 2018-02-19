@@ -26,7 +26,6 @@ html, body, #root{
     background-color: aqua;
     @include bp-small {
       background-color: purple;
-
     }
     p {
       color: blue;
@@ -84,9 +83,21 @@ form {
         display: block;
         padding: 0.5em;
     }
-    .ingredient {
+    textarea {
+      width: 90%;
+    }
+    .step {
+      max-width: 600px;
+    }
+    .ingredient, .step {
+      display: flex;
+      align-items: center;
       input, textarea, select, label {
         display: inline-block;
+      }
+      button {
+        padding: 0.5em 1em;
+        margin: 0.5em;
       }
     }
 }

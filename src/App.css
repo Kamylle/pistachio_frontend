@@ -113,5 +113,17 @@ form label {
   display: block;
   padding: 0.5em; }
 
-form .ingredient input, form .ingredient textarea, form .ingredient select, form .ingredient label {
-  display: inline-block; }
+form textarea {
+  width: 90%; }
+
+form .step {
+  max-width: 600px; }
+
+form .ingredient, form .step {
+  display: flex;
+  align-items: center; }
+  form .ingredient input, form .ingredient textarea, form .ingredient select, form .ingredient label, form .step input, form .step textarea, form .step select, form .step label {
+    display: inline-block; }
+  form .ingredient button, form .step button {
+    padding: 0.5em 1em;
+    margin: 0.5em; }

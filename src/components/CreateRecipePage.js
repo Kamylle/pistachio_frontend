@@ -11,7 +11,7 @@ import React, { Component } from 'react';
           qty: '',
           unit: '',
           ingr: '' }],
-        prep: [],
+        prep: [{step: ''}],
       };
 
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,7 +29,7 @@ import React, { Component } from 'react';
 
   handleSubmit(event) {
     //alert('A recipe was submitted: ' + this.state.recipe);
-    console.log("Recipe sent")
+    console.log("Recipe sent");
     event.preventDefault();
   }
 
@@ -41,17 +41,43 @@ import React, { Component } from 'react';
       else if (type === "qty") return { ...ingredient, qty: evt.target.value };
       else if (type === "unit") return { ...ingredient, unit: evt.target.value };
       else if (type === "ingr") return { ...ingredient, ingr: evt.target.value };
+      else return null;
     });
 
     this.setState({ ingredients: newIngredients });
   }
 
   handleAddIngredient = () => {
-    this.setState({ ingredients: this.state.ingredients.concat([{qty: '', unit: '', ingr: '' }]) });
+    this.setState({ 
+      ingredients: this.state.ingredients.concat([{qty: '', unit: '', ingr: '' }]) 
+    });
   }
 
   handleRemoveIngredient = (idx) => () => {
-    this.setState({ ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx) });
+    this.setState({ 
+      ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx) 
+    });
+  }
+
+  handleStepChange = (idx) => (evt) => {
+    const newStep = this.state.prep.map((step, sidx) => {
+      if (idx !== sidx) return step;
+      else return { ...step, step: evt.target.value };
+    });
+
+    this.setState({ prep: newStep });
+  }
+
+  handleAddStep = () => {
+    this.setState({ 
+      prep: this.state.prep.concat([{step: ''}]) 
+    });
+  }
+
+  handleRemoveStep = (idx) => () => {
+    this.setState({ 
+      prep: this.state.prep.filter((s, sidx) => idx !== sidx)
+    });
   }
 
   render() {
@@ -107,12 +133,6 @@ import React, { Component } from 'react';
                     <option value="ml">ml</option>
                     <option value="g">g</option>
                 </select>
-                {/* <input
-                  type="text"
-                  placeholder={"Unit"}
-                  value={ingredient.unit}
-                  onChange={this.handleIngredientChange(idx, "unit")}
-                /> */}
                 <input
                   type="text"
                   placeholder={`Ingredient #${idx + 1}`}
@@ -127,16 +147,18 @@ import React, { Component } from 'react';
 
 
             <h3>Preparation</h3>
-            <label>
-              Step 1
-              <textarea
-                name="prep"
-                type="text"
-                placeholder="Step 1"
-                value={this.state.prep}
-                onChange={this.handleInputChange}
-              />
-            </label>
+            {this.state.prep.map((prep, idx) => (
+              <div className="step">
+                <textarea
+                  type="text"
+                  placeholder={`Step #${idx + 1}`}
+                  value={prep.step}
+                  onChange={this.handleStepChange(idx)}
+                />
+                <button type="button" onClick={this.handleRemoveStep(idx)} className="small">-</button>
+              </div>
+            ))}
+            <button type="button" onClick={this.handleAddStep} className="small">Add Step</button>
 
           <input type="submit" value="Submit" />
         </form>
