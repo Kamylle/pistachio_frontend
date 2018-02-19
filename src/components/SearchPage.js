@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
-class HomePage extends Component {
+class SearchPage extends Component {
     render() {
       return (
         <div>
@@ -38,4 +38,4 @@ class HomePage extends Component {
     }
   }
 
-  export default HomePage;
+  export default SearchPage;
