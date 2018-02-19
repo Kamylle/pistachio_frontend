@@ -7,7 +7,10 @@ import React, { Component } from 'react';
       this.state = {
         recipe: "",
         cookbook: "",
-        ingredients: [{ ingr: '' }],
+        ingredients: [{ 
+          qty: '',
+          unit: '',
+          ingr: '' }],
         prep: [],
       };
 
@@ -32,17 +35,19 @@ import React, { Component } from 'react';
 
 //dynamic forms from: https://goshakkk.name/array-form-inputs/
 
-  handleIngredientChange = (idx) => (evt) => {
+  handleIngredientChange = (idx, type) => (evt) => {
     const newIngredients = this.state.ingredients.map((ingredient, sidx) => {
       if (idx !== sidx) return ingredient;
-      return { ...ingredient, ingr: evt.target.value };
+      else if (type === "qty") return { ...ingredient, qty: evt.target.value };
+      else if (type === "unit") return { ...ingredient, unit: evt.target.value };
+      else if (type === "ingr") return { ...ingredient, ingr: evt.target.value };
     });
 
     this.setState({ ingredients: newIngredients });
   }
 
   handleAddIngredient = () => {
-    this.setState({ ingredients: this.state.ingredients.concat([{ ingr: '' }]) });
+    this.setState({ ingredients: this.state.ingredients.concat([{qty: '', unit: '', ingr: '' }]) });
   }
 
   handleRemoveIngredient = (idx) => () => {
@@ -74,17 +79,40 @@ import React, { Component } from 'react';
                 value={this.state.cookbook}
                 onChange={this.handleInputChange}>
                   <option value="Select a Cookbook">Select a recipe</option>
-                  <option value="grapefruit">Grapefruit</option>
-                  <option value="lime">Lime</option>
-                  <option value="coconut">Coconut</option>
-                  <option value="mango">Mango</option>
-                  <option value="add a cookbook">Mango</option>
+                  <option value="Favorites">Favorites</option>
+                  <option value="Classics">Classics</option>
+                  <option value="Livre de Grand-Maman">Livre de Grand Maman</option>
+                  <option value="Apetizers">Apetizers</option>
+                  <option value="New Cookbook">New Cookbook</option>
               </select>
             </label>
 
             <h3>Ingredients</h3>
             {this.state.ingredients.map((ingredient, idx) => (
               <div className="ingredient">
+                <input
+                  type="text"
+                  placeholder={"Quantity"}
+                  value={ingredient.qty}
+                  onChange={this.handleIngredientChange(idx, "qty")}
+                />
+                <select
+                  type="text"
+                  value={ingredient.unit}
+                  onChange={this.handleIngredientChange(idx, "unit")}>
+                    <option value="unit">Unit</option>
+                    <option value="Cups">Cups</option>
+                    <option value="Tbs">Tbs</option>
+                    <option value="Tsp">Tsp</option>
+                    <option value="ml">ml</option>
+                    <option value="g">g</option>
+                </select>
+                {/* <input
+                  type="text"
+                  placeholder={"Unit"}
+                  value={ingredient.unit}
+                  onChange={this.handleIngredientChange(idx, "unit")}
+                /> */}
                 <input
                   type="text"
                   placeholder={`Ingredient #${idx + 1}`}
