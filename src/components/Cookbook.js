@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 
+
 class Cookbook extends Component {
     render() {
       return (
@@ -11,11 +12,10 @@ class Cookbook extends Component {
                 <h1>Cookbook</h1>
             </div>
             <div className="cardContain">
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
-          </div>
+                <RecipeCard/>
+                <RecipeCard/>
+                <RecipeCard/>
+            </div>
         </div>
 
       )

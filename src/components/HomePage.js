@@ -7,10 +7,10 @@ class HomePage extends Component {
     render() {
       return (
         <div className="flexContain">
-        <Sidebar/>
+          <Sidebar/>
           <div id="main" className="Home">
-              <Cookbook/>
-              <Cookbook/>
+            <Cookbook/>
+            <Cookbook/>
           </div>
         </div>
       )

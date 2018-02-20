@@ -6,14 +6,17 @@ class LoginPage extends Component {
       return (
         <div id="main" className="Login">
           <div className="container">
-            <label>
-              Email or Username
-              <input></input>
-            </label>
-            <label>
-              Password
-              <input></input>
-            </label>
+            <form>
+              <label>
+                Email or Username
+                <input></input>
+              </label>
+              <label>
+                Password
+                <input></input>
+              </label>
+              <button>Submit</button>
+            </form>
           </div>
         </div>
       )

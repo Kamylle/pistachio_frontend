@@ -14,20 +14,23 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      userID: "123"
+      username: "Lorem Ipsum"
     }
   }
 
   render() {
-    if (this.state.userID === false) {
+    if (this.state.username === false) {
       return (
         <div className="App">
+          <Route path="/recipe"
+            render={(routeProps) => (<Header username={this.state.username}/>)}
+          />
           <Switch>
-            <Header/>
             <Route
-              path="/recipe"
+              path="/recipe/:id"
+              // component={RecipePage}
               render={(routeProps) => (
-                <RecipePage/>
+                <RecipePage recipe={routeProps.match.params.recipe}/>
               )}
             />
             <Route
@@ -41,7 +44,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Header/>
+        <Header username={this.state.username}/>
         <Switch>
           <Route
             exact path="/"
