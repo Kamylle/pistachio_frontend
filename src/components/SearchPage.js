@@ -5,9 +5,9 @@ import Sidebar from './Sidebar';
 class SearchPage extends Component {
     render() {
       return (
-        <div>
-        <Sidebar/>
-          <div id="main" className="Home flexContain">
+        <div className="flexContain">
+          <Sidebar/>
+          <div id="main" className="Search cardContain">
               <div className="card">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies felis consequat pulvinar varius. Nunc blandit est lectus, sed gravida neque sollicitudin ac. Quisque efficitur imperdiet porta.</p>
               </div>

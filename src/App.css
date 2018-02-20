@@ -67,17 +67,24 @@ html, body, #root {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: aqua; }
+    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
     @media only screen and (max-width: 30em) {
       .App header {
         background-color: purple; } }
-    .App header p {
-      color: blue; }
+    .App header .accountLinks {
+      text-align: right; }
+      .App header .accountLinks a {
+        display: block; }
   .App aside {
     width: 15em;
     flex: none;
     padding-top: 6em;
     background-color: yellowgreen; }
+  .App .flexContain {
+    display: flex; }
   .App #main {
     background-color: deeppink;
     padding-top: 6em;
@@ -88,11 +95,16 @@ html, body, #root {
     justify-content: center; }
   .App .Add {
     justify-content: left; }
+  .App .Recipe {
+    flex-direction: column; }
+    .App .Recipe .container {
+      max-width: 40em;
+      margin: auto; }
 
-.flexContain {
+.cardContain {
   padding-left: 1em;
   padding-right: 1em; }
-  .flexContain .card {
+  .cardContain .card {
     background-color: white;
     padding: 2em;
     margin: 0.5em;
@@ -101,29 +113,26 @@ html, body, #root {
     min-width: 12em;
     max-width: 16em; }
 
-form h2, form h3 {
-  padding: 0.5em; }
-
-form input, form textarea, form select {
-  display: block;
-  padding: 0.5em;
-  margin: 0.5em; }
-
-form label {
-  display: block;
-  padding: 0.5em; }
-
-form textarea {
-  width: 90%; }
-
-form .step {
-  max-width: 600px; }
-
-form .ingredient, form .step {
-  display: flex;
-  align-items: center; }
-  form .ingredient input, form .ingredient textarea, form .ingredient select, form .ingredient label, form .step input, form .step textarea, form .step select, form .step label {
-    display: inline-block; }
-  form .ingredient button, form .step button {
-    padding: 0.5em 1em;
+form {
+  margin: auto; }
+  form h2, form h3 {
+    padding: 0.5em; }
+  form input, form textarea, form select {
+    display: block;
+    padding: 0.5em;
     margin: 0.5em; }
+  form label {
+    display: block;
+    padding: 0.5em; }
+  form textarea {
+    width: 90%; }
+  form .step {
+    max-width: 600px; }
+  form .ingredient, form .step {
+    display: flex;
+    align-items: center; }
+    form .ingredient input, form .ingredient textarea, form .ingredient select, form .ingredient label, form .step input, form .step textarea, form .step select, form .step label {
+      display: inline-block; }
+    form .ingredient button, form .step button {
+      padding: 0.5em 1em;
+      margin: 0.5em; }

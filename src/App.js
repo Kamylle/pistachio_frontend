@@ -30,12 +30,12 @@ class App extends Component {
                 <RecipePage/>
               )}
             />
+            <Route
+              render={(routeProps) => (
+                <LoginPage/>
+              )}
+            />
           </Switch>
-          <Route
-            render={(routeProps) => (
-              <LoginPage/>
-            )}
-          />
         </div>
       );
     }
@@ -48,19 +48,25 @@ class App extends Component {
             component={HomePage}
           />
           <Route
+            path="/recipe"
+            render={(routeProps) => (
+              <RecipePage/>
+            )}
+          />
+          <Route
             exact path="/add"
             component={CreateRecipePage}
           />
           <Route
-              path="/search"
-              render={(routeProps) => (
-                <SearchPage/>
-              )}
-            />
+            path="/search"
+            render={(routeProps) => (
+              <SearchPage/>
+            )}
+          />
           <Route
             render={() =>
               <h1>Page not found</h1>}
-            />
+          />
 		    </Switch>
       </div>
     );

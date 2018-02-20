@@ -5,7 +5,13 @@ class Header extends Component {
     render() {
       return (
         <header>
-          <p>paragraph!</p>
+          <a className="logo">Pistach.io</a>
+          <div className="searchbar">Search <i>O</i></div>
+          <button className="newRecipeBtn">+ New recipe</button>
+          <div className="accountLinks">
+            <a>Welcome Lorem</a>
+            <a>Logout</a>
+          </div>
         </header>
       )
     }

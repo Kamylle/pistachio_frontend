@@ -24,12 +24,19 @@ html, body, #root{
     top: 0;
     left: 0;
     background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     @include bp-small {
       background-color: purple;
     }
-    p {
-      color: blue;
+    .accountLinks {
+      text-align: right;
+      a {
+        display: block;
+      }
     }
+
   }
 
   aside{
@@ -37,6 +44,10 @@ html, body, #root{
     flex: none;
     padding-top: $header-height * 1.2;
     background-color: yellowgreen;
+  }
+
+  .flexContain {
+    display: flex;
   }
 
   #main {
@@ -48,15 +59,22 @@ html, body, #root{
   }
 
   .Home {
-      justify-content: center;
+    justify-content: center;
   }
 
   .Add {
-      justify-content: left;
+    justify-content: left;
+  }
+  .Recipe {
+    flex-direction: column;
+    .container {
+      max-width: 40em;
+      margin: auto;
+    }
   }
 }
 
-.flexContain {
+.cardContain {
   padding-left: 1em;
   padding-right: 1em;
   .card {
@@ -71,6 +89,7 @@ html, body, #root{
 }
 
 form {
+  margin: auto;
     h2, h3 {
         padding: 0.5em;
     }
