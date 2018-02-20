@@ -11,8 +11,9 @@ class RecipePage extends Component {
   }
 
   componentDidMount () {
+    //Currently return anything after the pistach.io/recipe/
     var recipeID = this.props.recipe;
-    //TODO use this ID to fetch recipe details from firebase
+    //TODO use this info from the path to fetch recipe details from firebase
     //When the recipe is loaded, change the state of isLoading to false so it renders the recipe
   }
 

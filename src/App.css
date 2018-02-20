@@ -86,7 +86,6 @@ html, body, #root {
   .App .flexContain {
     display: flex; }
   .App #main {
-    background-color: deeppink;
     padding-top: 6em;
     display: flex;
     flex-wrap: wrap;

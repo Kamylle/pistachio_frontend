@@ -18,8 +18,10 @@ class App extends Component {
     }
   }
 
+
+
   render() {
-    if (this.state.username === false) {
+    if (!this.state.username) {
       return (
         <div className="App">
           <Route path="/recipe"
@@ -27,7 +29,7 @@ class App extends Component {
           />
           <Switch>
             <Route
-              path="/recipe/:id"
+              path="/recipe/:recipe"
               // component={RecipePage}
               render={(routeProps) => (
                 <RecipePage recipe={routeProps.match.params.recipe}/>
