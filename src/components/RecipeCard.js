@@ -20,7 +20,6 @@ class RecipeCard extends Component {
             <div className="card">
                 <Link to={this.getRecipePath()}>
                     <h2>{this.state.recipeTitle}</h2>
-                    <p>Lorem ipsum si meliora dies ut vina poemata redict</p>
                 </Link>  
             </div>
          

@@ -22,7 +22,7 @@ class Cookbook extends Component {
     getClassName = () => {
         var display = ""
         if (this.props.isHidden) {display = " isHidden"}
-        return "flexContain" + display;
+        return "flexContain cookBookContainer" + display;
     }
 
     renderAllRecipe = () => {
@@ -38,9 +38,9 @@ class Cookbook extends Component {
     render() {
       return (
         <div className={this.getClassName()}>
-            <div>
+            <header>
                 <h1>{this.state.cookbookTitle}{this.state.cookbookID}</h1>
-            </div>
+            </header>
             <div className="cardContain">
                 {this.renderAllRecipe()}
             </div>
