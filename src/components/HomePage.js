@@ -5,12 +5,13 @@ import Cookbook from './Cookbook';
 
 class HomePage extends Component {
     render() {
+      console.log(this.props)
       return (
         <div className="flexContain">
-          <Sidebar/>
+          <Sidebar userID={this.props.username}/>
           <div id="main" className="Home">
-            <Cookbook/>
-            <Cookbook/>
+            <Cookbook cookbookID={"44444"}/>
+            <Cookbook cookbookID={"55555"}/>
           </div>
         </div>
       )

@@ -14,6 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      userID: "123456789",
       username: "Lorem Ipsum"
     }
   }
@@ -24,15 +25,21 @@ class App extends Component {
     if (!this.state.username) {
       return (
         <div className="App">
-          <Route path="/recipe"
-            render={(routeProps) => (<Header username={this.state.username}/>)}
+          <Route path="/recipe" 
+            // This route renders the header for paths outside of login
+            render={(routeProps) => (
+              <Header 
+                username={this.state.username}
+              />
+            )}
           />
           <Switch>
             <Route
               path="/recipe/:recipe"
-              // component={RecipePage}
               render={(routeProps) => (
-                <RecipePage recipe={routeProps.match.params.recipe}/>
+                <RecipePage 
+                  recipe={routeProps.match.params.recipe}
+                />
               )}
             />
             <Route
@@ -46,11 +53,17 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Header username={this.state.username}/>
+        <Header 
+          username={this.state.username}
+        />
         <Switch>
           <Route
             exact path="/"
-            component={HomePage}
+            render={(routeProps) => (
+              <HomePage
+                username={this.state.username}
+              />
+            )}
           />
           <Route
             path="/recipe"
@@ -60,7 +73,9 @@ class App extends Component {
           />
           <Route
             exact path="/add"
-            component={CreateRecipePage}
+            render={(routeProps) => (
+              <CreateRecipePage/>
+            )}
           />
           <Route
             path="/search"

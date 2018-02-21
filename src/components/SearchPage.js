@@ -10,8 +10,8 @@ class SearchPage extends Component {
         <div className="flexContain">
           <SidebarSearch/>
           <div id="main" className="Search cardContain">
-            <Cookbook/>
-            <Cookbook/>
+            <Cookbook cookbookID={"66666"}/>
+            <Cookbook cookbookID={"77777"}/>
           </div>
         </div>
       )
