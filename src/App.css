@@ -95,6 +95,8 @@ html, body, #root {
     display: flex;
     flex-wrap: wrap;
     flex-grow: 4; }
+    .App #main .isHidden {
+      display: none; }
   .App .Home {
     justify-content: center; }
   .App .Add {
