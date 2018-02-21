@@ -7,23 +7,32 @@ import CreateRecipePage from './components/CreateRecipePage';
 import SearchPage from './components/SearchPage';
 
 import Header from './components/Header';
-
+// import firebase from './components/firebase';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      userName: "josé",
       userID: "123"
     }
   }
 
+  setUsernameAndID = (username, userID, routeProps) => {
+    this.setState(st => ({
+      userName: username,
+      userID: userID
+    }));
+  };
+
   render() {
-    if (this.state.userID === false) {
+    if (!this.state.userID) {
       return (
         <div className="App">
+        <Header/>
           <Switch>
-            <Header/>
+            
             <Route
               path="/recipe"
               render={(routeProps) => (
@@ -32,7 +41,9 @@ class App extends Component {
             />
             <Route
               render={(routeProps) => (
-                <LoginPage/>
+                <LoginPage
+                  setUsernameAndID={(username, userID) => this.setUsernameAndID(username, userID, routeProps)}
+                />
               )}
             />
           </Switch>

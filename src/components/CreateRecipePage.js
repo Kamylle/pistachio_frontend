@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import firebase from './firebase';
 //import { Link } from 'react-router-dom';
 
   class CreateRecipePage extends Component {
     constructor(props) {
       super(props);
       this.state = {
+        username: this.props.username,
         recipe: "",
         cookbook: "",
         ingredients: [{ 
@@ -17,6 +19,20 @@ import React, { Component } from 'react';
       this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+
+
+  writeRecipe = async (recipe, cookbook, ingredients, prepStep) => {
+    return await firebase.database().ref('RecipesTest/').push({
+      // username: username,
+      recipe,
+      cookbook,
+      ingredients,
+      prep: [{
+        step: prepStep
+      }],
+    });
+  }
+
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -27,10 +43,37 @@ import React, { Component } from 'react';
     });
   }
 
-  handleSubmit(event) {
-    //alert('A recipe was submitted: ' + this.state.recipe);
+  handleSubmit = async (event) => {
+    // alert('A recipe was submitted: ' + this.state.recipe);
+    // const recipeID = 0;
+    // const username = this.props.username;
+    const recipe = this.state.recipe;
+    const cookbook = this.state.cookbook;
+    const ingredients = this.state.ingredients;
+    const ingredientsMap = ingredients.reduce((acc, curr, index) => {
+      return {...acc, [index]: curr}
+    }, {})
+    const prep = this.state.prep;
+    // let ingredientQty = this.state.ingredients[0].qty
+    // let ingredientUnit = this.state.ingredients[0].unit;
+    // let ingredientName = this.state.ingredients[0].ingr;
+    const prepStep = this.state.prep[0].step;
+    // for(var i = 0; i < ingredients.length; i++) {
+    //   let ingredientQty = ingredients[i].qty;
+    //   let ingredientUnit = ingredients[i].unit;
+    //   let ingredientName = ingredients[i].ingr;
+    // }
+    // for(var j = 0; j < step.length; j++) {
+    //   let prepStep = prep[i].step;
+    // }
+    console.log(ingredientsMap)
+    // console.log(username)
     console.log("Recipe sent");
     event.preventDefault();
+    try {
+      await this.writeRecipe(recipe, cookbook, ingredientsMap, prepStep);
+    } 
+    catch(err) { console.log(err)}  
   }
 
 //dynamic forms from: https://goshakkk.name/array-form-inputs/
@@ -82,6 +125,7 @@ import React, { Component } from 'react';
   
 
   render() {
+    console.log(this.state)
     return (
       <div id="main">
           <form onSubmit={this.handleSubmit}>
