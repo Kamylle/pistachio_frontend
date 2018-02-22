@@ -2,52 +2,58 @@ import React, { Component } from 'react';
 import firebase from '../scripts/firebase';
 //import { Link } from 'react-router-dom';
 
+const initialState = username => ({
+  username,
+  recipe: "",
+  cookbook: "",
+  cookTime: "20 minutes",
+  prepTime: "15 minutes",
+  cookBookID: "123",
+  ownerAnecdotes: [{
+    0: "blabla",
+    1: "bla"
+  }],
+  ownerNotes: [{
+    0: "blabla",
+    1: "bla"
+  }],
+  people: {
+    authorID: "0",
+    creatorID: "1"
+  },
+  starRating: "4.5",
+  yieldNb: "6",
+  title: {
+    prettifiedPath: "al-and-mon",
+    value: "Al & Mon"
+  },
+  tags: {
+    defaultTags: [{ 0: "dessert" }],
+    personalTags: [{ 0: "favourite" }]
+  },
+  ingredients: [{
+    qty: '',
+    unit: '',
+    ingr: ''
+  }],
+  prep: [{ step: '' }],
+});
+
 class CreateRecipePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: this.props.username,
-      recipe: "",
-      cookbook: "",
-      cookTime: "20 minutes",
-      prepTime: "15 minutes",
-      cookBookID: "123",
-      ownerAnecdotes: [{
-        0: "blabla",
-        1: "bla"
-      }],
-      ownerNotes: [{
-        0: "blabla",
-        1: "bla"
-      }],
-      people: {
-        authorID: "0",
-        creatorID: "1"
-      },
-      starRating: "4.5",
-      yieldNb: "6",
-      title: {
-        prettifiedPath: "al-and-mon",
-        value: "Al & Mon"
-      },
-      tags: {
-        defaultTags: [{ 0: "dessert" }],
-        personalTags: [{ 0: "favourite" }]
-      },
-      ingredients: [{
-        qty: '',
-        unit: '',
-        ingr: ''
-      }],
-      prep: [{ step: '' }],
-    };
+    this.state = initialState(props.username);
   }
 
     componentDidMount() {
       //get localstorage state and set it
       console.log(this.state.username)
-      const state = JSON.parse(localStorage.getItem('state'));
-      this.setState(state);
+      if(this.props.location.state) {
+        this.setState(this.props.location.state);
+      } else {
+        const state = JSON.parse(localStorage.getItem('state'));
+        this.setState(state);
+      }
     }
 
     setAppState = (state) => {
@@ -80,6 +86,7 @@ class CreateRecipePage extends Component {
     }, {})
 
     handleSubmit = async (event) => {
+      event.preventDefault();
       // alert('A recipe was submitted: ' + this.state.recipe);
       console.log(this.state);
       const recipe = { 
@@ -89,10 +96,11 @@ class CreateRecipePage extends Component {
       };
      
       console.log("Recipe sent");
-      event.preventDefault();
       try {
         console.log(recipe)
         await this.writeRecipe(recipe);
+        //reset state
+        this.setAppState(initialState);
       }
       catch (err) { console.log(err) }
     }

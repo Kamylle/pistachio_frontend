@@ -21,8 +21,20 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    const state = JSON.parse(localStorage.getItem('login'));
+    this.setState(state);
+  }
+
+  setLoginState = (state) => {
+    this.setState(state, () => {
+      localStorage.setItem('login', JSON.stringify(this.state));
+    });
+  }
+
+
   setUsernameAndID = (username, userID) => {
-    this.setState({userID, username})
+    this.setLoginState({userID, username})
   }
 
   render() {
@@ -78,6 +90,7 @@ class App extends Component {
               <RecipePage
               recipe={routeProps.match.params.recipe}
               username={this.state.username}
+              history={routeProps.history}
               />
             )}
           />
@@ -85,7 +98,9 @@ class App extends Component {
             exact path="/add"
             render={(routeProps) => (
               <CreateRecipePage
-              username={this.state.username}/>
+              username={this.state.username}
+              location={routeProps.location}
+              />
             )}
           />
           <Route

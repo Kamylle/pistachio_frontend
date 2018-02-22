@@ -50,11 +50,7 @@ class Cookbook extends Component {
   }
 
     getClassName = () => {
-<<<<<<< HEAD
         return `flexContain cookBookContainer ${this.props.isHidden ? "isHidden" : ""}`;
-=======
-        return `flexContain ${this.props.isHidden ? "isHidden" : ""}`;
->>>>>>> c21db6300f108da255b56d171cffd252b53891cc
     }
 
     renderAllRecipe = () => {

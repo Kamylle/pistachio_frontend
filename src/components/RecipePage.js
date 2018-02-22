@@ -91,7 +91,8 @@ class RecipePage extends Component {
       });
   };
 
-  editRecipe= () => {
+  editRecipe = () => {
+    this.props.history.push('/add', this.state.recipeObject);
     return(
       <Route
             exact path="/add"
