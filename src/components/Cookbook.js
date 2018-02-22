@@ -8,7 +8,7 @@ class Cookbook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cookbookID: 0, // Once completed, set back to: this.props.cookbookID
+            cookbookID: "asdjfbjshdvfasdf", // Once completed, set back to: this.props.cookbookID
             cookbookObject: {},
             creatorObject: {}, // Required Anywhere ? Remove Later If Not
             cookbookTitle: null,
@@ -50,7 +50,11 @@ class Cookbook extends Component {
   }
 
     getClassName = () => {
+<<<<<<< HEAD
         return `flexContain cookBookContainer ${this.props.isHidden ? "isHidden" : ""}`;
+=======
+        return `flexContain ${this.props.isHidden ? "isHidden" : ""}`;
+>>>>>>> c21db6300f108da255b56d171cffd252b53891cc
     }
 
     renderAllRecipe = () => {
@@ -58,6 +62,7 @@ class Cookbook extends Component {
           this.state.recipeIDs.map((recipeID, idx) => (
             <RecipeCard 
               recipeID={recipeID}
+              username={this.props.username}
             />
           ))
         )

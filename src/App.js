@@ -7,7 +7,7 @@ import CreateRecipePage from './components/CreateRecipePage';
 import SearchPage from './components/SearchPage';
 
 import Header from './components/Header';
-import firebase from './scripts/firebase';
+// import firebase from './scripts/firebase';
 import './App.css';
 
 // var user = firebase.auth().currentUser;
@@ -77,6 +77,7 @@ class App extends Component {
             render={(routeProps) => (
               <RecipePage
               recipe={routeProps.match.params.recipe}
+              username={this.state.username}
               />
             )}
           />

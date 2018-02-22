@@ -1,34 +1,43 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import firebase from '../scripts/firebase';
-import { rootRef, recipesRef, usersRef } from '../scripts/db';
+// import firebase from '../scripts/firebase';
+import {recipesRef, usersRef } from '../scripts/db';
 
 class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeID: 0, // Change back to this later after testing: this.props.recipeID
+            recipeID: "-L5z2Vtx8njBP-V7kNN7", // Change back to this later after testing: this.props.recipeID
             recipeObject: {},
             creatorObject: {},
-            loaded: false
+            loaded: true
         }
     }
 
     getRecipePath = () => {
         //TODO this function will return the path of the recipe
         //Will therefore require username from state
-        return "/recipe"
+        if (this.state.loaded) {
+            try {
+                const userID = this.props.userID;
+                const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
+                return `/recipe/${userID}/${prettifiedPath}`;
+            } catch(err) {
+                return "/recipe";
+            }
+        }
+        return "/recipe";
     }
 
     getRecipeTitle = () => {
-        return this.state.recipeObject.title.value;
+        return this.state.recipeObject.recipe;
     }
 
     getRecipeCreatorFullName = () => {
-        const firstName = this.state.creatorObject.firstName;
-        const lastName = this.state.creatorObject.lastName;
-        const fullName = `${firstName} ${lastName}`;
-        return fullName;
+        // const firstName = this.state.creatorObject.firstName;
+        // const lastName = this.state.creatorObject.lastName;
+        // const fullName = `${firstName} ${lastName}`;
+        return this.state.recipeObject.username;
     }
 
     componentWillMount = () => {
