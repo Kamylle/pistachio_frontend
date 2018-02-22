@@ -6,14 +6,70 @@
 html, body, #root{
   width: 100%;
   height: 100%;
-  color: black;
+  color: $black;
   font-family: $sans-font;
 }
 
+::selection {
+  background: #acc85c;
+  color: $white;
+}
+::-moz-selection {
+  background: #acc85c;
+  color: $white;
+}
+
+a, button {
+  cursor: pointer;
+}
+
+// ########  ##     ## ######## ########  #######  ##    ##  ######
+// ##     ## ##     ##    ##       ##    ##     ## ###   ## ##    ##
+// ##     ## ##     ##    ##       ##    ##     ## ####  ## ##
+// ########  ##     ##    ##       ##    ##     ## ## ## ##  ######
+// ##     ## ##     ##    ##       ##    ##     ## ##  ####       ##
+// ##     ## ##     ##    ##       ##    ##     ## ##   ### ##    ##
+// ########   #######     ##       ##     #######  ##    ##  ######
+
+button {
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
+  margin: 0.5em 0;
+  padding: 0.7em 1em;
+
+  &.secondaryBtn {
+    background-color: $black;
+    color: $white;
+    border: none;
+  }
+}
+.googleSignInBtn {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5em 0 0 !important;
+  background-color: $white;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
+  border: 1px solid rgba(51, 42, 29, 0.1);
+  img {
+    height: 5em;
+  }
+  &:hover {
+      background-color: $whitish;
+      border: 1px solid rgba(51, 42, 29, 0.5);
+  }
+}
+
+//   ###    ########  ########
+//  ## ##   ##     ## ##     ##
+// ##   ##  ##     ## ##     ##
+// ##     ## ########  ########
+// ######### ##        ##
+// ##     ## ##        ##
+// ##     ## ##        ##
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: gray;
+  background-color: deeppink;
   display: flex;
 
   & > header {
@@ -23,7 +79,7 @@ html, body, #root{
     position: fixed;
     top: 0;
     left: 0;
-    background-color: aqua;
+    background-color: $white;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +105,7 @@ html, body, #root{
     width: 15em;
     flex: none;
     padding-top: $header-height;
-    background-color: yellowgreen;
+    background-color: $white;
   }
 
   #main {
@@ -74,7 +130,7 @@ html, body, #root{
 
 aside {
   &.cookbookMarks {
-    background-color: deeppink;
+    background-color: $white;
     h3 {
       padding: 2em 1em 1em;
     }
@@ -92,8 +148,8 @@ aside {
   width: 100%;
   flex-direction: column;
   header {
-    background-color: green;
-    color: white;
+    background-color: $primaryMed;
+    color: $white;
     padding: 6em 2em 4em;
     font-family: $serif-font;
   }
@@ -120,11 +176,70 @@ aside {
   column-gap: 0;
 
   .card {
-     background-color: white;
+     background-color: $white;
      max-width: 100%;
      padding: 2em;
      margin: 0.5em;
      display: inline-block;
+  }
+}
+
+// ##        #######   ######   #### ##    ##
+// ##       ##     ## ##    ##   ##  ###   ##
+// ##       ##     ## ##         ##  ####  ##
+// ##       ##     ## ##   ####  ##  ## ## ##
+// ##       ##     ## ##    ##   ##  ##  ####
+// ##       ##     ## ##    ##   ##  ##   ###
+// ########  #######   ######   #### ##    ##
+
+.LoginPage {
+  display: flex;
+  width: 100%;
+  background-image: url("./img/bg-coul.jpeg");
+  background-size: cover;
+  align-items: flex-start;
+  padding: 0 15%;
+  .container {
+    padding: 3em 3em 1em;
+    background-color: $white;
+    max-width: 18em;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.29);
+    .titleSection {
+      padding-bottom: 1em;
+      h1 {
+        font-size: 2.7em;
+      }
+      p {
+        font-family: $serif-font;
+        padding-top: 0.3em;
+        color: $grayMed;
+      }
+    }
+    .Form {
+      padding-bottom: 1em;
+    }
+    .googleLogin {
+      padding-bottom: 1em;
+    }
+    .logSign {
+      & > a > * {
+        display: inline-block;
+      }
+      span {
+        font-family: $serif-font;
+        font-weight: 700;
+        color: $primaryDark;
+        padding-left: 0.5em;
+      }
+    }
+    input {
+      display: block;
+    }
+  }
+  .error {
+    padding-bottom: 1em;
+    color: red;
   }
 }
 
@@ -135,6 +250,33 @@ aside {
 // ##       ##     ## ##   ##   ##     ##
 // ##       ##     ## ##    ##  ##     ##
 // ##        #######  ##     ## ##     ##
+
+input, textarea {
+  background-color: $whitish;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
+  border: 1px solid rgba(51, 42, 29, 0.1);
+
+  &, select {
+    display: block;
+    padding: 0.6em 1em;
+    margin:  0.5em 0;
+    border-radius: 2px;
+    &:focus {
+      outline: 2px solid $primaryLight;
+    }
+  }
+}
+
+label {
+    display: block;
+    padding: 0.5em 0;
+    font-family: $serif-font;
+    letter-spacing: 0.06em;
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+
 
 form {
   margin: auto;

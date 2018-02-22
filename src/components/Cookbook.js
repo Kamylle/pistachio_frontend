@@ -27,23 +27,17 @@ class Cookbook extends Component {
       .child(`${this.state.cookbookID}`)
       .once("value")
       .then(snapshot => { 
-          console.log("Snapshot value =", snapshot.val());
           cookbook = snapshot.val();
-          console.log("Cookbook Object =", cookbook);
           cookbookTtl = cookbook.title.value;
-          console.log("Cookbook Title =", cookbookTtl);
           cookbookRecipeIDs = cookbook.recipeIDs;
-          console.log("Cookbook Recipe IDs =", cookbookRecipeIDs);
           return cookbook.people.creatorID;
       })
       .then(creatorID => {
-          console.log("creatorID =", creatorID);
           return usersRef
           .child(creatorID)
           .once("value")
       })
       .then(creatorObj => { 
-          console.log("creator Object =", creatorObj.val());
           this.setState({ 
               cookbookObject: cookbook,
               cookbookTitle: cookbookTtl,
@@ -56,7 +50,7 @@ class Cookbook extends Component {
   }
 
     getClassName = () => {
-        return `flexContain ${this.props.isHidden ? "isHidden" : null}`;
+        return `flexContain cookBookContainer ${this.props.isHidden ? "isHidden" : ""}`;
     }
 
     renderAllRecipe = () => {
