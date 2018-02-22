@@ -27,7 +27,7 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <aside>
+      <aside className="cookbookMarks">
       <h3>Cookbooks</h3>
         <ul>
           <li onClick={this.handleLinkSelect("all")}>All recipies</li>

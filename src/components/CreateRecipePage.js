@@ -20,16 +20,16 @@ class CreateRecipePage extends Component {
         0: "blabla",
         1: "bla"
       }],
-      people: [{
-        authorID: [{ 0: "0" }],
+      people: {
+        authorID: "0",
         creatorID: "1"
-      }],
+      },
       starRating: "4.5",
       yieldNb: "6",
-      title: [{
+      title: {
         prettifiedPath: "al-and-mon",
         value: "Al & Mon"
-      }],
+      },
       tags: [{
         defaultTags: [{ 0: "dessert" }],
         personalTags: [{ 0: "favourite" }]
@@ -58,8 +58,8 @@ class CreateRecipePage extends Component {
 
     writeRecipe = async (recipe) => {
       const db = firebase.database();
-      const recipeKey = await db.ref('RecipesTest/').push().key;
-      db.ref(`RecipesTest/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
+      const recipeKey = await db.ref('Recipes/').push().key;
+      db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
     }
 
     handleInputChange = (event) => {
@@ -81,6 +81,7 @@ class CreateRecipePage extends Component {
 
     handleSubmit = async (event) => {
       // alert('A recipe was submitted: ' + this.state.recipe);
+      console.log(this.state);
       const recipe = { 
         ...this.state,
         ingredients: this.formatArray(this.state.ingredients),
@@ -90,6 +91,7 @@ class CreateRecipePage extends Component {
       console.log("Recipe sent");
       event.preventDefault();
       try {
+        console.log(recipe)
         await this.writeRecipe(recipe);
       }
       catch (err) { console.log(err) }

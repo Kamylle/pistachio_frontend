@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
-// import { firebase } from '../scripts/firebase';
+import { firebase } from '../scripts/firebase';
 import { rootRef, recipesRef, cookbooksRef, usersRef } from '../scripts/db';
 
 class Cookbook extends Component {
@@ -73,9 +73,9 @@ class Cookbook extends Component {
       return this.state.loaded 
       ? (
         <div className={this.getClassName()}>
-            <div>
+            <header>
                 <h1>{this.state.cookbookTitle}{this.state.cookbookID}</h1>
-            </div>
+            </header>
             <div className="cardContain">
                 {this.renderAllRecipe()}
             </div>
