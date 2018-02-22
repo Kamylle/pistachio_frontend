@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 // import firebase from "../scripts/firebase";
-//import { Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router';
+import { Link } from 'react-router-dom';
 import { recipesRef, usersRef } from "../scripts/db";
+import CreateRecipePage from "./CreateRecipePage";
 
 class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L5z6HH5aV5AYq1GDdTO", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L5z2Vtx8njBP-V7kNN7", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -22,8 +24,17 @@ class RecipePage extends Component {
   getRecipePath = () => {
     //TODO this function will return the path of the recipe
     //Will therefore require username from state
+    if (this.state.loaded) {
+        try {
+            const userID = this.props.userID;
+            const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
+            return `/recipe/${userID}/${prettifiedPath}`;
+        } catch(err) {
+            return "/recipe";
+        }
+    }
     return "/recipe";
-  };
+}
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
@@ -80,6 +91,18 @@ class RecipePage extends Component {
       });
   };
 
+  editRecipe= () => {
+    return(
+      <Route
+            exact path="/add"
+            render={(routeProps) => (
+              <CreateRecipePage
+              username={this.state.username}/>
+            )}
+          />
+    );
+  };
+
   render() {
     // console.log(this.props);
     // console.log(this.state)
@@ -126,6 +149,7 @@ class RecipePage extends Component {
             <ul>
                 {prepMap}
             </ul>
+            <button onClick={this.editRecipe}>Edit recipe</button>
           </div>
         )};
       </div>

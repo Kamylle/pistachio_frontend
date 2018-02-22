@@ -65,6 +65,7 @@ class Cookbook extends Component {
             <RecipeCard 
               recipeID={recipeID}
               username={this.props.username}
+              userID={this.props.userID}
             />
           ))
         )
