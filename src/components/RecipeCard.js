@@ -17,7 +17,16 @@ class RecipeCard extends Component {
     getRecipePath = () => {
         //TODO this function will return the path of the recipe
         //Will therefore require username from state
-        return "/recipe"
+        if (this.state.loaded) {
+            try {
+                const userID = this.props.userID;
+                const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
+                return `/recipe/${userID}/${prettifiedPath}`;
+            } catch(err) {
+                return "/recipe";
+            }
+        }
+        return "/recipe";
     }
 
     getRecipeTitle = () => {
