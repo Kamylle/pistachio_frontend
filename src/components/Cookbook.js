@@ -8,20 +8,41 @@ class Cookbook extends Component {
         super(props);
         this.state = {
             cookbookID: this.props.cookbookID,
-            cookbookTitle: "Cookbook Title"
+            cookbookTitle: "Cookbook",
+            recipeIDs: [
+                //TODO get recipeIDs from user
+                "11111111",
+                "22222222",
+                "33333333",
+                "44444444"
+              ]
         }
     }
+
+    getClassName = () => {
+        var display = ""
+        if (this.props.isHidden) {display = " isHidden"}
+        return "flexContain" + display;
+    }
+
+    renderAllRecipe = () => {
+        return (
+          this.state.recipeIDs.map((recipeID, idx) => (
+            <RecipeCard 
+              recipeID={recipeID}
+            />
+          ))
+        )
+      }
+
     render() {
       return (
-
-        <div className="flexContain">
+        <div className={this.getClassName()}>
             <div>
-                <h1>{this.state.cookbookTitle}</h1>
+                <h1>{this.state.cookbookTitle}{this.state.cookbookID}</h1>
             </div>
             <div className="cardContain">
-                <RecipeCard recipeID={"11111"}/>
-                <RecipeCard recipeID={"22222"}/>
-                <RecipeCard recipeID={"33333"}/>
+                {this.renderAllRecipe()}
             </div>
         </div>
 
