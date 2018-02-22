@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './firebase';
+import firebase from '../scripts/firebase';
 //import { Link } from 'react-router-dom';
 
 class CreateRecipePage extends Component {

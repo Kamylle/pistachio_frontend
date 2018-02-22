@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firebase } from '../scripts/dbconfig';
+import firebase from '../scripts/firebase';
 import { rootRef, recipesRef, usersRef } from '../scripts/db';
 
 class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeID: this.props.recipeID, 
+            recipeID: 0, 
             recipeObject: {},
             creatorObject: {},
             loaded: false

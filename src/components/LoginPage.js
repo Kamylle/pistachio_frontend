@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import firebase from './firebase';
+import firebase from '../scripts/firebase';
 // const auth = firebase.auth();
 
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -16,7 +16,7 @@ class LoginPage extends Component {
   login = async () => {
     const email = this.email.value;
     const password = this.password.value;
-    const username = this.state.userName;
+    // const username = this.state.userName;
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
       console.log(firebaseUser);
@@ -42,10 +42,10 @@ class LoginPage extends Component {
   googleSignIn = () => {
     firebase.auth().signInWithPopup(provider).then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
+      // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      var profile = result.additionalUserInfo.profile;
+      // var profile = result.additionalUserInfo.profile;
       this.writeAccountData(user.uid, user.displayName, user.email);
       this.props.setUsernameAndID(user.displayName, user.uid);
     }).catch(function (error) {
