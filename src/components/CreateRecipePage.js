@@ -2,132 +2,151 @@ import React, { Component } from 'react';
 import firebase from './firebase';
 //import { Link } from 'react-router-dom';
 
-  class CreateRecipePage extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        username: this.props.username,
-        recipe: "",
-        cookbook: "",
-        ingredients: [{ 
-          qty: '',
-          unit: '',
-          ingr: '' }],
-        prep: [{step: ''}],
-      };
-
-      this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-
-
-  writeRecipe = async (recipe, cookbook, ingredients, prepStep) => {
-    return await firebase.database().ref('RecipesTest/').push({
-      // username: username,
-      recipe,
-      cookbook,
-      ingredients,
-      prep: [{
-        step: prepStep
+class CreateRecipePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: this.props.username,
+      recipe: "",
+      cookbook: "",
+      cookTime: "20 minutes",
+      prepTime: "15 minutes",
+      cookBookID: "123",
+      ownerAnecdotes: [{
+        0: "blabla",
+        1: "bla"
       }],
-    });
+      ownerNotes: [{
+        0: "blabla",
+        1: "bla"
+      }],
+      people: [{
+        authorID: [{ 0: "0" }],
+        creatorID: "1"
+      }],
+      starRating: "4.5",
+      yieldNb: "6",
+      title: [{
+        prettifiedPath: "al-and-mon",
+        value: "Al & Mon"
+      }],
+      tags: [{
+        defaultTags: [{ 0: "dessert" }],
+        personalTags: [{ 0: "favourite" }]
+      }],
+      ingredients: [{
+        qty: '',
+        unit: '',
+        ingr: ''
+      }],
+      prep: [{ step: '' }],
+    };
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    componentDidMount() {
+      //get localstorage state and set it
+      console.log(this.state.username)
+      const state = JSON.parse(localStorage.getItem('state'));
+      this.setState(state);
+    }
 
-    this.setState({
-      [name]: value
-    });
-  }
+    setAppState = (state) => {
+      this.setState(state, () => {
+        localStorage.setItem('state', JSON.stringify(this.state));
+      });
+    }
 
-  handleSubmit = async (event) => {
-    // alert('A recipe was submitted: ' + this.state.recipe);
-    // const recipeID = 0;
-    // const username = this.props.username;
-    const recipe = this.state.recipe;
-    const cookbook = this.state.cookbook;
-    const ingredients = this.state.ingredients;
-    const ingredientsMap = ingredients.reduce((acc, curr, index) => {
-      return {...acc, [index]: curr}
+    writeRecipe = async (recipe) => {
+      const db = firebase.database();
+      const recipeKey = await db.ref('RecipesTest/').push().key;
+      db.ref(`RecipesTest/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
+    }
+
+    handleInputChange = (event) => {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+      if(value === "New Cookbook") {
+        console.log("hey")
+      }
+
+      this.setAppState({
+        [name]: value
+      });
+    }
+
+    formatArray = (arr) => arr.reduce((acc, curr, index) => {
+      return { ...acc, [index]: curr }
     }, {})
-    const prep = this.state.prep;
-    // let ingredientQty = this.state.ingredients[0].qty
-    // let ingredientUnit = this.state.ingredients[0].unit;
-    // let ingredientName = this.state.ingredients[0].ingr;
-    const prepStep = this.state.prep[0].step;
-    // for(var i = 0; i < ingredients.length; i++) {
-    //   let ingredientQty = ingredients[i].qty;
-    //   let ingredientUnit = ingredients[i].unit;
-    //   let ingredientName = ingredients[i].ingr;
-    // }
-    // for(var j = 0; j < step.length; j++) {
-    //   let prepStep = prep[i].step;
-    // }
-    console.log(ingredientsMap)
-    // console.log(username)
-    console.log("Recipe sent");
-    event.preventDefault();
-    try {
-      await this.writeRecipe(recipe, cookbook, ingredientsMap, prepStep);
-    } 
-    catch(err) { console.log(err)}  
-  }
 
-//dynamic forms from: https://goshakkk.name/array-form-inputs/
+    handleSubmit = async (event) => {
+      // alert('A recipe was submitted: ' + this.state.recipe);
+      const recipe = { 
+        ...this.state,
+        ingredients: this.formatArray(this.state.ingredients),
+        prep: this.formatArray(this.state.prep)
+      };
+     
+      console.log("Recipe sent");
+      event.preventDefault();
+      try {
+        await this.writeRecipe(recipe);
+      }
+      catch (err) { console.log(err) }
+    }
 
-  handleIngredientChange = (idx, type) => (evt) => {
-    const newIngredients = this.state.ingredients.map((ingredient, sidx) => {
-      if (idx !== sidx) return ingredient;
-      else if (type === "qty") return { ...ingredient, qty: evt.target.value };
-      else if (type === "unit") return { ...ingredient, unit: evt.target.value };
-      else if (type === "ingr") return { ...ingredient, ingr: evt.target.value };
-      else return null;
-    });
+    //dynamic forms from: https://goshakkk.name/array-form-inputs/
 
-    this.setState({ ingredients: newIngredients });
-  }
+    handleIngredientChange = (idx, type) => (evt) => {
+      const newIngredients = this.state.ingredients.map((ingredient, sidx) => {
+        if (idx !== sidx) return ingredient;
+        else if (type === "qty") return { ...ingredient, qty: evt.target.value };
+        else if (type === "unit") return { ...ingredient, unit: evt.target.value };
+        else if (type === "ingr") return { ...ingredient, ingr: evt.target.value };
+        else return null;
+      });
 
-  handleAddIngredient = () => {
-    this.setState({ 
-      ingredients: this.state.ingredients.concat([{qty: '', unit: '', ingr: '' }]) 
-    });
-  }
+      this.setAppState({ ingredients: newIngredients });
+    }
 
-  handleRemoveIngredient = (idx) => () => {
-    this.setState({ 
-      ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx) 
-    });
-  }
+    handleAddIngredient = () => {
+      this.setAppState({
+        ingredients: this.state.ingredients.concat([{ qty: '', unit: '', ingr: '' }])
+      });
+    }
 
-  handleStepChange = (idx) => (evt) => {
-    const newStep = this.state.prep.map((step, sidx) => {
-      if (idx !== sidx) return step;
-      else return { ...step, step: evt.target.value };
-    });
+    handleRemoveIngredient = (idx) => () => {
+      this.setAppState({
+        ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx)
+      });
+    }
 
-    this.setState({ prep: newStep });
-  }
+    handleStepChange = (idx) => (evt) => {
+      const newStep = this.state.prep.map((step, sidx) => {
+        if (idx !== sidx) return step;
+        else return { ...step, step: evt.target.value };
+      });
 
-  handleAddStep = () => {
-    this.setState({ 
-      prep: this.state.prep.concat([{step: ''}]) 
-    });
-  }
+      this.setAppState({ prep: newStep });
+    }
 
-  handleRemoveStep = (idx) => () => {
-    this.setState({ 
-      prep: this.state.prep.filter((s, sidx) => idx !== sidx)
-    });
-  }
-  
+    handleAddStep = () => {
+      this.setAppState({
+        prep: this.state.prep.concat([{ step: '' }])
+      });
+    }
 
-  render() {
-    console.log(this.state)
-    return (
-      <div id="main">
+    handleRemoveStep = (idx) => () => {
+      this.setAppState({
+        prep: this.state.prep.filter((s, sidx) => idx !== sidx)
+      });
+    }
+
+
+    render() {
+      console.log(this.state)
+      return (
+        <div id="main">
           <form onSubmit={this.handleSubmit}>
             <h2>New Recipe</h2>
 
@@ -149,12 +168,12 @@ import firebase from './firebase';
                 type="text"
                 value={this.state.cookbook}
                 onChange={this.handleInputChange}>
-                  <option value="Select a Cookbook">Select a recipe</option>
-                  <option value="Favorites">Favorites</option>
-                  <option value="Classics">Classics</option>
-                  <option value="Livre de Grand-Maman">Livre de Grand Maman</option>
-                  <option value="Apetizers">Apetizers</option>
-                  <option value="New Cookbook">New Cookbook</option>
+                <option value="Select a Cookbook">Select a cookbook</option>
+                <option value="Favorites">Favorites</option>
+                <option value="Classics">Classics</option>
+                <option value="Livre de Grand-Maman">Livre de Grand Maman</option>
+                <option value="Apetizers">Apetizers</option>
+                <option value="New Cookbook">New Cookbook</option>
               </select>
             </label>
 
@@ -171,12 +190,12 @@ import firebase from './firebase';
                   type="text"
                   value={ingredient.unit}
                   onChange={this.handleIngredientChange(idx, "unit")}>
-                    <option value="unit">Unit</option>
-                    <option value="Cups">Cups</option>
-                    <option value="Tbs">Tbs</option>
-                    <option value="Tsp">Tsp</option>
-                    <option value="ml">ml</option>
-                    <option value="g">g</option>
+                  <option value="unit">Unit</option>
+                  <option value="Cups">Cups</option>
+                  <option value="Tbs">Tbs</option>
+                  <option value="Tsp">Tsp</option>
+                  <option value="ml">ml</option>
+                  <option value="g">g</option>
                 </select>
                 <input
                   type="text"
@@ -184,7 +203,7 @@ import firebase from './firebase';
                   value={ingredient.ingr}
                   onChange={this.handleIngredientChange(idx, "ingr")}
                 />
-                
+
                 <button type="button" onClick={this.handleRemoveIngredient(idx)} className="small">-</button>
               </div>
             ))}
@@ -205,10 +224,10 @@ import firebase from './firebase';
             ))}
             <button type="button" onClick={this.handleAddStep} className="small">Add Step</button>
 
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      );
+    }
   }
-}
-export default CreateRecipePage;
+  export default CreateRecipePage;

@@ -74,10 +74,15 @@ html, body, #root {
     @media only screen and (max-width: 30em) {
       .App header {
         background-color: purple; } }
+    .App header a {
+      padding: 0 1em; }
     .App header .accountLinks {
+      display: block;
       text-align: right; }
       .App header .accountLinks a {
         display: block; }
+    .App header div {
+      display: flex; }
   .App aside {
     width: 15em;
     flex: none;
@@ -86,7 +91,6 @@ html, body, #root {
   .App .flexContain {
     display: flex; }
   .App #main {
-    background-color: deeppink;
     padding-top: 6em;
     display: flex;
     flex-wrap: wrap;

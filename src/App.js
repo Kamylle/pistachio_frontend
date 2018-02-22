@@ -7,42 +7,50 @@ import CreateRecipePage from './components/CreateRecipePage';
 import SearchPage from './components/SearchPage';
 
 import Header from './components/Header';
-// import firebase from './components/firebase';
+import firebase from './components/firebase';
 import './App.css';
+
+// var user = firebase.auth().currentUser;
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      userName: "josé",
-      userID: "123"
+      userID: "undefined",
+      username: "undefined"
     }
   }
 
-  setUsernameAndID = (username, userID, routeProps) => {
-    this.setState(st => ({
-      userName: username,
-      userID: userID
-    }));
-  };
+  setUsernameAndID = (username, userID) => {
+    this.setState({userID, username})
+  }
 
   render() {
-    if (!this.state.userID) {
+    if (!this.state.username) {
       return (
         <div className="App">
-        <Header/>
+          {/* <Route path="/recipe" 
+            // This route renders the header for paths outside of login
+            render={(routeProps) => (
+              <Header 
+                username={this.state.username}
+              />
+            )}
+          /> */}
           <Switch>
-            
             <Route
-              path="/recipe"
+              path="/recipe/:recipe"
               render={(routeProps) => (
-                <RecipePage/>
+                <RecipePage 
+                  recipe={routeProps.match.params.recipe}
+                />
               )}
             />
             <Route
+              exact path="/"
               render={(routeProps) => (
                 <LoginPage
-                  setUsernameAndID={(username, userID) => this.setUsernameAndID(username, userID, routeProps)}
+                  setUsernameAndID={(username, userID) => this.setUsernameAndID(username, userID)}
                 />
               )}
             />
@@ -52,21 +60,32 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Header/>
+        <Header 
+          username={this.state.username}
+        />
         <Switch>
           <Route
             exact path="/"
-            component={HomePage}
+            render={(routeProps) => (
+              <HomePage
+                username={this.state.username}
+              />
+            )}
           />
           <Route
             path="/recipe"
             render={(routeProps) => (
-              <RecipePage/>
+              <RecipePage
+              recipe={routeProps.match.params.recipe}
+              />
             )}
           />
           <Route
             exact path="/add"
-            component={CreateRecipePage}
+            render={(routeProps) => (
+              <CreateRecipePage
+              username={this.state.username}/>
+            )}
           />
           <Route
             path="/search"
