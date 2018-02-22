@@ -7,11 +7,7 @@ class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-<<<<<<< HEAD
-            recipeID: 0, 
-=======
             recipeID: 0, // Change back to this later after testing: this.props.recipeID
->>>>>>> d974ba53187fd0be83eedb07a1b889bccd60066c
             recipeObject: {},
             creatorObject: {},
             loaded: false
