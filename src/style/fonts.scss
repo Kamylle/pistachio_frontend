@@ -4,5 +4,30 @@ $sans-font: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif !d
 $serif-font: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif !default;
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: $serif-font;
   font-weight: 700;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1.15em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 0.9em;
 }

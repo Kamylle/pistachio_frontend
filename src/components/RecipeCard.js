@@ -62,7 +62,9 @@ class RecipeCard extends Component {
 
     render() {
         { return !this.state.loaded 
-            ? <div>Loading...</div>
+            ? <div className="card">
+                <h2>Loading Mock Card Here For Testing Purposes</h2>
+            </div>
             : (
                 <div className="card">
                     <Link to={this.getRecipePath()}>
