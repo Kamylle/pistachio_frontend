@@ -52,33 +52,76 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700; }
 
 h1 {
-  font-size: 2em; }
+  font-size: 2em;
+  letter-spacing: 0.04em; }
 
 h2 {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  letter-spacing: 0.035em; }
 
 h3 {
-  font-size: 1.25em; }
+  font-size: 1.25em;
+  letter-spacing: 0.03em; }
 
 h4 {
-  font-size: 1.15em; }
+  font-size: 1.15em;
+  letter-spacing: 0.03em; }
 
 h5 {
-  font-size: 1em; }
+  font-size: 1em;
+  letter-spacing: 0.02em; }
 
 h6 {
-  font-size: 0.9em; }
+  font-size: 0.9em;
+  letter-spacing: 0.01em; }
+
+p {
+  line-height: 1.2em; }
 
 html, body, #root {
   width: 100%;
   height: 100%;
-  color: black;
+  color: #272424;
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+::selection {
+  background: #acc85c;
+  color: #FFFFFF; }
+
+::-moz-selection {
+  background: #acc85c;
+  color: #FFFFFF; }
+
+a, button {
+  cursor: pointer; }
+
+button {
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
+  margin: 0.5em 0;
+  padding: 0.7em 1em; }
+  button.secondaryBtn {
+    background-color: #272424;
+    color: #FFFFFF;
+    border: none; }
+
+.googleSignInBtn {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5em 0 0 !important;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset;
+  border: 1px solid rgba(51, 42, 29, 0.1); }
+  .googleSignInBtn img {
+    height: 5em; }
+  .googleSignInBtn:hover {
+    background-color: #f9f9f9;
+    border: 1px solid rgba(51, 42, 29, 0.5); }
 
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: gray;
+  background-color: deeppink;
   display: flex; }
   .App > header {
     z-index: 100;
@@ -87,7 +130,7 @@ html, body, #root {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: aqua;
+    background-color: #FFFFFF;
     display: flex;
     justify-content: space-between;
     align-items: center; }
@@ -107,7 +150,7 @@ html, body, #root {
     width: 15em;
     flex: none;
     padding-top: 5em;
-    background-color: yellowgreen; }
+    background-color: #FFFFFF; }
   .App #main {
     padding-top: 5em;
     display: flex;
@@ -124,7 +167,7 @@ html, body, #root {
   justify-content: center; }
 
 aside.cookbookMarks {
-  background-color: deeppink; }
+  background-color: #FFFFFF; }
   aside.cookbookMarks h3 {
     padding: 2em 1em 1em; }
   aside.cookbookMarks li {
@@ -137,8 +180,8 @@ aside.cookbookMarks {
   width: 100%;
   flex-direction: column; }
   .cookBookContainer header {
-    background-color: green;
-    color: white;
+    background-color: #acc85c;
+    color: #FFFFFF;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
 
@@ -159,11 +202,69 @@ aside.cookbookMarks {
   column-count: 2;
   column-gap: 0; }
   .cardContain .card {
-    background-color: white;
+    background-color: #FFFFFF;
     max-width: 100%;
     padding: 2em;
     margin: 0.5em;
     display: inline-block; }
+
+.LoginPage {
+  display: flex;
+  width: 100%;
+  background-image: url("./img/bg-coul.jpeg");
+  background-size: cover;
+  align-items: flex-start;
+  padding: 0 15%; }
+  .LoginPage .container {
+    padding: 3em 3em 1em;
+    background-color: #FFFFFF;
+    max-width: 18em;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.29); }
+    .LoginPage .container .titleSection {
+      padding-bottom: 1em; }
+      .LoginPage .container .titleSection h1 {
+        font-size: 2.7em; }
+      .LoginPage .container .titleSection p {
+        font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+        padding-top: 0.3em;
+        color: #9b9b9b; }
+    .LoginPage .container .Form {
+      padding-bottom: 1em; }
+    .LoginPage .container .googleLogin {
+      padding-bottom: 1em; }
+    .LoginPage .container .logSign > a > * {
+      display: inline-block; }
+    .LoginPage .container .logSign span {
+      font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+      font-weight: 700;
+      color: #89a240;
+      padding-left: 0.5em; }
+    .LoginPage .container input {
+      display: block; }
+  .LoginPage .error {
+    padding-bottom: 1em;
+    color: red; }
+
+input, textarea {
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset;
+  border: 1px solid rgba(51, 42, 29, 0.1); }
+  input, input select, textarea, textarea select {
+    display: block;
+    padding: 0.6em 1em;
+    margin: 0.5em 0;
+    border-radius: 2px; }
+    input:focus, input select:focus, textarea:focus, textarea select:focus {
+      outline: 2px solid #acc85c; }
+
+label {
+  display: block;
+  padding: 0.5em 0;
+  font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+  letter-spacing: 0.06em;
+  font-size: 0.8em;
+  font-weight: 700; }
 
 form {
   margin: auto; }

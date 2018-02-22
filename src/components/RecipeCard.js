@@ -48,18 +48,15 @@ class RecipeCard extends Component {
         .child(this.state.recipeID)
         .once("value")
         .then(snapshot => { 
-            console.log(snapshot.val());
             recipe = snapshot.val();
             return recipe.people.creatorID;
         })
         .then(creatorID => {
-            console.log("creatorID =", creatorID);
             return usersRef
             .child(creatorID)
             .once("value")
         })
         .then(creatorObj => { 
-            console.log("creator Object =", creatorObj.val());
             this.setState({ 
                 recipeObject: recipe,
                 creatorObject: creatorObj.val(),

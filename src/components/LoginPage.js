@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+import googleIcon from '../img/icon_google_login.svg';
 import firebase from '../scripts/firebase';
 // const auth = firebase.auth();
 
@@ -10,7 +9,12 @@ var provider = new firebase.auth.GoogleAuthProvider();
 class LoginPage extends Component {
   constructor() {
     super();
-    this.state = { userID: undefined, userName: undefined, display: 'signin', error: '' }
+    this.state = { 
+      userID: undefined, 
+      userName: undefined, 
+      display: 'signin', 
+      error: '' 
+    }
   }
 
   login = async () => {
@@ -19,7 +23,10 @@ class LoginPage extends Component {
     // const username = this.state.userName;
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
+<<<<<<< HEAD
+=======
       // console.log(firebaseUser);
+>>>>>>> c21db6300f108da255b56d171cffd252b53891cc
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
     .catch(error => { this.setState({ error: error.message }); });
@@ -74,38 +81,109 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.display === 'signin' ? (
-          <div>
-            <div>
-              <input id="txtEmail" type="email" placeholder="Email" ref={r => this.email = r} />
-              <input id="txtPassword" type="password" placeholder="Password" ref={r => this.password = r} />
-              <button id="btnSignIn" className="btn btn-action" onClick={this.login}>Sign in</button>
-            </div>
-            <div>
-              <h4> You don't have an account ?</h4>
-              <button id="btnSignUp" className="btn btn-action" onClick={() => this.setDisplay('signup')}>Create an account</button>
-            </div>
-            <div>
-              <h4>Or sign in with Google: </h4>
-              <button id="btnGoogle" className="btn btn-action hide" onClick={this.googleSignIn}>Sign in with Google</button>
-            </div>
+      <div className="LoginPage">
+        <div className="container">
+          <div className="titleSection">
+            <h1>Pistach.io</h1>
+            <p>Digital familial cookbook. <br/> Create, share and print your recipes.</p>
           </div>
-        ) : (
-          <div>
-            <div>
-              <input id="txtEmail" type="email" placeholder="Email" ref={r => this.email = r} />
-              <input id="txtName" type="username" placeholder="Username" ref={r => this.username = r} />
-              <input id="txtPassword" type="password" placeholder="Password" ref={r => this.password = r} />
-              <button id="btnSignUp" className="btn btn-secondary" onClick={this.signup}>Create an account</button>
+          {this.state.error !== '' && <p className="error">Error occured: {this.state.error}</p>}
+          {this.state.display === 'signin' ? (
+            <div className="Login">
+              <div className="Form">
+              <div className="googleLogin">
+                <button 
+                  id="btnGoogle" 
+                  onClick={this.googleSignIn}
+                  className="googleSignInBtn">
+                  <img src={googleIcon} alt="Google Icon" style={{height: "4em"}}/>
+                  Sign in with Google
+                </button>
+                <span>or</span>
+              </div>
+                <label>
+                  Email
+                  <input 
+                    id="txtEmail" 
+                    type="email" 
+                    placeholder="Email" 
+                    ref={r => this.email = r} 
+                  />
+                </label>
+                <label>
+                  Password
+                  <input 
+                    id="txtPassword" 
+                    type="password" 
+                    placeholder="Password" 
+                    ref={r => this.password = r} 
+                  />
+                </label>
+                <button 
+                  id="btnSignIn" 
+                  className="secondaryBtn" 
+                  onClick={this.login}>
+                  Sign in
+                </button>
+              </div>
+              <div className="logSign"> 
+                <a 
+                  id="btnSignUp"  
+                  onClick={() => this.setDisplay('signup')}>
+                  <h5>You don't have an account ? </h5>
+                  <span>Signup</span>
+                </a>
+              </div>
             </div>
-            <div>
-              <h4>Already have an account?</h4>
-              <button id="btnSignIn" className="btn btn-action" onClick={() => this.setDisplay('signin')}>Sign In</button>
+          ) : (
+            <div className="Signup">
+              <div className="Form">
+                <label>
+                  Email
+                  <input 
+                    id="txtEmail" 
+                    type="email" 
+                    placeholder="Email" 
+                    ref={r => this.email = r} 
+                  />
+                </label>
+                <label>
+                  Username
+                  <input 
+                    id="txtName" 
+                    type="username" 
+                    placeholder="Username" 
+                    ref={r => this.username = r} 
+                  />
+                </label>
+                <label>
+                  Password
+                  <input 
+                    id="txtPassword" 
+                    type="password" 
+                    placeholder="Password" 
+                    ref={r => this.password = r} 
+                  />
+                </label>
+                <button 
+                  id="btnSignUp" 
+                  className="secondaryBtn" 
+                  onClick={this.signup}>
+                  Signup
+                  </button>
+              </div>
+              <div className="logSign">
+                <a 
+                  id="btnSignIn" 
+                  className="btn btn-action" 
+                  onClick={() => this.setDisplay('signin')}>
+                  <h5>Already have an account?</h5>
+                  <span>Sign In</span>
+                </a>
+              </div>
             </div>
-          </div>
-        )}
-        {this.state.error !== '' && <h3>Error occured: {this.state.error}</h3>}
+          )}
+        </div>
       </div>
     );
   }
