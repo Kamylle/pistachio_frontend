@@ -7,7 +7,11 @@ class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+<<<<<<< HEAD
             recipeID: 0, 
+=======
+            recipeID: 0, // Change back to this later after testing: this.props.recipeID
+>>>>>>> d974ba53187fd0be83eedb07a1b889bccd60066c
             recipeObject: {},
             creatorObject: {},
             loaded: false
@@ -33,7 +37,7 @@ class RecipeCard extends Component {
 
     componentWillMount = () => {
 
-        var recipe = {};
+        let recipe = {};
 
         recipesRef
         .child(this.state.recipeID)
@@ -49,12 +53,12 @@ class RecipeCard extends Component {
             .child(creatorID)
             .once("value")
         })
-        .then(creator => { 
-            console.log("creator Object =", creator.val());
+        .then(creatorObj => { 
+            console.log("creator Object =", creatorObj.val());
             this.setState({ 
                 recipeObject: recipe,
-                creatorObject: creator.val(),
-                recipeLoaded: true 
+                creatorObject: creatorObj.val(),
+                loaded: true 
             })
         })
         .catch(err => { console.log(err) } );
