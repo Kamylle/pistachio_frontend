@@ -19,7 +19,7 @@ class LoginPage extends Component {
     // const username = this.state.userName;
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
-      console.log(firebaseUser);
+      // console.log(firebaseUser);
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
     .catch(error => { this.setState({ error: error.message }); });
@@ -71,10 +71,6 @@ class LoginPage extends Component {
   setDisplay = (display) => {
     this.setState({ display });
   }
-
-  // logout = () => {
-  //   firebase.auth().signOut();
-  // }
 
   render() {
     return (

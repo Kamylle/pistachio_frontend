@@ -6,7 +6,9 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      recipeID: "",
+      creatorID: "",
     };
   }
 
@@ -24,12 +26,57 @@ class RecipePage extends Component {
   //     var recipes = snapshot.val();
   //   });
   // };
+ getRecipePath = () => {
+        //TODO this function will return the path of the recipe
+        //Will therefore require username from state
+        return "/recipe"
+    }
+
+    getRecipeTitle = () => {
+        return this.state.recipeObject.title.value;
+    }
+
+    getRecipeCreatorFullName = () => {
+        const firstName = this.state.creatorObject.firstName;
+        const lastName = this.state.creatorObject.lastName;
+        const fullName = `${firstName} ${lastName}`;
+        return fullName;
+    }
+
+    componentWillMount = () => {
+
+        let recipe = {};
+
+        recipesRef
+        .child(this.state.recipeID)
+        .once("value")
+        .then(snapshot => { 
+            console.log(snapshot.val());
+            recipe = snapshot.val();
+            return recipe.people.creatorID;
+        })
+        .then(creatorID => {
+            console.log("creatorID =", creatorID);
+            return usersRef
+            .child(creatorID)
+            .once("value")
+        })
+        .then(creatorObj => { 
+            console.log("creator Object =", creatorObj.val());
+            this.setState({ 
+                recipeObject: recipe,
+                creatorObject: creatorObj.val(),
+                loaded: true 
+            })
+        })
+        .catch(err => { console.log(err) } );
+    }
 
   getRecipe = () => {
     var getRecipe = firebase.database().ref("RecipesTest/");
     getRecipe.on("value", function(snapshot) {
       var recipes = snapshot.val(); 
-      console.log(recipes)
+      // console.log(recipes)
     });
       
       // console.log(recipe1)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
-import { firebase } from '../scripts/dbconfig';
+// import { firebase } from '../scripts/firebase';
 import { rootRef, recipesRef, cookbooksRef, usersRef } from '../scripts/db';
 
 class Cookbook extends Component {

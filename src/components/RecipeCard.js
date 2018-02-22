@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import firebase from '../scripts/firebase';
-import { rootRef, recipesRef, usersRef } from '../scripts/db';
+// import firebase from '../scripts/firebase';
+import {recipesRef, usersRef } from '../scripts/db';
 
 class RecipeCard extends Component {
     constructor(props) {
