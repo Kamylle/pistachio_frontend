@@ -77,6 +77,7 @@ class App extends Component {
             render={(routeProps) => (
               <RecipePage
               recipe={routeProps.match.params.recipe}
+              username={this.state.username}
               />
             )}
           />

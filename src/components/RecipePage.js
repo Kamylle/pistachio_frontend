@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../scripts/firebase";
+// import firebase from "../scripts/firebase";
 //import { Link } from 'react-router-dom';
 import { recipesRef, usersRef } from "../scripts/db";
 
@@ -7,7 +7,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L5yaIri1jKEKaE_IJhs", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L5z6HH5aV5AYq1GDdTO", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -69,6 +69,7 @@ class RecipePage extends Component {
       .then(creatorObj => {
         console.log("creator Object =", creatorObj.val());
         this.setState({
+          recipeID: recipe.recipeID, 
           recipeObject: recipe,
           creatorObject: creatorObj.val()
           // loaded: true

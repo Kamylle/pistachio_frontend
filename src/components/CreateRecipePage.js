@@ -30,10 +30,10 @@ class CreateRecipePage extends Component {
         prettifiedPath: "al-and-mon",
         value: "Al & Mon"
       },
-      tags: [{
+      tags: {
         defaultTags: [{ 0: "dessert" }],
         personalTags: [{ 0: "favourite" }]
-      }],
+      },
       ingredients: [{
         qty: '',
         unit: '',
