@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { accountsRef, cookbooksRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 // import React, { Component } from 'react';
+=======
+>>>>>>> 981985050d8b1403acfdfc8ef3211193abfcbc5d
 
 class Sidebar extends Component {
   constructor(props) {
@@ -49,9 +52,11 @@ class Sidebar extends Component {
   }
 
   getCookbookTitle = idx => {
-    return this.state.cookbookObjectsloaded 
-      ? this.state.userCookbooks[idx].title.value
-      : "..."
+    try {
+      return this.state.cookbookObjectsloaded 
+        ? this.state.userCookbooks[idx].title.value
+        : "..."
+    } catch(err) {}
   }
 
   render() {
