@@ -9,11 +9,8 @@ class Sidebar extends Component {
           userID: this.props.userID,
           linkSlected: "all",
           loaded: false
-          //cookbookIDs: this.props.cookbookIDs // REMOVE THIS PROP UP THE CHAIN
       }
   }
-
-  //TODO get cookbook names from User ID
 
   componentDidMount = () => {
     accountsRef
@@ -41,7 +38,7 @@ class Sidebar extends Component {
                 {cookbookID}
               </li>
               ))
-            : null }
+            : <div>... Loading Cookbooks ...</div> }
         </ul>
         <button>Create a new cookbook</button>
       </aside>
