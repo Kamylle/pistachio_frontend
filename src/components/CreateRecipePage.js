@@ -55,7 +55,7 @@ class CreateRecipePage extends Component {
 
   componentDidMount() {
     //get localstorage state and set it
-    console.log(this.state.username);
+    // console.log(this.state.username);
     if (this.props.location.state) {
       this.setState(this.props.location.state);
     } else {
@@ -77,7 +77,7 @@ class CreateRecipePage extends Component {
   };
 
   addImage = async (img) => {
-    console.log(img)
+    // console.log(img)
     const storageRef = firebase.storage().ref('images/' + img.name);
     const snapshot = await storageRef.put(img);
     console.log('Uploaded a blob or file!', snapshot);
@@ -112,7 +112,7 @@ class CreateRecipePage extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     // alert('A recipe was submitted: ' + this.state.recipe);
-    console.log(this.state);
+    // console.log(this.state);
     const recipe = {
       ...this.state,
       ingredients: this.formatArray(this.state.ingredients),
@@ -121,7 +121,7 @@ class CreateRecipePage extends Component {
 
     console.log("Recipe sent");
     try {
-      console.log(recipe);
+      // console.log(recipe);
       await this.writeRecipe(recipe);
       //reset state
       this.setAppState(initialState);
@@ -182,7 +182,7 @@ class CreateRecipePage extends Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div id="main">
         <form onSubmit={this.handleSubmit}>

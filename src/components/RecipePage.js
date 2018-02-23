@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L63OJ-l6AKQFc7nGfc7", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -45,12 +45,16 @@ class RecipePage extends Component {
     return this.state.recipeObject.img
   }
 
-  getRecipeCreatorFullName = () => {
-    const firstName = this.state.creatorObject.firstName;
-    const lastName = this.state.creatorObject.lastName;
-    const fullName = `${firstName} ${lastName}`;
-    return fullName;
-  };
+  getDefaultImg = () => {
+    return firebase.storage.ref('gs://pistachio-decodemtl.appspot.com/images/Riffelsee');
+  }
+
+  // getRecipeCreatorFullName = () => {
+  //   const firstName = this.state.creatorObject.firstName;
+  //   const lastName = this.state.creatorObject.lastName;
+  //   const fullName = `${firstName} ${lastName}`;
+  //   return this.state.creatorObject.username;
+  // };
 
   // getRecipeIngredients = () => {
   //   console.log(this.state.recipeObject.ingredients)
@@ -72,17 +76,17 @@ class RecipePage extends Component {
       .child(this.state.recipeID)
       .once("value")
       .then(snapshot => {
-        console.log(snapshot.val());
+        // console.log(snapshot.val());
         recipe = snapshot.val();
-        console.log(recipe);
+        // console.log(recipe);
         return recipe.people.creatorID;
       })
       .then(creatorID => {
-        console.log("creatorID =", creatorID);
+        // console.log("creatorID =", creatorID);
         return usersRef.child(creatorID).once("value");
       })
       .then(creatorObj => {
-        console.log("creator Object =", creatorObj.val());
+        // console.log("creator Object =", creatorObj.val());
         this.setState({
           recipeID: recipe.recipeID,
           recipeObject: recipe,
@@ -96,13 +100,14 @@ class RecipePage extends Component {
   };
 
   editRecipe = () => {
-    this.props.history.push("/add", this.state.recipeObject);
+    this.props.history.push("/edit", this.state.recipeObject);
     return (
       <Route
         exact
-        path="/add"
+        path="/edit"
         render={routeProps => (
-          <CreateRecipePage username={this.state.username} />
+          <CreateRecipePage username={this.state.username} 
+          recipeID={this.state.recipeObject.recipeID}/>
         )}
       />
     );
@@ -147,7 +152,9 @@ class RecipePage extends Component {
         ) : (
           <div className="container">
             <h1>{this.getRecipeTitle()}</h1>
-            <img src={this.getRecipeImage()}/>
+            {this.state.image !== "" ? 
+            <img src={this.getRecipeImage()} alt="recipe pic"/> :
+            <img src={this.getDefaultImg()} alt="default pic"/>}
             <ul>
               {ingredientsMap}
               {/* <li>2 oeufs</li>

@@ -98,7 +98,7 @@ class App extends Component {
             )}
           />
           <Route
-            exact path="/add"
+            exact path="/edit"
             render={(routeProps) => (
               <CreateRecipePage
               userID={this.state.userID}
