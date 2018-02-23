@@ -12,8 +12,8 @@ class Header extends Component {
 
   logout = () => {
     firebase.auth().signOut();
-    console.log(firebase.auth().currentUser)
-    this.setState({ username: "" })
+    console.log(firebase.auth().currentUser);
+    this.setState({ username: "" });
   };
 
   getHeaderContentLogguedIn = () => {
@@ -44,9 +44,16 @@ class Header extends Component {
         <Link to="/" className="logo">
           Pistach.io
         </Link>
+        <form>
+          <label>
+            Search :
+            <input type="text" name="name" />
+          </label>
+        
         <Link to="/search" className="searchbar">
           Search <i>O</i>
         </Link>
+        </form>
         {this.state.username
           ? this.getHeaderContentLogguedIn()
           : this.getHeaderContentLogguedOut()}

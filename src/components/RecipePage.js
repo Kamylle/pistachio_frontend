@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L5zYXy72FGxmJrqH0jQ", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L62d8eQfzoP2zI2_1_Z", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -40,6 +40,10 @@ class RecipePage extends Component {
     return this.state.recipeObject.recipe;
     console.log(this.state.recipeObject);
   };
+
+  getRecipeImage = () => {
+    return this.state.recipeObject.img
+  }
 
   getRecipeCreatorFullName = () => {
     const firstName = this.state.creatorObject.firstName;
@@ -133,7 +137,7 @@ class RecipePage extends Component {
         <li key={index}>{content.step}</li>
       ));
     } else {
-      ingredientsMap = <div />;
+      prepMap = <div />;
     }
 
     return (
@@ -143,6 +147,7 @@ class RecipePage extends Component {
         ) : (
           <div className="container">
             <h1>{this.getRecipeTitle()}</h1>
+            <img src={this.getRecipeImage()}/>
             <ul>
               {ingredientsMap}
               {/* <li>2 oeufs</li>
