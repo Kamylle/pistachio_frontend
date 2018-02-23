@@ -27,11 +27,11 @@ class App extends Component {
   }
 
   setLoginState = (state) => {
+    this.getUserCookbooks();
     this.setState(state, () => {
       localStorage.setItem('login', JSON.stringify(this.state));
     });
   }
-
 
   setUsernameAndID = (username, userID) => {
     this.setLoginState({userID, username})
@@ -73,6 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header 
+          userID={this.state.userID}
           username={this.state.username}
         />
         <Switch>
@@ -80,6 +81,7 @@ class App extends Component {
             exact path="/"
             render={(routeProps) => (
               <HomePage
+                userID={this.state.userID}
                 username={this.state.username}
               />
             )}
@@ -89,6 +91,7 @@ class App extends Component {
             render={(routeProps) => (
               <RecipePage
               recipe={routeProps.match.params.recipe}
+              userID={this.state.userID}
               username={this.state.username}
               history={routeProps.history}
               />
@@ -98,6 +101,7 @@ class App extends Component {
             exact path="/add"
             render={(routeProps) => (
               <CreateRecipePage
+              userID={this.state.userID}
               username={this.state.username}
               location={routeProps.location}
               />

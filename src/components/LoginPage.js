@@ -17,7 +17,8 @@ class LoginPage extends Component {
     }
   }
 
-  login = async () => {
+  login = async (e) => {
+    e.preventDefault();
     const email = this.email.value;
     const password = this.password.value;
     // const username = this.state.userName;
@@ -28,7 +29,8 @@ class LoginPage extends Component {
     .catch(error => { this.setState({ error: error.message }); });
   }
 
-  signup = async () => {
+  signup = async (e) => {
+    e.preventDefault();
     const email = this.email.value;
     const password = this.password.value;
     const username = this.username.value;
@@ -90,17 +92,21 @@ class LoginPage extends Component {
           {this.state.error !== '' && <p className="error">Error occured: {this.state.error}</p>}
           {this.state.display === 'signin' ? (
             <div className="Login">
-              <div className="Form">
-              <div className="googleLogin">
-                <button 
-                  id="btnGoogle" 
-                  onClick={this.googleSignIn}
-                  className="googleSignInBtn">
-                  <img src={googleIcon} alt="Google Icon" style={{height: "4em"}}/>
-                  Sign in with Google
-                </button>
-                <span>or</span>
-              </div>
+                <div className="googleLogin">
+                  <button 
+                    id="btnGoogle" 
+                    onClick={this.googleSignIn}
+                    className="googleSignInBtn">
+                    <img src={googleIcon} alt="Google Icon" style={{height: "4em"}}/>
+                    Sign in with Google
+                  </button>
+                  <span>or</span>
+                </div>
+              <form 
+                className="Form"
+                onClick={this.login}
+                type="submit"
+              >
                 <label>
                   Email
                   <input 
@@ -121,11 +127,10 @@ class LoginPage extends Component {
                 </label>
                 <button 
                   id="btnSignIn" 
-                  className="secondaryBtn" 
-                  onClick={this.login}>
+                  className="secondaryBtn">
                   Sign in
                 </button>
-              </div>
+              </form>
               <div className="logSign"> 
                 <a 
                   id="btnSignUp"  
@@ -137,7 +142,10 @@ class LoginPage extends Component {
             </div>
           ) : (
             <div className="Signup">
-              <div className="Form">
+              <form 
+                className="Form"
+                onSubmit={this.signup}
+              >
                 <label>
                   Email
                   <input 
@@ -168,10 +176,11 @@ class LoginPage extends Component {
                 <button 
                   id="btnSignUp" 
                   className="secondaryBtn" 
-                  onClick={this.signup}>
+                  type="submit"
+                >
                   Signup
-                  </button>
-              </div>
+                </button>
+              </form>
               <div className="logSign">
                 <a 
                   id="btnSignIn" 

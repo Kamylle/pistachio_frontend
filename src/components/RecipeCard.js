@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import firebase from '../scripts/firebase';
-import {recipesRef, usersRef } from '../scripts/db';
+import {recipesRef, accountsRef } from '../scripts/db';
 
 class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeID: "-L5z2Vtx8njBP-V7kNN7", // Change back to this later after testing: this.props.recipeID
+            recipeID: "-L5zY_jUNpUqK5bSTrBv", // Change back to this later after testing: this.props.recipeID
             recipeObject: {},
             creatorObject: {},
             loaded: true
@@ -43,16 +43,17 @@ class RecipeCard extends Component {
     componentWillMount = () => {
 
         let recipe = {};
+        let creatorObject = {};
 
         recipesRef
         .child(this.state.recipeID)
         .once("value")
         .then(snapshot => { 
             recipe = snapshot.val();
-            return recipe.userID;
+            return recipe.people.creatorID;
         })
         .then(userID => {
-            return usersRef
+            return accountsRef
             .child(userID)
             .once("value")
         })

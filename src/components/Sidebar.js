@@ -1,41 +1,44 @@
 import React, { Component } from 'react';
+import { accountsRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          userID: " ",
+          userID: this.props.userID,
           linkSlected: "all",
-          cookbookIDs: [
-            "11111111",
-            "22222222",
-            "33333333",
-            "44444444"
-          ]
+          loaded: false
       }
   }
 
-  //TODO get cookbook names from User ID
+  componentDidMount = () => {
+    accountsRef
+    .child(`${this.state.userID}/cookbooksList`)
+    .on('value', snap => { 
+      console.log("SNAPVAL =", snap.val());
+      this.setState({cookbookIDs: snap.val(), loaded: true})
+    })
+  }
 
   handleLinkSelect = (cookbookID) => () => {
     this.setState({ linkSlected: cookbookID });
     this.props.sidebarState(cookbookID);
-    
   }
-
 
   render() {
     return (
       <aside className="cookbookMarks">
       <h3>Cookbooks</h3>
         <ul>
-          <li onClick={this.handleLinkSelect("all")}>All recipies</li>
-          {this.state.cookbookIDs.map((cookbookID, idx) => (
-            <li onClick={this.handleLinkSelect(cookbookID)}>
-              {cookbookID}
-            </li>
-          ))}
+          <li onClick={this.handleLinkSelect("all")}>All recipes</li>
+          { this.state.loaded 
+            ? this.state.cookbookIDs.map((cookbookID, idx) => (
+              <li onClick={this.handleLinkSelect(cookbookID)}>
+                {cookbookID}
+              </li>
+              ))
+            : <div>... Loading Cookbooks ...</div> }
         </ul>
         <button>Create a new cookbook</button>
       </aside>
