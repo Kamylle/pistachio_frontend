@@ -1,64 +1,64 @@
-import React, { Component } from 'react';
-import firebase from '../scripts/firebase';
+import React, { Component } from "react";
+import firebase from "../scripts/firebase";
 import Textarea from "react-textarea-autosize";
 import { accountsRef, cookbooksRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
-const initialState = username => ({
-  username,
-  recipe: "",
-  cookbook: "",
-  cookTime: "20 minutes",
-  prepTime: "15 minutes",
-  cookBookID: "123",
-  img: "",
-  ownerAnecdotes: [
-    {
-      0: "blabla",
-      1: "bla"
-    }
-  ],
-  ownerNotes: [
-    {
-      0: "blabla",
-      1: "bla"
-    }
-  ],
-  people: {
-    authorID: "0",
-    creatorID: "1"
-  },
-  starRating: "4.5",
-  yieldNb: "6",
-  title: {
-    prettifiedPath: "al-and-mon",
-    value: "Al & Mon"
-  },
-  tags: {
-    defaultTags: [{ 0: "dessert" }],
-    personalTags: [{ 0: "favourite" }]
-  },
-  ingredients: [
-    {
-      qty: "",
-      unit: "",
-      ingr: ""
-    }
-  ],
-  prep: [{ step: "" }]
-});
-
 class CreateRecipePage extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(props.username);
+    this.initialState = {
+      username: props.username,
+      recipe: "",
+      cookbook: "",
+      cookTime: "20 minutes",
+      prepTime: "15 minutes",
+      cookBookID: "123",
+      img: "",
+      ownerAnecdotes: [
+        {
+          0: "blabla",
+          1: "bla"
+        }
+      ],
+      ownerNotes: [
+        {
+          0: "blabla",
+          1: "bla"
+        }
+      ],
+      people: {
+        authorID: "0",
+        creatorID: "1"
+      },
+      starRating: "4.5",
+      yieldNb: "6",
+      title: {
+        prettifiedPath: "al-and-mon",
+        value: "Al & Mon"
+      },
+      tags: {
+        defaultTags: [{ 0: "dessert" }],
+        personalTags: [{ 0: "favourite" }]
+      },
+      ingredients: [
+        {
+          qty: "",
+          unit: "",
+          ingr: ""
+        }
+      ],
+      prep: [{ step: "" }]
+    };
+    this.state = this.initialState;
+    this.editRecipe = false;
   }
 
   componentDidMount() {
     //get localstorage state and set it
-    console.log(this.state.username);
+    console.log(this.props.location.state);
     if (this.props.location.state) {
-      this.setState(this.props.location.state);
+      this.setState(this.props.location.state.recipeObject);
     } else {
       const state = JSON.parse(localStorage.getItem("state"));
       this.setState(state);
@@ -71,25 +71,35 @@ class CreateRecipePage extends Component {
     });
   };
 
-  writeRecipe = async (recipe) => {
+  writeRecipe = async recipe => {
     const db = firebase.database();
-    const recipeKey = await db.ref("Recipes/").push().key;
-    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey }); 
+    console.log(this.props)
+    const recipeKey = this.props.location.state ? 
+    this.props.location.state.recipeID :
+    await db.ref("Recipes/").push().key;
+    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
   };
 
-  addImage = async (img) => {
-    console.log(img)
-    const storageRef = firebase.storage().ref('images/' + img.name);
+  // editRecipe = async (recipe, recipeKey) => {
+  //   const db = firebase.database();
+  //   await db
+  //     .ref(`Recipes/${recipeKey}`)
+  //     .set({ ...recipe, recipeID: recipeKey });
+  // };
+
+  addImage = async img => {
+    // console.log(img)
+    const storageRef = firebase.storage().ref("images/" + img.name);
     const snapshot = await storageRef.put(img);
-    console.log('Uploaded a blob or file!', snapshot);
-    this.setAppState({img: snapshot.downloadURL})
-  }
+    // console.log('Uploaded a blob or file!', snapshot);
+    this.setAppState({ img: snapshot.downloadURL });
+  };
 
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
- 
+
     if (value === "New Cookbook") {
       console.log("hey"); // TODO
     }
@@ -99,9 +109,9 @@ class CreateRecipePage extends Component {
     });
   };
 
-  handleImageInput = (event) => {
+  handleImageInput = event => {
     this.addImage(event.target.files[0]);
-  }
+  };
 
   formatArray = arr =>
     arr.reduce((acc, curr, index) => {
@@ -111,7 +121,6 @@ class CreateRecipePage extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     // alert('A recipe was submitted: ' + this.state.recipe);
-    console.log(this.state);
     const recipe = {
       ...this.state,
       ingredients: this.formatArray(this.state.ingredients),
@@ -120,10 +129,14 @@ class CreateRecipePage extends Component {
 
     console.log("Recipe sent");
     try {
-      console.log(recipe);
-      await this.writeRecipe(recipe);
+      console.log(this.props);
+      // if (!this.props.recipeID) {
+        await this.writeRecipe(recipe);
+      // } else {
+      //   await this.editRecipe(recipe, this.props.recipeID);
+      // }
       //reset state
-      this.setAppState(initialState);
+      this.setAppState(this.initialState);
     } catch (err) {
       console.log(err);
     }
@@ -194,7 +207,6 @@ class CreateRecipePage extends Component {
           selectableCookbooks.push(cookbook.title.value)
         });
       }
-      console.log("SELECTABLE COOKBOOKS =", selectableCookbooks);
 
       const selectOptions = selectableCookbooks
       .map((cookbookTitle, cbIdx) => {
@@ -238,7 +250,6 @@ class CreateRecipePage extends Component {
       ))
     )
     .then((userCookbooks) => {
-      console.log("*** userCookbooks", userCookbooks);
       this.setState({ userCookbooks, cookbookObjectsloaded: true }) 
     })
     .catch();
@@ -265,14 +276,17 @@ class CreateRecipePage extends Component {
 
           <label>
             Image
-            <input name="image"
-            type="file"
-            // value={this.state.image}
-            onChange={this.handleImageInput} 
-            // ref={r => this.img = r}
+            <input
+              name="image"
+              type="file"
+              // value={this.state.image}
+              onChange={this.handleImageInput}
+              // ref={r => this.img = r}
             />
           </label>
-          {this.state.img !== '' && <img src={this.state.img} alt="uploaded recipe img" />}
+          {this.state.img !== "" && (
+            <img src={this.state.img} alt="uploaded recipe img" />
+          )}
 
           <label>
             Cookbook
