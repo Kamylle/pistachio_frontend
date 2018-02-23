@@ -72,15 +72,15 @@ class CreateRecipePage extends Component {
   writeRecipe = async (recipe) => {
     const db = firebase.database();
     const recipeKey = await db.ref("Recipes/").push().key;
-    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
-    this.addImage();
-    
-
+    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey }); 
   };
 
-  addImage = () => {
-    const storageRef = firebase.storage().ref('images/');
-    storageRef.put(this.img.value)
+  addImage = async (img) => {
+    console.log(img)
+    const storageRef = firebase.storage().ref('images/' + img.name);
+    const snapshot = await storageRef.put(img);
+    console.log('Uploaded a blob or file!', snapshot);
+    this.setAppState({img: snapshot.downloadURL})
   }
 
 
@@ -98,6 +98,10 @@ class CreateRecipePage extends Component {
       [name]: value
     });
   };
+
+  handleImageInput = (event) => {
+    this.addImage(event.target.files[0]);
+  }
 
   formatArray = arr =>
     arr.reduce((acc, curr, index) => {
@@ -199,10 +203,11 @@ class CreateRecipePage extends Component {
             <input name="image"
             type="file"
             // value={this.state.image}
-            // onChange={this.handleInputChange} 
-            ref={r => this.img = r}
+            onChange={this.handleImageInput} 
+            // ref={r => this.img = r}
             />
           </label>
+          {this.state.img !== '' && <img src={this.state.img} alt="uploaded recipe img" />}
 
           <label>
             Cookbook
