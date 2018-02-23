@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { accountsRef, cookbooksRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
 class Sidebar extends Component {
   constructor(props) {
