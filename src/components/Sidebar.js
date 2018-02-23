@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { accountsRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
@@ -16,8 +15,9 @@ class Sidebar extends Component {
     accountsRef
     .child(`${this.state.userID}/cookbooksList`)
     .on('value', snap => { 
-      console.log("SNAPVAL =", snap.val());
-      this.setState({cookbookIDs: snap.val(), loaded: true})
+      this.setState({
+        cookbookIDs: snap.val(), 
+        loaded: true})
     })
   }
 
