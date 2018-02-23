@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../scripts/firebase";
-import { Switch, Route } from "react-router";
-import { Link } from "react-router-dom";
+import { Route } from "react-router";
+// import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
@@ -38,7 +38,7 @@ class RecipePage extends Component {
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
-    console.log(this.state.recipeObject);
+    // console.log(this.state.recipeObject);
   };
 
   getRecipeImage = () => {
