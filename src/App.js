@@ -17,13 +17,8 @@ class App extends Component {
     super();
     this.state = {
       userID: undefined,
-      username: undefined,
-      userCookbooks: undefined
+      username: undefined
     }
-  }
-
-  getUserCookbooks = () => {
-    console.log("LOGGED IN USER ID =", this.state.userID);
   }
 
   componentDidMount() {
@@ -78,6 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header 
+          userID={this.state.userID}
           username={this.state.username}
         />
         <Switch>
@@ -95,6 +91,7 @@ class App extends Component {
             render={(routeProps) => (
               <RecipePage
               recipe={routeProps.match.params.recipe}
+              userID={this.state.userID}
               username={this.state.username}
               history={routeProps.history}
               />
@@ -104,6 +101,7 @@ class App extends Component {
             exact path="/add"
             render={(routeProps) => (
               <CreateRecipePage
+              userID={this.state.userID}
               username={this.state.username}
               location={routeProps.location}
               />

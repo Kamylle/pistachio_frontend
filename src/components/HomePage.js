@@ -13,8 +13,6 @@ class HomePage extends Component {
       }
     }
 
-    //TODO get cookbook names from User ID
-
     setUserCookbookIDs = () => {
       accountsRef
       .child(`${this.props.userID}/cookbooksList`)
@@ -62,7 +60,6 @@ class HomePage extends Component {
           <Sidebar 
             userID={this.props.userID}
             username={this.props.username}
-            cookbookIDs={this.props.cookbookIDs}
             sidebarState={this.getSidebarState}
           />
           <div id="main" className="Home">
