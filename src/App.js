@@ -17,8 +17,13 @@ class App extends Component {
     super();
     this.state = {
       userID: undefined,
-      username: undefined
+      username: undefined,
+      userCookbooks: undefined
     }
+  }
+
+  getUserCookbooks = () => {
+    console.log("LOGGED IN USER ID =", this.state.userID);
   }
 
   componentDidMount() {
@@ -27,11 +32,11 @@ class App extends Component {
   }
 
   setLoginState = (state) => {
+    this.getUserCookbooks();
     this.setState(state, () => {
       localStorage.setItem('login', JSON.stringify(this.state));
     });
   }
-
 
   setUsernameAndID = (username, userID) => {
     this.setLoginState({userID, username})
@@ -80,6 +85,7 @@ class App extends Component {
             exact path="/"
             render={(routeProps) => (
               <HomePage
+                userID={this.state.userID}
                 username={this.state.username}
               />
             )}

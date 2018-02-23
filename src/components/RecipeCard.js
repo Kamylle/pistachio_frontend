@@ -50,7 +50,6 @@ class RecipeCard extends Component {
         .once("value")
         .then(snapshot => { 
             recipe = snapshot.val();
-            console.log("RECIPE CREATOR ID =",recipe.people.creatorID);
             return recipe.people.creatorID;
         })
         .then(userID => {
@@ -64,8 +63,6 @@ class RecipeCard extends Component {
                 creatorObject: creatorObj.val(),
                 loaded: true 
             })
-            console.log("RECIPE OBJECT =", recipe);
-            console.log("CREATOR OBJECT =", creatorObject);
         })
         .catch(err => { console.log(err) } );
     }
