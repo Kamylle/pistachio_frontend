@@ -43,15 +43,9 @@ class RecipePage extends Component {
     return this.state.recipeObject.img
   }
 
-  // getDefaultImg = () => {
-
-  //   return ;
-  // }
-
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
   };
-
 
   componentWillMount = () => {
     let recipe = {};
