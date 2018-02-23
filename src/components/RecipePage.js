@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../scripts/firebase";
-import { Switch, Route } from "react-router";
-import { Link } from "react-router-dom";
+import { Route } from "react-router";
+// import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L62d8eQfzoP2zI2_1_Z", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -38,7 +38,7 @@ class RecipePage extends Component {
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
-    console.log(this.state.recipeObject);
+    // console.log(this.state.recipeObject);
   };
 
   getRecipeImage = () => {
