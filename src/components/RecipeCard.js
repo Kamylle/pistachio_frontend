@@ -70,21 +70,22 @@ class RecipeCard extends Component {
       });
   };
 
-  render() {
-    return !this.state.loaded ? (
-      <div className="card">
-        <h2>Loading Mock Card Here For Testing Purposes</h2>
-      </div>
-    ) : (
-      <div className="card">
-        <Link to={this.getRecipePath()}>
-          <h2>{this.getRecipeTitle()}</h2>
-          {/* <p>{this.getRecipeCreatorFullName()}</p> */}
-          <img src={this.getRecipeImage()} alt="recipe pic"/>
-        </Link>
-      </div>
-    );
-  }
+    render() {
+        { return !this.state.loaded 
+            ? <div className="card">
+                <h2>Loading Mock Card Here For Testing Purposes</h2>
+            </div>
+            : (
+                <div className="card">
+                    <Link to={this.getRecipePath()}>
+                        <div className="cardImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/>
+                        <h2>{this.getRecipeTitle()}</h2>
+                        {/* <p>{this.getRecipeCreatorFullName()}</p> */}
+                    </Link>  
+                </div>
+              )
+        }
+    }
 }
 
 export default RecipeCard;

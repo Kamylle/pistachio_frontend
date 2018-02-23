@@ -71,9 +71,14 @@ class Cookbook extends Component {
       ? (
         <div className={this.getClassName()}>
             <header>
-                <h1>{this.state.cookbookTitle}{this.state.cookbookID}</h1>
+                <h1>{this.state.cookbookTitle}</h1>
+                <h3>{this.state.cookbookID}</h3>
             </header>
             <div className="cardContain">
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
                 {this.renderAllRecipe()}
             </div>
         </div>

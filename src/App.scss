@@ -23,6 +23,14 @@ a, button {
   cursor: pointer;
 }
 
+a {
+  color: $black;
+  text-decoration: none;
+  &:hover {
+    color: $blackest;
+  }
+}
+
 // ########  ##     ## ######## ########  #######  ##    ##  ######
 // ##     ## ##     ##    ##       ##    ##     ## ###   ## ##    ##
 // ##     ## ##     ##    ##       ##    ##     ## ####  ## ##
@@ -41,6 +49,13 @@ button {
     background-color: $black;
     color: $white;
     border: none;
+    &:hover {
+      background-color: $blackest;
+      color: $grayLight;
+    }
+    &:active {
+      box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+    }
   }
 }
 .googleSignInBtn {
@@ -66,10 +81,11 @@ button {
 // ######### ##        ##
 // ##     ## ##        ##
 // ##     ## ##        ##
+
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: deeppink;
+  background-color: $whitish;
   display: flex;
 
   & > header {
@@ -83,9 +99,6 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include bp-small {
-      background-color: purple;
-    }
     a {
       padding: 0 1em;
     }
@@ -147,6 +160,7 @@ aside {
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
+  justify-content: center;
   header {
     background-color: $primaryMed;
     color: $white;
@@ -172,15 +186,44 @@ aside {
   top: -3em;
   padding-left: 1em;
   padding-right: 1em;
-  column-count: 2;
-  column-gap: 0;
+  //column-count: 1;
+  column-gap: 1em;;
+  column-width: 15em;
+
+  @include bp-md {
+    //column-count: 2;
+  }
+  @include bp-xl {
+    //column-count: 3;
+  }
 
   .card {
+     box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
      background-color: $white;
-     max-width: 100%;
-     padding: 2em;
-     margin: 0.5em;
      display: inline-block;
+     margin-bottom: 1em;
+     width: 100%;
+     border-radius: 0.2em;
+     &:hover {
+       box-shadow: 0 0 0 2px $primaryDark, 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+     }
+     &:active {
+       box-shadow: 0 0 0 2px $grayMed;
+       h2 {
+         opacity: 0.85;
+       }
+     }
+     .cardImg {
+       width: 100%;
+       height: 5em;
+       background-size: cover;
+       border-radius: 0.2em 0.2em 0 0;
+     }
+     h2 {
+       font-family: $sans-font;
+       padding: 1em;
+       line-height: 1.2em;
+     }
   }
 }
 
