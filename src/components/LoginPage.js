@@ -23,10 +23,7 @@ class LoginPage extends Component {
     // const username = this.state.userName;
     const auth = firebase.auth();
     auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
-<<<<<<< HEAD
-=======
       // console.log(firebaseUser);
->>>>>>> c21db6300f108da255b56d171cffd252b53891cc
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
     .catch(error => { this.setState({ error: error.message }); });
