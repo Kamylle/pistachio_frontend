@@ -30,11 +30,12 @@ class Cookbook extends Component {
           cookbook = snapshot.val();
           cookbookTtl = cookbook.title.value;
           cookbookRecipeIDs = cookbook.recipeIDs;
-          return cookbook.people.creatorID;
+        //   console.log(cookbook.ownerUserID)
+          return cookbook.ownerUserID;
       })
-      .then(creatorID => {
+      .then(ownerUserID => {
           return usersRef
-          .child(creatorID)
+          .child(ownerUserID)
           .once("value")
       })
       .then(creatorObj => { 
@@ -59,6 +60,7 @@ class Cookbook extends Component {
             <RecipeCard 
               recipeID={recipeID}
               username={this.props.username}
+              userID={this.props.userID}
             />
           ))
         )

@@ -21,6 +21,7 @@ class Sidebar extends Component {
   handleLinkSelect = (cookbookID) => () => {
     this.setState({ linkSlected: cookbookID });
     this.props.sidebarState(cookbookID);
+    
   }
 
 
