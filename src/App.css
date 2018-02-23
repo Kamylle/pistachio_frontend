@@ -46,6 +46,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/*Utils*/
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 /*Media Queries*/
 h1, h2, h3, h4, h5, h6 {
   font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
@@ -81,19 +88,25 @@ p {
 html, body, #root {
   width: 100%;
   height: 100%;
-  color: #272424;
+  color: #262424;
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 ::selection {
   background: #acc85c;
-  color: #FFFFFF; }
+  color: #ffffff; }
 
 ::-moz-selection {
   background: #acc85c;
-  color: #FFFFFF; }
+  color: #ffffff; }
 
 a, button {
   cursor: pointer; }
+
+a {
+  color: #262424;
+  text-decoration: none; }
+  a:hover {
+    color: #000000; }
 
 button {
   border-radius: 2px;
@@ -101,15 +114,20 @@ button {
   margin: 0.5em 0;
   padding: 0.7em 1em; }
   button.secondaryBtn {
-    background-color: #272424;
-    color: #FFFFFF;
+    background-color: #262424;
+    color: #ffffff;
     border: none; }
+    button.secondaryBtn:hover {
+      background-color: #000000;
+      color: #f4f3f2; }
+    button.secondaryBtn:active {
+      box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0); }
 
 .googleSignInBtn {
   display: flex;
   align-items: center;
   padding: 0 1.5em 0 0 !important;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset;
   border: 1px solid rgba(51, 42, 29, 0.1); }
   .googleSignInBtn img {
@@ -121,7 +139,7 @@ button {
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: deeppink;
+  background-color: #f9f9f9;
   display: flex; }
   .App > header {
     z-index: 100;
@@ -130,7 +148,7 @@ button {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center; }
@@ -147,7 +165,7 @@ button {
     width: 15em;
     flex: none;
     padding-top: 5em;
-    background-color: #FFFFFF; }
+    background-color: #ffffff; }
   .App #main {
     padding-top: 5em;
     display: flex;
@@ -164,7 +182,7 @@ button {
   justify-content: center; }
 
 aside.cookbookMarks {
-  background-color: #FFFFFF; }
+  background-color: #ffffff; }
   aside.cookbookMarks h3 {
     padding: 2em 1em 1em; }
   aside.cookbookMarks li {
@@ -179,7 +197,7 @@ aside.cookbookMarks {
   justify-content: center; }
   .cookBookContainer header {
     background-color: #acc85c;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
 
@@ -197,20 +215,30 @@ aside.cookbookMarks {
   top: -3em;
   padding-left: 1em;
   padding-right: 1em;
-  column-count: 1;
-  column-gap: 0; }
-  @media only screen and (min-width: 40em) {
-    .cardContain {
-      column-count: 2; } }
-  @media only screen and (min-width: 80em) {
-    .cardContain {
-      column-count: 3; } }
+  column-gap: 1em;
+  column-width: 15em; }
   .cardContain .card {
-    background-color: #FFFFFF;
-    padding: 2em;
-    margin: 0.5em;
+    box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+    background-color: #ffffff;
     display: inline-block;
-    flex-grow: 1; }
+    margin-bottom: 1em;
+    width: 100%;
+    border-radius: 0.2em; }
+    .cardContain .card:hover {
+      box-shadow: 0 0 0 2px #89a240, 0 2px 3px 2px rgba(54, 40, 28, 0.07); }
+    .cardContain .card:active {
+      box-shadow: 0 0 0 2px #d1cfcf; }
+      .cardContain .card:active h2 {
+        opacity: 0.85; }
+    .cardContain .card .cardImg {
+      width: 100%;
+      height: 5em;
+      background-size: cover;
+      border-radius: 0.2em 0.2em 0 0; }
+    .cardContain .card h2 {
+      font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding: 1em;
+      line-height: 1.2em; }
 
 .LoginPage {
   display: flex;
@@ -221,7 +249,7 @@ aside.cookbookMarks {
   padding: 0 15%; }
   .LoginPage .container {
     padding: 3em 3em 1em;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     max-width: 18em;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.29); }
@@ -232,7 +260,7 @@ aside.cookbookMarks {
       .LoginPage .container .titleSection p {
         font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
         padding-top: 0.3em;
-        color: #9b9b9b; }
+        color: #d1cfcf; }
     .LoginPage .container .Form {
       padding-bottom: 1em; }
     .LoginPage .container .googleLogin {
@@ -260,7 +288,7 @@ input, textarea {
     margin: 0.5em 0;
     border-radius: 2px; }
     input:focus, input select:focus, textarea:focus, textarea select:focus {
-      outline: 2px solid #acc85c; }
+      outline: 2px solid #cae47e; }
 
 label {
   display: block;

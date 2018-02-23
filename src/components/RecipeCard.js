@@ -7,7 +7,7 @@ class RecipeCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeID: "-L62d8eQfzoP2zI2_1_Z", // Change back to this later after testing: this.props.recipeID
+            recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
             recipeObject: {},
             creatorObject: {},
             loaded: true
@@ -79,9 +79,10 @@ class RecipeCard extends Component {
             : (
                 <div className="card">
                     <Link to={this.getRecipePath()}>
+                        <div className="cardImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/>
                         <h2>{this.getRecipeTitle()}</h2>
-                        <p>{this.getRecipeCreatorFullName()}</p>
-                        <img src={this.getRecipeImage()} />
+                        {/* <p>{this.getRecipeCreatorFullName()}</p> */}
+                        
                     </Link>  
                 </div>
               )
