@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from '../scripts/firebase';
+import Textarea from "react-textarea-autosize";
 //import { Link } from 'react-router-dom';
 
 const initialState = username => ({
@@ -223,7 +224,7 @@ class CreateRecipePage extends Component {
             <h3>Preparation</h3>
             {this.state.prep.map((prep, idx) => (
               <div className="step">
-                <textarea
+                <Textarea
                   type="text"
                   placeholder={`Step #${idx + 1}`}
                   value={prep.step}
