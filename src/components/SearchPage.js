@@ -5,13 +5,16 @@ import Cookbook from './Cookbook';
 
 
 class SearchPage extends Component {
+  constructor(props) {
+    super(props);
+  }
     render() {
       return (
         <div className="flexContain">
           <SidebarSearch/>
           <div id="main" className="Search cardContain">
-            <Cookbook cookbookID={"66666"}/>
-            <Cookbook cookbookID={"77777"}/>
+            <Cookbook cookbookID={this.props.cookbookID}/>
+            <Cookbook cookbookID={this.props.recipeID}/>
           </div>
         </div>
       )
