@@ -23,7 +23,7 @@ class Header extends Component {
           + New recipe
         </Link>
         <div className="accountLinks">
-          <a>Welcome {this.state.username}</a>
+          <p>Welcome {this.state.username}</p>
           <a onClick={this.logout}>Logout</a>
         </div>
       </div>
@@ -39,20 +39,26 @@ class Header extends Component {
   };
 
   render() {
+    // console.log(this.state.recipeObject)
     return (
       <header>
         <Link to="/" className="logo">
           Pistach.io
         </Link>
         <form>
-          <label>
-            Search :
-            <input type="text" name="name" />
-          </label>
-        
-        <Link to="/search" className="searchbar">
-          Search <i>O</i>
-        </Link>
+            <input 
+              type="text" 
+              name="name" 
+              placeholder="Search"
+              ref={ r => this.searchInput = r }
+            />
+
+          <Link to="/search" 
+            className="searchbar" 
+            onClick={this.performSearch}
+          >
+            <i>O</i>
+          </Link>
         </form>
         {this.state.username
           ? this.getHeaderContentLogguedIn()
