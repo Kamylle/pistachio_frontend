@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-// import firebase from "../scripts/firebase";
-import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
+import firebase from "../scripts/firebase";
+import { Switch, Route } from "react-router";
+import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L5z2Vtx8njBP-V7kNN7", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L5zYXy72FGxmJrqH0jQ", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -25,16 +25,16 @@ class RecipePage extends Component {
     //TODO this function will return the path of the recipe
     //Will therefore require username from state
     if (this.state.loaded) {
-        try {
-            const userID = this.props.userID;
-            const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
-            return `/recipe/${userID}/${prettifiedPath}`;
-        } catch(err) {
-            return "/recipe";
-        }
+      try {
+        const userID = this.props.userID;
+        const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
+        return `/recipe/${userID}/${prettifiedPath}`;
+      } catch (err) {
+        return "/recipe";
+      }
     }
     return "/recipe";
-}
+  };
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
@@ -80,7 +80,7 @@ class RecipePage extends Component {
       .then(creatorObj => {
         console.log("creator Object =", creatorObj.val());
         this.setState({
-          recipeID: recipe.recipeID, 
+          recipeID: recipe.recipeID,
           recipeObject: recipe,
           creatorObject: creatorObj.val()
           // loaded: true
@@ -92,17 +92,25 @@ class RecipePage extends Component {
   };
 
   editRecipe = () => {
-    this.props.history.push('/add', this.state.recipeObject);
-    return(
+    this.props.history.push("/add", this.state.recipeObject);
+    return (
       <Route
-            exact path="/add"
-            render={(routeProps) => (
-              <CreateRecipePage
-              username={this.state.username}/>
-            )}
-          />
+        exact
+        path="/add"
+        render={routeProps => (
+          <CreateRecipePage username={this.state.username} />
+        )}
+      />
     );
   };
+
+  deleteRecipe = async () => {
+    
+    if(window.confirm('Are you sure you wish to delete this item?')) {
+    const db = firebase.database();
+    await db.ref(`Recipes/${this.state.recipeID}`).remove();
+  };
+}
 
   render() {
     // console.log(this.props);
@@ -121,13 +129,9 @@ class RecipePage extends Component {
     }
     var prepMap;
     if (this.state.recipeObject.prep) {
-      prepMap = this.state.recipeObject.prep.map(
-        (content, index) => (
-          <li key={index}>
-            {content.step}
-          </li>
-        )
-      );
+      prepMap = this.state.recipeObject.prep.map((content, index) => (
+        <li key={index}>{content.step}</li>
+      ));
     } else {
       ingredientsMap = <div />;
     }
@@ -147,10 +151,13 @@ class RecipePage extends Component {
               <li>1 pincée de sel</li>
               <li>Beurre pour badigeonner</li> */}
             </ul>
-            <ul>
-                {prepMap}
-            </ul>
-            <button onClick={this.editRecipe}>Edit recipe</button>
+            <ul>{prepMap}</ul>
+            <div>
+              <button onClick={this.editRecipe}>Edit recipe</button>
+            </div>
+            <div>
+              <button onClick={this.deleteRecipe}>Delete recipe</button>
+            </div>
           </div>
         )};
       </div>

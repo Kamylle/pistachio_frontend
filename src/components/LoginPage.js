@@ -63,10 +63,14 @@ class LoginPage extends Component {
     });
   }
 
-  writeAccountData = async (userId, username, email) => {
+  writeAccountData = async (userId, username, email, cookbooksList) => {
     return await firebase.database().ref('Accounts/' + userId).set({
-      username: username,
-      email: email,
+      username,
+      email,
+      cookbooksList: {
+        0: Math.floor(Math.random() * 10000000),
+        1: Math.floor(Math.random() * 10000000)
+      }
       // profile_picture : imageUrl
     });
   }

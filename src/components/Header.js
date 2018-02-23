@@ -12,6 +12,7 @@ class Header extends Component {
 
   logout = () => {
     firebase.auth().signOut();
+    console.log(firebase.auth().currentUser)
     this.setState({ username: "" })
   };
 

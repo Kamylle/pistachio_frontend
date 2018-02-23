@@ -16,8 +16,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      userID: "undefined",
-      username: null
+      userID: undefined,
+      username: undefined
     }
   }
 
