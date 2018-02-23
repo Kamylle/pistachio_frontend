@@ -83,9 +83,6 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include bp-small {
-      background-color: purple;
-    }
     a {
       padding: 0 1em;
     }
@@ -147,6 +144,7 @@ aside {
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
+  justify-content: center;
   header {
     background-color: $primaryMed;
     color: $white;
@@ -172,15 +170,22 @@ aside {
   top: -3em;
   padding-left: 1em;
   padding-right: 1em;
-  column-count: 2;
+  column-count: 1;
   column-gap: 0;
+
+  @include bp-md {
+    column-count: 2;
+  }
+  @include bp-xl {
+    column-count: 3;
+  }
 
   .card {
      background-color: $white;
-     max-width: 100%;
      padding: 2em;
      margin: 0.5em;
      display: inline-block;
+     flex-grow: 1;
   }
 }
 

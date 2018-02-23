@@ -1,21 +1,30 @@
 
 
 /*Media Queries*/
-
-@mixin bp-large {
-    @media only screen and (max-width: 60em) {
+@mixin bp-xl {
+  //960px
+    @media only screen and (min-width: 80em) {
       @content;
     }
   }
 
-  @mixin bp-medium {
-    @media only screen and (max-width: 40em) {
+@mixin bp-lg {
+  //960px
+    @media only screen and (min-width: 60em) {
       @content;
     }
   }
 
-  @mixin bp-small {
-    @media only screen and (max-width: 30em) {
+  @mixin bp-md {
+    //640px
+    @media only screen and (min-width: 40em) {
+      @content;
+    }
+  }
+
+  @mixin bp-sm {
+    //480px
+    @media only screen and (min-width: 30em) {
       @content;
     }
   }

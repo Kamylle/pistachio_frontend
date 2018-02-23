@@ -134,9 +134,6 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center; }
-    @media only screen and (max-width: 30em) {
-      .App > header {
-        background-color: purple; } }
     .App > header a {
       padding: 0 1em; }
     .App > header .accountLinks {
@@ -178,7 +175,8 @@ aside.cookbookMarks {
 
 .cookBookContainer {
   width: 100%;
-  flex-direction: column; }
+  flex-direction: column;
+  justify-content: center; }
   .cookBookContainer header {
     background-color: #acc85c;
     color: #FFFFFF;
@@ -199,14 +197,20 @@ aside.cookbookMarks {
   top: -3em;
   padding-left: 1em;
   padding-right: 1em;
-  column-count: 2;
+  column-count: 1;
   column-gap: 0; }
+  @media only screen and (min-width: 40em) {
+    .cardContain {
+      column-count: 2; } }
+  @media only screen and (min-width: 80em) {
+    .cardContain {
+      column-count: 3; } }
   .cardContain .card {
     background-color: #FFFFFF;
-    max-width: 100%;
     padding: 2em;
     margin: 0.5em;
-    display: inline-block; }
+    display: inline-block;
+    flex-grow: 1; }
 
 .LoginPage {
   display: flex;
