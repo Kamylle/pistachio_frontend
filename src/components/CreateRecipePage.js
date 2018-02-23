@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../scripts/firebase';
 import Textarea from "react-textarea-autosize";
+import { accountsRef, cookbooksRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
 const initialState = username => ({
@@ -84,15 +85,13 @@ class CreateRecipePage extends Component {
     this.setAppState({img: snapshot.downloadURL})
   }
 
-
-
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
  
     if (value === "New Cookbook") {
-      console.log("hey");
+      console.log("hey"); // TODO
     }
 
     this.setAppState({
@@ -181,7 +180,72 @@ class CreateRecipePage extends Component {
     });
   };
 
+  getSelectableCookbooksList = () => {
+    const defaultUnselectableOption = [<option disabled>Select A Cookbook...</option>]
+    const newCookbookSelectableOption = <option value="newCookbook">Create New Cookbook...</option>
+
+    try {
+      const userID = this.props.userID;
+      const selectableCookbooks = [];
+      const returnTags = "";
+
+      if (this.state.cookbookObjectsloaded) {
+        this.state.userCookbooks.forEach(cookbook => {
+          selectableCookbooks.push(cookbook.title.value)
+        });
+      }
+      console.log("SELECTABLE COOKBOOKS =", selectableCookbooks);
+
+      const selectOptions = selectableCookbooks
+      .map((cookbookTitle, cbIdx) => {
+        return cbIdx === 0 
+        ? <option selected value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
+        : <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
+      })
+
+      return defaultUnselectableOption
+              .concat(selectOptions)
+              .concat(newCookbookSelectableOption)
+
+    } catch(err) { 
+      return (newCookbookSelectableOption)
+    }
+
+  }
+
+  renderSelectableCookbooks = () => {
+
+  }
+
+  componentWillMount = () => {
+    let userCookbooksList = [];
+    accountsRef
+    .child(`${this.props.userID}/cookbooksList`)
+    .once('value')
+    .then(snap => { 
+      this.setState({
+        cookbookIDs: snap.val(), cookbooksListLoaded: true
+      });
+      userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
+      return snap.val()
+    })
+    .then(async returnedUserCookbookList => 
+      await Promise.all(returnedUserCookbookList.map(cookbookID =>
+        cookbooksRef
+        .child(`${cookbookID}`)
+        .once('value')
+        .then(snap => snap.val()) // An array of own cookbook object(s) returned from the database.
+      ))
+    )
+    .then((userCookbooks) => {
+      console.log("*** userCookbooks", userCookbooks);
+      this.setState({ userCookbooks, cookbookObjectsloaded: true }) 
+    })
+    .catch();
+  }
+
   render() {
+    this.getSelectableCookbooksList();
     console.log(this.state);
     return (
       <div id="main">
@@ -218,12 +282,7 @@ class CreateRecipePage extends Component {
               value={this.state.cookbook}
               onChange={this.handleInputChange}
             >
-              <option value="Select a Cookbook">Select a cookbook</option>
-              <option value="Favorites">Favorites</option>
-              <option value="Classics">Classics</option>
-              <option value="Livre de Grand-Maman">Livre de Grand Maman</option>
-              <option value="Apetizers">Apetizers</option>
-              <option value="New Cookbook">New Cookbook</option>
+              {this.getSelectableCookbooksList()}
             </select>
           </label>
 
