@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../scripts/firebase";
-import { Switch, Route } from "react-router";
-import { Link } from "react-router-dom";
+import { Route } from "react-router";
+// import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L5zYXy72FGxmJrqH0jQ", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false
@@ -38,8 +38,12 @@ class RecipePage extends Component {
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
-    console.log(this.state.recipeObject);
+    // console.log(this.state.recipeObject);
   };
+
+  getRecipeImage = () => {
+    return this.state.recipeObject.img
+  }
 
   getRecipeCreatorFullName = () => {
     const firstName = this.state.creatorObject.firstName;
@@ -133,7 +137,7 @@ class RecipePage extends Component {
         <li key={index}>{content.step}</li>
       ));
     } else {
-      ingredientsMap = <div />;
+      prepMap = <div />;
     }
 
     return (
@@ -143,6 +147,7 @@ class RecipePage extends Component {
         ) : (
           <div className="container">
             <h1>{this.getRecipeTitle()}</h1>
+            <img src={this.getRecipeImage()}/>
             <ul>
               {ingredientsMap}
               {/* <li>2 oeufs</li>
