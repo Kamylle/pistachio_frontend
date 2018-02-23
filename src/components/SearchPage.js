@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import { Link } from 'react-router-dom';
 import SidebarSearch from "./SidebarSearch";
 import Cookbook from "./Cookbook";
-import {recipesRef} from '../scripts/db';
+
 
 class SearchPage extends Component {
    render() {
