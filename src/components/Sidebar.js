@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { accountsRef, cookbooksRef } from "../scripts/db";
 //import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-// import React, { Component } from 'react';
-=======
->>>>>>> 981985050d8b1403acfdfc8ef3211193abfcbc5d
 
 class Sidebar extends Component {
   constructor(props) {

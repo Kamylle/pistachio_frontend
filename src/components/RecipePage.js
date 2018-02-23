@@ -9,17 +9,15 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L63OJ-l6AKQFc7nGfc7", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L63ojry_up-WEqoyl1l", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
-      loaded: false
+      loaded: false,
+      img: '',
+      defaultImg: ''
     };
   }
 
-  // formatArray = arr =>
-  //   arr.reduce((acc, curr, index) => {
-  //     return { ...acc, [index]: curr };
-  //   }, {});
 
   getRecipePath = () => {
     //TODO this function will return the path of the recipe
@@ -45,29 +43,15 @@ class RecipePage extends Component {
     return this.state.recipeObject.img
   }
 
-  getDefaultImg = () => {
-    return firebase.storage.ref('gs://pistachio-decodemtl.appspot.com/images/Riffelsee');
-  }
+  // getDefaultImg = () => {
 
-  // getRecipeCreatorFullName = () => {
-  //   const firstName = this.state.creatorObject.firstName;
-  //   const lastName = this.state.creatorObject.lastName;
-  //   const fullName = `${firstName} ${lastName}`;
-  //   return this.state.creatorObject.username;
-  // };
-
-  // getRecipeIngredients = () => {
-  //   console.log(this.state.recipeObject.ingredients)
-  //   let arrIngredient = this.state.recipeObject.ingredients;
-  //   console.log(arrIngredient)
-  //   if(arrIngredient) {
-  //     console.log(arrIngredient[0])
-
-  //   }
-  //   arrIngredient.forEach(x => this.object.value(x))
-  //   console.log(arrIngredient)
-  //   return this.state.recipeObject.ingredients;
+  //   return ;
   // }
+
+  getRecipeCreatorFullName = () => {
+    return this.state.creatorObject.username;
+  };
+
 
   componentWillMount = () => {
     let recipe = {};
@@ -97,20 +81,19 @@ class RecipePage extends Component {
       .catch(err => {
         console.log(err);
       });
+
+      //Set default Image
+      var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
+      .then((url) => {
+        console.log({ img: url })
+        this.setState({ defaultImg: url });
+      }).catch(function(error) {
+        // Handle any errors here
+      });
   };
 
   editRecipe = () => {
-    this.props.history.push("/edit", this.state.recipeObject);
-    return (
-      <Route
-        exact
-        path="/edit"
-        render={routeProps => (
-          <CreateRecipePage username={this.state.username} 
-          recipeID={this.state.recipeObject.recipeID}/>
-        )}
-      />
-    );
+    this.props.history.push("/edit", {recipeID: this.state.recipeID, recipeObject: this.state.recipeObject});
   };
 
   deleteRecipe = async () => {
@@ -144,7 +127,7 @@ class RecipePage extends Component {
     } else {
       prepMap = <div />;
     }
-
+    console.log(this.state)
     return (
       <div id="main" className="Recipe">
         {this.state.loaded ? (
@@ -152,9 +135,9 @@ class RecipePage extends Component {
         ) : (
           <div className="container">
             <h1>{this.getRecipeTitle()}</h1>
-            {this.state.image !== "" ? 
+            {this.state.img !== "" ? 
             <img src={this.getRecipeImage()} alt="recipe pic"/> :
-            <img src={this.getDefaultImg()} alt="default pic"/>}
+            <img src={this.state.defaultImg} alt="default pic"/>}
             <ul>
               {ingredientsMap}
               {/* <li>2 oeufs</li>

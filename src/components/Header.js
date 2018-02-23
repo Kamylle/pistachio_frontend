@@ -42,21 +42,18 @@ class Header extends Component {
   };
 
   performSearch = () => {
-    // let wordSearch = this.searchInput.value;
+    let wordSearch = this.searchInput.value;
     let allRecipes = this.state.recipeObject;
     console.log(allRecipes)
-    let keysRecipe = Object.keys(allRecipes);
-    console.log(keysRecipe)
-    for(var i = 0; i < keysRecipe.length; i++) {
-      console.log(allRecipes[i].recipe)
-    }
-    // let titleRecipes = Object.value(keysRecipe.recipe)
-    // console.log(titleRecipes)
+    
+    Object.values(allRecipes).filter(item => item.recipe.includes(wordSearch))
+    
   }
 
   logout = () => {
     firebase.auth().signOut();
     console.log(firebase.auth().currentUser);
+    localStorage.removeItem('login');
     this.setState({ username: "" });
   };
 

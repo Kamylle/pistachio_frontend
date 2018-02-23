@@ -23,11 +23,11 @@ class App extends Component {
 
   componentDidMount() {
     const state = JSON.parse(localStorage.getItem('login'));
-    this.setState(state);
+    this.setState(state, () => console.log(this.state.username));
   }
 
   setLoginState = (state) => {
-    this.getUserCookbooks();
+    // this.getUserCookbooks();
     this.setState(state, () => {
       localStorage.setItem('login', JSON.stringify(this.state));
     });
