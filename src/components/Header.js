@@ -87,7 +87,6 @@ class Header extends Component {
           Pistach.io
         </Link>
         <form>
-<<<<<<< HEAD
             <input 
               type="text" 
               name="name" 
@@ -100,15 +99,6 @@ class Header extends Component {
             onClick={this.performSearch}
           >
             <i>O</i>
-=======
-          <label>
-            Search :
-            <input type="text" name="name" ref={ r => this.searchInput = r }/>
-          </label>
-
-          <Link to="/search" className="searchbar" onClick={this.performSearch}>
-            Search <i>O</i>
->>>>>>> f93a6da18c318b638191d5054a2733c7c04665c9
           </Link>
         </form>
         {this.state.username
