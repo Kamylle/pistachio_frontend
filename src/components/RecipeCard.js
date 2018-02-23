@@ -49,11 +49,11 @@ class RecipeCard extends Component {
         .once("value")
         .then(snapshot => { 
             recipe = snapshot.val();
-            return recipe.people.creatorID;
+            return recipe.userID;
         })
-        .then(creatorID => {
+        .then(userID => {
             return usersRef
-            .child(creatorID)
+            .child(userID)
             .once("value")
         })
         .then(creatorObj => { 
