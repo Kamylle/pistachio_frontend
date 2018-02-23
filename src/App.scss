@@ -99,18 +99,52 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 0 40px 4px rgba(54, 39, 28, 0.1);
     a {
       padding: 0 1em;
+    }
+    form {
+      display: flex;
+      margin: 0;
+      input {
+        box-shadow: none;
+        border: none;
+        font-size: 1.2em;
+        margin: 0;
+        text-align: right;
+        font-family: $serif-font;
+        letter-spacing: 0.03em;
+        &::placeholder {
+          color: $grayMed;
+        }
+      }
     }
     .accountLinks {
       display: block;
       text-align: right;
-      a {
+      font-family: $serif-font;
+      font-size: 0.8em;
+      padding: 1.4em 1.5em 0;
+      & > * {
         display: block;
+        padding: 0;
+        line-height: 1.2em;
+      }
+      a {
+        color: $primaryDark;
       }
     }
     div {
         display: flex;
+    }
+    .newRecipeBtn {
+      height: $header-height;
+      background-color: $black;
+      color: $white;
+      padding: 1.5em;
+      &:hover {
+        background-color: $blackest;
+      }
     }
   }
 
@@ -157,12 +191,20 @@ aside {
   }
 }
 
+// ######   #######   #######  ##    ## ########   #######   #######  ##    ##
+// ##    ## ##     ## ##     ## ##   ##  ##     ## ##     ## ##     ## ##   ##
+// ##       ##     ## ##     ## ##  ##   ##     ## ##     ## ##     ## ##  ##
+// ##       ##     ## ##     ## #####    ########  ##     ## ##     ## #####
+// ##       ##     ## ##     ## ##  ##   ##     ## ##     ## ##     ## ##  ##
+// ##    ## ##     ## ##     ## ##   ##  ##     ## ##     ## ##     ## ##   ##
+// ######   #######   #######  ##    ## ########   #######   #######  ##    ##
+
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
   justify-content: center;
   header {
-    background-color: $primaryMed;
+    background-color: $primaryDark;
     color: $white;
     padding: 6em 2em 4em;
     font-family: $serif-font;
@@ -217,6 +259,7 @@ aside {
        width: 100%;
        height: 5em;
        background-size: cover;
+       background-position: center;
        border-radius: 0.2em 0.2em 0 0;
      }
      h2 {
