@@ -54,6 +54,32 @@ class CreateRecipePage extends Component {
     this.editRecipe = false;
   }
 
+  componentWillMount = () => {
+    let userCookbooksList = [];
+    accountsRef
+    .child(`${this.props.userID}/cookbooksList`)
+    .once('value')
+    .then(snap => { 
+      this.setState({
+        cookbookIDs: snap.val(), cookbooksListLoaded: true
+      });
+      userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
+      return snap.val()
+    })
+    .then(async returnedUserCookbookList => 
+      await Promise.all(returnedUserCookbookList.map(cookbookID =>
+        cookbooksRef
+        .child(`${cookbookID}`)
+        .once('value')
+        .then(snap => snap.val()) // An array of own cookbook object(s) returned from the database.
+      ))
+    )
+    .then((userCookbooks) => {
+      this.setState({ userCookbooks, cookbookObjectsloaded: true }) 
+    })
+    .catch();
+  }
+
   componentDidMount() {
     //get localstorage state and set it
     console.log(this.props.location.state);
@@ -95,12 +121,24 @@ class CreateRecipePage extends Component {
     this.setAppState({ img: snapshot.downloadURL });
   };
 
+  handleNewCookbookInputChange = event => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    
+
+    this.setAppState({
+      newUserCookbookName: value
+    });
+  };
+
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if (value === "New Cookbook") {
+    if (value === "newCookbook") {
       console.log("hey"); // TODO
     }
 
@@ -200,7 +238,6 @@ class CreateRecipePage extends Component {
     try {
       const userID = this.props.userID;
       const selectableCookbooks = [];
-      const returnTags = "";
 
       if (this.state.cookbookObjectsloaded) {
         this.state.userCookbooks.forEach(cookbook => {
@@ -222,37 +259,20 @@ class CreateRecipePage extends Component {
     } catch(err) { 
       return (newCookbookSelectableOption)
     }
-
   }
 
-  renderSelectableCookbooks = () => {
-
-  }
-
-  componentWillMount = () => {
-    let userCookbooksList = [];
-    accountsRef
-    .child(`${this.props.userID}/cookbooksList`)
-    .once('value')
-    .then(snap => { 
-      this.setState({
-        cookbookIDs: snap.val(), cookbooksListLoaded: true
-      });
-      userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
-      return snap.val()
-    })
-    .then(async returnedUserCookbookList => 
-      await Promise.all(returnedUserCookbookList.map(cookbookID =>
-        cookbooksRef
-        .child(`${cookbookID}`)
-        .once('value')
-        .then(snap => snap.val()) // An array of own cookbook object(s) returned from the database.
-      ))
-    )
-    .then((userCookbooks) => {
-      this.setState({ userCookbooks, cookbookObjectsloaded: true }) 
-    })
-    .catch();
+  checkForCookbookNameConflict = () => {
+    console.log("Your Input Name For The New Cookbook =", this.state.newUserCookbookName);
+    const userCookbookTitles = this.state.userCookbooks.map(cb => {
+      return cb.title.value
+    });
+    userCookbookTitles.push("Create New Cookbook...", ""); // Should not be a valid cookbook name...
+    const cookbookNameIsValid = userCookbookTitles.every(cbt => cbt.toLowerCase() !== this.state.newUserCookbookName.toLowerCase());
+    
+    if (!cookbookNameIsValid) {
+      return <button disabled>Add Cookbook</button>
+    }
+    return <button>Add Cookbook</button>
   }
 
   render() {
@@ -295,9 +315,20 @@ class CreateRecipePage extends Component {
               type="text"
               value={this.state.cookbook}
               onChange={this.handleInputChange}
+              ref={cbs => this.cookbookSelector = cbs}
             >
               {this.getSelectableCookbooksList()}
             </select>
+            {this.state.cookbook === "newCookbook" 
+              ? 
+                <div>
+                  <input 
+                    ref={ncbif => this.newCookbookInputField = ncbif} 
+                    placeholder="Your new cookbook's name here"
+                    onChange={this.handleNewCookbookInputChange}/>
+                  <div>{this.checkForCookbookNameConflict()}</div>
+                </div> 
+              : null}
           </label>
 
           <h3>Ingredients</h3>
