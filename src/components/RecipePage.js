@@ -146,18 +146,30 @@ class RecipePage extends Component {
             </div>
             <div className="container">
               <h1>{this.getRecipeTitle()}</h1>
-              <ul>
+              <ul className="ingredientsList">
+                <h3> Ingredients </h3>
                 {this.getRecipeIndredients()}
               </ul>
-              <ul>{this.getPrepSteps()}</ul>
+              <div className="anecdote">
+                <h3>Anecdote</h3>
+                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+              </div>
+              <ul className="prepList">
+                <h3> Preparation </h3>
+                {this.getPrepSteps()}
+              </ul>
+              <div className="notes">
+                <h3>Notes</h3>
+                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+              </div>
               {/* <div>
                 <button onClick={this.deleteRecipe}>Delete recipe</button>
               </div> */}
-              <div className="sideTools">
-                <i className="icon send i24"></i>
-                <i onClick={this.editRecipe} className="icon edit i24"></i>
-                <i className="icon print i24"></i>
-              </div>
+            </div>
+            <div className="sideTools">
+              <i className="icon send i24"></i>
+              <i onClick={this.editRecipe} className="icon edit i24"></i>
+              <i className="icon print i24"></i>
             </div>
           </div>
         )};
