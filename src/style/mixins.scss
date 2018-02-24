@@ -7,30 +7,38 @@ html {
 }
 
 /*Media Queries*/
-@mixin bp-xl {
-  //960px
-    @media only screen and (min-width: 80em) {
-      @content;
-    }
+
+@mixin bp-sm {
+  //480px
+  @media only screen and (min-width: 30em) {
+    @content;
   }
+}
+
+@mixin bp-md {
+  //640px
+  @media only screen and (min-width: 40em) {
+    @content;
+  }
+}
 
 @mixin bp-lg {
   //960px
-    @media only screen and (min-width: 60em) {
-      @content;
-    }
+  @media only screen and (min-width: 60em) {
+    @content;
   }
+}
 
-  @mixin bp-md {
-    //640px
-    @media only screen and (min-width: 40em) {
-      @content;
-    }
+@mixin bp-xl {
+  //1280px
+  @media only screen and (min-width: 80em) {
+    @content;
   }
+}
 
-  @mixin bp-sm {
-    //480px
-    @media only screen and (min-width: 30em) {
-      @content;
-    }
+@mixin bp-xxl {
+  //1600px
+  @media only screen and (min-width: 100em) {
+    @content;
   }
+}

@@ -80,6 +80,10 @@ class Cookbook extends Component {
                 {this.renderAllRecipe()}
                 {this.renderAllRecipe()}
                 {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
+                {this.renderAllRecipe()}
             </div>
         </div>
         ) 
