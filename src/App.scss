@@ -107,6 +107,7 @@ button {
     form {
       display: flex;
       margin: 0;
+      align-items: center;
       input {
         box-shadow: none;
         background-color: $white;

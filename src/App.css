@@ -89,9 +89,37 @@ h6 {
 p {
   line-height: 1.2em; }
 
-.icon.search {
-  width: 24px;
-  height: 24px; }
+.icon {
+  display: inline-block; }
+  .icon.i24 {
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px; }
+  .icon.search {
+    background-image: url("./img/icons/ic_search_green.svg");
+    background-image: url("./img/icons/ic_search.svg"); }
+    .icon.search:hover {
+      background-image: url("./img/icons/ic_search_green.svg"); }
+  .icon.add {
+    background-image: url("./img/icons/ic_add_moss.svg");
+    background-image: url("./img/icons/ic_add_white.svg"); }
+    .icon.add:hover {
+      background-image: url("./img/icons/ic_add_moss.svg"); }
+  .icon.send {
+    background-image: url("./img/icons/ic_send_moss.svg");
+    background-image: url("./img/icons/ic_send_white.svg"); }
+    .icon.send:hover {
+      background-image: url("./img/icons/ic_send_moss.svg"); }
+  .icon.add {
+    background-image: url("./img/icons/ic_edit_moss.svg");
+    background-image: url("./img/icons/ic_edit_white.svg"); }
+    .icon.add:hover {
+      background-image: url("./img/icons/ic_edit_moss.svg"); }
+  .icon.send {
+    background-image: url("./img/icons/ic_send_moss.svg");
+    background-image: url("./img/icons/ic_send_white.svg"); }
+    .icon.send:hover {
+      background-image: url("./img/icons/ic_send_moss.svg"); }
 
 html, body, #root {
   width: 100%;
@@ -165,7 +193,8 @@ button {
       padding: 0 1em; }
     .App > header form {
       display: flex;
-      margin: 0; }
+      margin: 0;
+      align-items: center; }
       .App > header form input {
         box-shadow: none;
         background-color: #ffffff;
