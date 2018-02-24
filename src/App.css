@@ -89,6 +89,38 @@ h6 {
 p {
   line-height: 1.2em; }
 
+.icon {
+  display: inline-block; }
+  .icon.i24 {
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px; }
+  .icon.search {
+    background-image: url("./img/icons/ic_search_green.svg");
+    background-image: url("./img/icons/ic_search.svg"); }
+    .icon.search:hover {
+      background-image: url("./img/icons/ic_search_green.svg"); }
+  .icon.add {
+    background-image: url("./img/icons/ic_add_moss.svg");
+    background-image: url("./img/icons/ic_add_white.svg"); }
+    .icon.add:hover {
+      background-image: url("./img/icons/ic_add_moss.svg"); }
+  .icon.send {
+    background-image: url("./img/icons/ic_send_moss.svg");
+    background-image: url("./img/icons/ic_send_white.svg"); }
+    .icon.send:hover {
+      background-image: url("./img/icons/ic_send_moss.svg"); }
+  .icon.add {
+    background-image: url("./img/icons/ic_edit_moss.svg");
+    background-image: url("./img/icons/ic_edit_white.svg"); }
+    .icon.add:hover {
+      background-image: url("./img/icons/ic_edit_moss.svg"); }
+  .icon.send {
+    background-image: url("./img/icons/ic_send_moss.svg");
+    background-image: url("./img/icons/ic_send_white.svg"); }
+    .icon.send:hover {
+      background-image: url("./img/icons/ic_send_moss.svg"); }
+
 html, body, #root {
   width: 100%;
   height: 100%;
@@ -161,15 +193,21 @@ button {
       padding: 0 1em; }
     .App > header form {
       display: flex;
-      margin: 0; }
+      margin: 0;
+      align-items: center; }
       .App > header form input {
         box-shadow: none;
+        background-color: #ffffff;
         border: none;
         font-size: 1.2em;
         margin: 0;
         text-align: right;
         font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
         letter-spacing: 0.03em; }
+        .App > header form input:focus {
+          outline: none; }
+          .App > header form input:focus::placeholder {
+            color: #cae47e; }
         .App > header form input::placeholder {
           color: #d1cfcf; }
     .App > header .accountLinks {
@@ -248,7 +286,23 @@ aside.cookbookMarks {
   padding-left: 1em;
   padding-right: 1em;
   column-gap: 1em;
-  column-width: 15em; }
+  column-width: 15em;
+  column-count: 1; }
+  @media only screen and (min-width: 40em) {
+    .cardContain {
+      columns: 2; } }
+  @media only screen and (min-width: 40em) {
+    .cardContain {
+      columns: 2; } }
+  @media only screen and (min-width: 60em) {
+    .cardContain {
+      columns: 3; } }
+  @media only screen and (min-width: 80em) {
+    .cardContain {
+      columns: 4; } }
+  @media only screen and (min-width: 100em) {
+    .cardContain {
+      columns: 6; } }
   .cardContain .card {
     box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
     background-color: #ffffff;

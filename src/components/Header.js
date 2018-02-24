@@ -98,7 +98,7 @@ class Header extends Component {
             className="searchbar" 
             onClick={this.performSearch}
           >
-            <i>O</i>
+            <i className="icon search i24"></i>
           </Link>
         </form>
         {this.state.username
