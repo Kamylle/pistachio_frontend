@@ -11,7 +11,7 @@ class Sidebar extends Component {
           linkSlected: "all",
           cookbooksListLoaded: false,
           cookbookObjectsloaded: false,
-          userCookbooks: null,
+          userCookbooks: [],
           showAddCookbookFields: false,
           newUserCookbookNameFromSidebar: ""
       }
@@ -24,11 +24,16 @@ class Sidebar extends Component {
     .child(`${this.state.userID}/cookbooksList`)
     .once('value')
     .then(snap => {
+      if (snap.val() !== null) {
       this.setState({
         cookbookIDs: snap.val(), cookbooksListLoaded: true
       });
       userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
+      console.log("USERCOOKBOOKSLIST =", userCookbooksList);
       return snap.val()
+      } else {
+        return 
+      }
     })
     .then(async returnedUserCookbookList =>
       await Promise.all(returnedUserCookbookList.map(cookbookID =>
@@ -41,7 +46,7 @@ class Sidebar extends Component {
     .then((userCookbooks) => {
       this.setState({ userCookbooks, cookbookObjectsloaded: true })
     })
-    .catch();
+    .catch(err => console.log("SIDEBAR - COMPONENTWILLMOUNT ERROR = ", err));
   }
 
   handleLinkSelect = (cookbookID) => () => {
@@ -94,18 +99,21 @@ class Sidebar extends Component {
   }
 
   showCookbookAddButtonOnConflictClear = () => {
-    const userCookbookTitles = this.state.userCookbooks.map(cb => {
-      return cb.title.value
-    });
-    userCookbookTitles.push(""); // This should not be a valid cookbook name...
+    try {
+      console.log("THIS.STATE.USERCOOKBOOKS =", this.state.userCookbooks);
+      const userCookbookTitles = this.state.userCookbooks.map(cb => {
+        return cb.title.value
+      });
+      userCookbookTitles.push(""); // This should not be a valid cookbook name...
 
-    const cookbookNameIsValid = userCookbookTitles.every(
-      cbt => cbt.toLowerCase() !== this.state.newUserCookbookNameFromSidebar.toLowerCase());
+      const cookbookNameIsValid = userCookbookTitles.every(
+        cbt => cbt.toLowerCase() !== this.state.newUserCookbookNameFromSidebar.toLowerCase());
 
-    if (!cookbookNameIsValid) {
-      return <button disabled>Add</button>
-    }
-    return <button onClick={this.handleAddCookbook}>Add</button>
+      if (!cookbookNameIsValid) {
+        return <button disabled>Add</button>
+      }
+      return <button onClick={this.handleAddCookbook}>Add</button>
+    } catch(err) { console.log(err)}
   }
 
   render() {
@@ -115,14 +123,15 @@ class Sidebar extends Component {
         <ul>
           <li onClick={this.handleLinkSelect("all")}>All recipes</li>
           { this.state.cookbooksListLoaded
-            ? (this.state.cookbookIDs.map((cookbookID, idx) => (
+            ? /*(this.state.cookbookIDs.map((cookbookID, idx) => (
               <li onClick={this.handleLinkSelect(cookbookID)}>
                 {
                   this.state.cookbookObjectsloaded
                   ? `${this.getCookbookTitle(idx)}` : null
                 }
               </li>
-              )))
+              )))*/
+              <div></div>
             : <div>... Loading Cookbooks ...</div> }
         </ul>
         {

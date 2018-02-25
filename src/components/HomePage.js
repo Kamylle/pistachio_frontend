@@ -9,16 +9,18 @@ class HomePage extends Component {
       super();
       this.state = {
         sidebarSelect: "all",
-        cookbookIDs: null
+        cookbookIDs: ["newCookbook"]
       }
     }
 
-    setUserCookbookIDs = () => {
-      accountsRef
+    setUserCookbookIDs = async () => {
+      await accountsRef
       .child(`${this.props.userID}/cookbooksList`)
       .on('value', snap => {
         console.log("COOKBOOKS LIST SNAPVAL =", snap.val());
-        this.setState({ cookbookIDs: snap.val() });
+        if (snap.val() !== null) { 
+          this.setState({ cookbookIDs: snap.val() })
+        }
       })
     }
 
@@ -31,7 +33,7 @@ class HomePage extends Component {
     }
 
     renderAllCookbooks = () => {
-      try {
+      //try {
         return (
           this.state.cookbookIDs.map((cookbookID, idx) => (
             <Cookbook 
@@ -45,9 +47,9 @@ class HomePage extends Component {
             />
           ))
         )
-      } catch(err) {
-        return (<div></div>)
-      }
+      //} catch(err) {
+      //  return (<div></div>)
+      //}
     }
 
     componentWillMount = () => {
