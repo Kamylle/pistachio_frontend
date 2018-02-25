@@ -54,6 +54,7 @@ html {
   box-sizing: inherit; }
 
 /*Media Queries*/
+/*Transitions*/
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -138,7 +139,12 @@ html, body, #root {
   color: #ffffff; }
 
 a, button {
-  cursor: pointer; }
+  cursor: pointer;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
 
 a {
   color: #262424;
@@ -196,10 +202,12 @@ button {
     .App > header form {
       display: flex;
       margin: 0;
-      align-items: center; }
+      align-items: center;
+      justify-content: flex-end;
+      flex-grow: 2; }
       .App > header form input {
         box-shadow: none;
-        background-color: #ffffff;
+        background-color: #ffffff !important;
         border: none;
         font-size: 1.2em;
         margin: 0;
@@ -212,9 +220,11 @@ button {
         .App > header form input::placeholder {
           color: #d1cfcf; }
     .App > header .logo {
-      font-size: 2em;
+      text-transform: uppercase;
+      font-size: 1.6em;
       font-weight: 600;
-      padding-left: 0.4em; }
+      padding-left: 0.4em;
+      letter-spacing: 0.16em; }
     .App > header .accountLinks {
       display: block;
       text-align: right;
@@ -226,6 +236,8 @@ button {
         line-height: 1.2em; }
       .App > header .accountLinks a {
         color: #89a240; }
+        .App > header .accountLinks a:hover {
+          color: #cae47e; }
     .App > header div {
       display: flex; }
     .App > header .newRecipeBtn {
@@ -233,9 +245,15 @@ button {
       background-color: #262424;
       font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: #ffffff;
-      padding: 1.5em; }
+      padding: 1em 1.5em;
+      line-height: 2em; }
+      .App > header .newRecipeBtn i {
+        position: relative;
+        top: 0.4em; }
+      .App > header .newRecipeBtn span {
+        padding-left: 0.5em; }
       .App > header .newRecipeBtn:hover {
-        background-color: #000000; }
+        background-color: #89a240; }
   .App aside {
     width: 15em;
     flex: none;
@@ -264,7 +282,12 @@ aside.cookbookMarks {
   aside.cookbookMarks ul {
     padding: 1em 0; }
     aside.cookbookMarks ul li {
-      padding: 1em; }
+      padding: 1em;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease; }
       aside.cookbookMarks ul li.selected {
         background-color: rgba(38, 36, 36, 0.06);
         border-left: 0.2em solid #89a240;
@@ -286,7 +309,12 @@ aside.cookbookMarks {
   position: fixed;
   right: 0;
   top: 7em;
-  padding: 0.2em 0; }
+  padding: 0.2em 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
   .sideTools:hover {
     background-color: #000000; }
   .sideTools i {
@@ -295,8 +323,7 @@ aside.cookbookMarks {
 
 .cookBookContainer {
   width: 100%;
-  flex-direction: column;
-  justify-content: center; }
+  flex-direction: column; }
   .cookBookContainer header {
     background-color: #89a240;
     background-image: url("./img/bg-green.jpg");
@@ -341,10 +368,20 @@ aside.cookbookMarks {
     display: inline-block;
     margin-bottom: 1em;
     width: 100%;
-    border-radius: 0.2em; }
+    border-radius: 0.2em;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease; }
     .cardContain .card:hover {
       box-shadow: 0 0 0 2px #89a240, 0 2px 3px 2px rgba(54, 40, 28, 0.07); }
     .cardContain .card:active {
+      -webkit-transition: all 0.1s ease;
+      -moz-transition: all 0.1s ease;
+      -ms-transition: all 0.1s ease;
+      -o-transition: all 0.1s ease;
+      transition: all 0.1s ease;
       box-shadow: 0 0 0 2px #d1cfcf; }
       .cardContain .card:active h2 {
         opacity: 0.85; }

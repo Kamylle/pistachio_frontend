@@ -73,7 +73,7 @@ class Header extends Component {
       <div>
         <Link to="/edit" className="newRecipeBtn">
           <i className="icon add i24" />
-          New recipe
+          <span>New recipe</span>
         </Link>
         <div className="accountLinks">
           <p>Welcome {this.state.username}</p>

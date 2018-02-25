@@ -22,6 +22,7 @@ html, body, #root{
 
 a, button {
   cursor: pointer;
+  @include transition (all, 0.5s, ease);
 }
 
 a {
@@ -108,9 +109,11 @@ button {
       display: flex;
       margin: 0;
       align-items: center;
+      justify-content: flex-end;
+      flex-grow: 2;
       input {
         box-shadow: none;
-        background-color: $white;
+        background-color: $white !important;
         border: none;
         font-size: 1.2em;
         margin: 0;
@@ -128,9 +131,11 @@ button {
       }
     }
     .logo {
-      font-size: 2em;
+      text-transform: uppercase;
+      font-size: 1.6em;
       font-weight: 600;
       padding-left: 0.4em;
+      letter-spacing: 0.16em;
     }
     .accountLinks {
       display: block;
@@ -144,6 +149,9 @@ button {
       }
       a {
         color: $primaryDark;
+        &:hover {
+          color: $primaryLight;
+        }
       }
     }
     div {
@@ -154,9 +162,17 @@ button {
       background-color: $black;
       font-family: $sans-font;
       color: $white;
-      padding: 1.5em;
+      padding: 1em 1.5em;
+      line-height: 2em;
+      i {
+        position: relative;
+        top: 0.4em;
+      }
+      span {
+        padding-left: 0.5em;
+      }
       &:hover {
-        background-color: $blackest;
+        background-color: $primaryDark;
       }
     }
   }
@@ -206,6 +222,7 @@ aside {
       padding: 1em 0;
       li{
         padding: 1em;
+        @include transition (all, 0.5s, ease)
         &.selected {
           background-color: rgba(38, 36, 36, 0.06);
           border-left: 0.2em solid $primaryDark;
@@ -243,6 +260,7 @@ aside {
   right: 0;
   top: $header-height + 3em;
   padding: 0.2em 0;
+  @include transition (all, 0.5s, ease)
   &:hover {
     background-color: $blackest;
   }
@@ -263,7 +281,7 @@ aside {
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
-  justify-content: center;
+  //justify-content: center;
   header {
     background-color: $primaryDark;
     background-image: url("./img/bg-green.jpg");
@@ -318,10 +336,12 @@ aside {
      margin-bottom: 1em;
      width: 100%;
      border-radius: 0.2em;
+     @include transition (all, 0.5s, ease)
      &:hover {
        box-shadow: 0 0 0 2px $primaryDark, 0 2px 3px 2px rgba(54, 40, 28, 0.07);
      }
      &:active {
+       @include transition (all, 0.1s, ease)
        box-shadow: 0 0 0 2px $grayMed;
        h2 {
          opacity: 0.85;

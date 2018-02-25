@@ -153,7 +153,7 @@ class RecipePage extends Component {
         ) : (
           <div>
             <div className="recipeImgContainer">
-              {this.state.img !== "" ?
+              {this.getRecipeImage() !== "" ?
               <div className="recipeImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/> :
                 <div className="recipeImg" style={{backgroundImage: `url(${this.state.defaultImg})`}}/>
               }
