@@ -38,7 +38,7 @@ export const usersRef = rootRef.child('/Users');
 //     newID += `@${Date.now() / 1}`; // Appends current time after the '@' to further prevent unlikely but unfortunate conflicts
 //     return newID;
 //   }
-  
+
 //   return randomizer();
 // }
 
@@ -61,7 +61,7 @@ export const usersRef = rootRef.child('/Users');
 // const getLastCookbookID = () => {} // Usage: to add a new author with the "next available cookbook ID".
 // const removeCookbook = cookbookID => {}
 
-export const setPrettifiedCookbookPath = async cookbookID => { 
+export const setPrettifiedCookbookPath = async cookbookID => {
   await cookbooksRef
     .child(`${cookbookID}/title/value`)
     .on('value', snapshot => {
@@ -143,7 +143,7 @@ export const setPrettifiedCookbookPath = async cookbookID => {
 // } // Usage: required to add a new author with the "next available recipe ID".
 // const removeRecipe = recipeID => {}
 
-// const setPrettifiedRecipePath = async recipeID => { 
+// const setPrettifiedRecipePath = async recipeID => {
 //   const titleVal = await recipesRef
 //     .child(`${recipeID}/title/value`)
 //     .on('value', snapshot => {

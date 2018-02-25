@@ -205,7 +205,6 @@ class CreateRecipePage extends Component {
   handleNewCookbookAddition = async evt  => {
     evt.preventDefault(); 
     this.newCookbookInputField.value = ""; // Clears the new cookbook name input field upon submission
-    this.cookbookSelector.options[this.state.cookbookIDs.length].selected; // TEST
     this.setAppState({ newCookbookAdded: true });
 
     const db = firebase.database();
@@ -286,7 +285,6 @@ class CreateRecipePage extends Component {
   }
 
   checkForCookbookNameConflict = () => {
-    console.log("Your Input Name For The New Cookbook =", this.state.newUserCookbookName);
     const userCookbookTitles = this.state.userCookbooks.map(cb => {
       return cb.title.value
     });
