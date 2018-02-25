@@ -6,41 +6,43 @@
   &.i24 {
       width: 24px;
       height: 24px;
-      background-size: 24px 24px;
+      background-size: 16px 16px;
+      background-repeat: no-repeat;
+      background-position: center;
   }
   &.search {
-    background-image: url("./img/icons/ic_search_green.svg");
     background-image: url("./img/icons/ic_search.svg");
     &:hover {
+      background-image: url("./img/icons/ic_search.svg");
       background-image: url("./img/icons/ic_search_green.svg");
     }
   }
   &.add {
-    background-image: url("./img/icons/ic_add_moss.svg");
     background-image: url("./img/icons/ic_add_white.svg");
     &:hover {
+      background-image: url("./img/icons/ic_add_white.svg");
       background-image: url("./img/icons/ic_add_moss.svg");
     }
   }
   &.send {
-    background-image: url("./img/icons/ic_send_moss.svg");
     background-image: url("./img/icons/ic_send_white.svg");
     &:hover {
+      background-image: url("./img/icons/ic_send_white.svg");
       background-image: url("./img/icons/ic_send_moss.svg");
     }
   }
-  &.add {
-    background-image: url("./img/icons/ic_edit_moss.svg");
+  &.edit {
     background-image: url("./img/icons/ic_edit_white.svg");
     &:hover {
+      background-image: url("./img/icons/ic_edit_white.svg");
       background-image: url("./img/icons/ic_edit_moss.svg");
     }
   }
-  &.send {
-    background-image: url("./img/icons/ic_send_moss.svg");
-    background-image: url("./img/icons/ic_send_white.svg");
+  &.print {
+    background-image: url("./img/icons/ic_print_white.svg");
     &:hover {
-      background-image: url("./img/icons/ic_send_moss.svg");
+      background-image: url("./img/icons/ic_print_white.svg");
+      background-image: url("./img/icons/ic_print_moss.svg");
     }
   }
 }

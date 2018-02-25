@@ -94,32 +94,34 @@ p {
   .icon.i24 {
     width: 24px;
     height: 24px;
-    background-size: 24px 24px; }
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: center; }
   .icon.search {
-    background-image: url("./img/icons/ic_search_green.svg");
     background-image: url("./img/icons/ic_search.svg"); }
     .icon.search:hover {
+      background-image: url("./img/icons/ic_search.svg");
       background-image: url("./img/icons/ic_search_green.svg"); }
   .icon.add {
-    background-image: url("./img/icons/ic_add_moss.svg");
     background-image: url("./img/icons/ic_add_white.svg"); }
     .icon.add:hover {
+      background-image: url("./img/icons/ic_add_white.svg");
       background-image: url("./img/icons/ic_add_moss.svg"); }
   .icon.send {
-    background-image: url("./img/icons/ic_send_moss.svg");
     background-image: url("./img/icons/ic_send_white.svg"); }
     .icon.send:hover {
+      background-image: url("./img/icons/ic_send_white.svg");
       background-image: url("./img/icons/ic_send_moss.svg"); }
-  .icon.add {
-    background-image: url("./img/icons/ic_edit_moss.svg");
+  .icon.edit {
     background-image: url("./img/icons/ic_edit_white.svg"); }
-    .icon.add:hover {
+    .icon.edit:hover {
+      background-image: url("./img/icons/ic_edit_white.svg");
       background-image: url("./img/icons/ic_edit_moss.svg"); }
-  .icon.send {
-    background-image: url("./img/icons/ic_send_moss.svg");
-    background-image: url("./img/icons/ic_send_white.svg"); }
-    .icon.send:hover {
-      background-image: url("./img/icons/ic_send_moss.svg"); }
+  .icon.print {
+    background-image: url("./img/icons/ic_print_white.svg"); }
+    .icon.print:hover {
+      background-image: url("./img/icons/ic_print_white.svg");
+      background-image: url("./img/icons/ic_print_moss.svg"); }
 
 html, body, #root {
   width: 100%;
@@ -261,6 +263,18 @@ aside.cookbookMarks {
     padding: 1em;
     width: 100%; }
 
+.sideTools {
+  background-color: #262424;
+  position: fixed;
+  right: 0;
+  top: 7em;
+  padding: 0.2em 0; }
+  .sideTools:hover {
+    background-color: #000000; }
+  .sideTools i {
+    display: block;
+    padding: 1.2em; }
+
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
@@ -290,19 +304,16 @@ aside.cookbookMarks {
   column-count: 1; }
   @media only screen and (min-width: 40em) {
     .cardContain {
-      columns: 2; } }
-  @media only screen and (min-width: 40em) {
-    .cardContain {
-      columns: 2; } }
+      column-count: 2; } }
   @media only screen and (min-width: 60em) {
     .cardContain {
       columns: 3; } }
   @media only screen and (min-width: 80em) {
     .cardContain {
-      columns: 4; } }
+      column-count: 4; } }
   @media only screen and (min-width: 100em) {
     .cardContain {
-      columns: 6; } }
+      column-count: 6; } }
   .cardContain .card {
     box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
     background-color: #ffffff;
@@ -326,6 +337,64 @@ aside.cookbookMarks {
       font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
       padding: 1em;
       line-height: 1.2em; }
+
+.Recipe {
+  background-color: #ffffff; }
+  .Recipe .container {
+    background-color: #ffffff;
+    font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+    column-count: 1;
+    column-gap: 3em;
+    max-width: 60em;
+    padding: 3em 7%; }
+    @media only screen and (min-width: 40em) {
+      .Recipe .container {
+        padding: 3em; } }
+    .Recipe .container > * {
+      break-inside: avoid;
+      padding-bottom: 1.8em; }
+    @media only screen and (min-width: 40em) {
+      .Recipe .container {
+        column-count: 2; } }
+    .Recipe .container h1 {
+      font-size: 3.5em;
+      text-transform: uppercase;
+      font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding-bottom: 1em; }
+    .Recipe .container h3 {
+      font-size: 1.6em;
+      padding-bottom: 0.5em; }
+    .Recipe .container li {
+      line-height: 1.2em;
+      padding-bottom: 0.6em; }
+    .Recipe .container hr {
+      border: 0.2em solid #cae47e;
+      width: 3em;
+      padding: 0;
+      margin-bottom: 1.6em;
+      background-color: #cae47e; }
+    .Recipe .container .notes.displayDesktop {
+      display: none; }
+      @media only screen and (min-width: 40em) {
+        .Recipe .container .notes.displayDesktop {
+          display: block; } }
+    .Recipe .container .notes.displayMobile {
+      display: block; }
+      @media only screen and (min-width: 40em) {
+        .Recipe .container .notes.displayMobile {
+          display: none; } }
+    @media only screen and (min-width: 40em) {
+      .Recipe .container .prepList {
+        break-before: always; } }
+    @media only screen and (min-width: 40em) {
+      .Recipe .container .anecdote {
+        border: 2px solid #cae47e;
+        padding: 3em; } }
+  .Recipe .recipeImg {
+    width: 100%;
+    height: 20em;
+    background-size: cover;
+    background-position: center; }
 
 .LoginPage {
   display: flex;
