@@ -8,7 +8,7 @@ class Cookbook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cookbookID: "asdjfbjshdvfasdf", // Once completed, set back to: this.props.cookbookID
+            cookbookID: "this.props.cookbookID", // Once completed, set back to: this.props.cookbookID
             cookbookObject: {},
             creatorObject: {}, // Required Anywhere ? Remove Later If Not
             cookbookTitle: null,
