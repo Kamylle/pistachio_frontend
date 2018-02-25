@@ -11,8 +11,8 @@ class CreateRecipePage extends Component {
       username: props.username,
       recipe: "",
       cookbook: "",
-      cookTime: "20 minutes",
-      prepTime: "15 minutes",
+      cookTime: "",
+      prepTime: "",
       cookBookID: "123",
       img: "",
       ownerAnecdotes: [
@@ -311,6 +311,28 @@ class CreateRecipePage extends Component {
               type="text"
               placeholder="Recipe Name"
               value={this.state.recipe}
+              onChange={this.handleInputChange}
+            />
+          </label>
+
+          <label>
+            Preparation time
+            <input
+              name="preptime"
+              type="text"
+              placeholder="Estimated preparation time"
+              value={this.state.prepTime}
+              onChange={this.handleInputChange}
+            />
+          </label>
+
+          <label>
+            Cook time
+            <input
+              name="cooktime"
+              type="text"
+              placeholder="Estimated cook time"
+              value={this.state.cookTime}
               onChange={this.handleInputChange}
             />
           </label>

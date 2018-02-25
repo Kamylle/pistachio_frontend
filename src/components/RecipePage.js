@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import { Route } from "react-router";
 // import { Link } from "react-router-dom";
-import { recipesRef, usersRef } from "../scripts/db";
+import { recipesRef, accountsRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
 class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L68Sr3X_fpb5ZHI0V-_", // Change back to this later after testing: this.props.recipeID
+      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -17,7 +17,6 @@ class RecipePage extends Component {
       defaultImg: ''
     };
   }
-
 
   getRecipePath = () => {
     //TODO this function will return the path of the recipe
@@ -42,11 +41,6 @@ class RecipePage extends Component {
   getRecipeImage = () => {
     return this.state.recipeObject.img
   }
-
-  // getDefaultImg = () => {
-
-  //   return ;
-  // }
 
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
@@ -80,11 +74,11 @@ class RecipePage extends Component {
     return prepMap;
   }
 
-
-  componentWillMount = () => {
+  componentWillMount = async () => {
+    if (this.state.loaded) {
     let recipe = {};
 
-    recipesRef
+    await recipesRef
       .child(this.state.recipeID)
       .once("value")
       .then(snapshot => {
@@ -95,19 +89,19 @@ class RecipePage extends Component {
       })
       .then(creatorID => {
         // console.log("creatorID =", creatorID);
-        return usersRef.child(creatorID).once("value");
+        return accountsRef.child(creatorID).once("value");
       })
       .then(creatorObj => {
         // console.log("creator Object =", creatorObj.val());
         this.setState({
           recipeID: recipe.recipeID,
           recipeObject: recipe,
-          creatorObject: creatorObj.val()
-          // loaded: true
+          creatorObject: creatorObj.val(),
+          loaded: true
         });
       })
       .catch(err => {
-        console.log(err);
+        console.log("RECIPEPAGE > COMPONENTWILLMOUNT ERROR = ", err);
       });
 
       //Set default Image
@@ -117,6 +111,7 @@ class RecipePage extends Component {
       }).catch(function(error) {
         // Handle any errors here
       });
+    }
   };
 
   editRecipe = () => {
@@ -134,9 +129,9 @@ class RecipePage extends Component {
   render() {
     return (
       <div id="main" className="Recipe">
-        {this.state.loaded ? (
-          "loading animation"
-        ) : (
+        {this.state.loaded 
+        ? ( "loading animation" )
+        : (
           <div>
             <div className="recipeImgContainer">
               {this.state.img !== "" ?
@@ -167,7 +162,7 @@ class RecipePage extends Component {
                 <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
               </div>
               <div className="anecdote">
-                <h3>Anectdotes</h3>
+                <h3>Anecdotes</h3>
                 <hr align="left"/>
                 <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
               </div>

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../scripts/firebase";
-import {recipesRef } from '../scripts/db';
+import { recipesRef } from "../scripts/db";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: this.props.username,
-      recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
+      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       // creatorObject: {}
+      itemsFound: []
     };
   }
 
@@ -33,7 +34,8 @@ class Header extends Component {
         this.setState({
           recipeObject: recipe,
           // creatorObject: creatorObj.val(),
-          loaded: true
+          loaded: true,
+          itemsFound: []
         });
       })
       .catch(err => {
@@ -44,16 +46,25 @@ class Header extends Component {
   performSearch = () => {
     let wordSearch = this.searchInput.value;
     let allRecipes = this.state.recipeObject;
-    console.log(allRecipes)
-    
-    Object.values(allRecipes).filter(item => item.recipe.includes(wordSearch))
-    
-  }
+    let arrOfRecipes = [];
+    var recipesFound = Object.values(allRecipes).filter(item =>
+      item.recipe.includes(wordSearch)
+    );
+    // console.log(recipesFound);
+    arrOfRecipes.push(recipesFound);
+    // console.log(arrOfRecipes);
+    let arrOfCookbooks = [];
+    var recipesFound = Object.values(allRecipes).filter(item =>
+      item.username.includes(wordSearch)
+    );
+    let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
+    this.setState({ itemsFound: arrOfRecipes });
+  };
 
   logout = () => {
     firebase.auth().signOut();
-    console.log(firebase.auth().currentUser);
-    localStorage.removeItem('login');
+    // console.log(firebase.auth().currentUser);
+    localStorage.removeItem("login");
     this.setState({ username: "" });
   };
 
@@ -61,7 +72,7 @@ class Header extends Component {
     return (
       <div>
         <Link to="/edit" className="newRecipeBtn">
-          <i className="icon add i24"></i>
+          <i className="icon add i24" />
           New recipe
         </Link>
         <div className="accountLinks">
@@ -81,25 +92,27 @@ class Header extends Component {
   };
 
   render() {
-    // console.log(this.state.recipeObject)
+    // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
         <Link to="/" className="logo">
           Pistach.io
         </Link>
         <form>
-            <input 
-              type="text" 
-              name="name" 
-              placeholder="Search"
-              ref={ r => this.searchInput = r }
-            />
+          <input
+            type="text"
+            name="name"
+            placeholder="Search"
+            ref={r => (this.searchInput = r)}
+          />
 
-          <Link to="/search" 
-            className="searchbar" 
+          <Link
+            to="/search"
+            className="searchbar"
             onClick={this.performSearch}
+            itemsfound={this.state.itemsFound}
           >
-            <i className="icon search i24"></i>
+            <i className="icon search i24" />
           </Link>
         </form>
         {this.state.username
