@@ -8,9 +8,10 @@ class Header extends Component {
     super(props);
     this.state = {
       username: this.props.username,
-      recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
-      recipeObject: {}
+      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
+      recipeObject: {},
       // creatorObject: {}
+      itemsFound: []
     };
   }
 
@@ -49,15 +50,20 @@ class Header extends Component {
     var recipesFound = Object.values(allRecipes).filter(item =>
       item.recipe.includes(wordSearch)
     );
-    console.log(recipesFound);
+    // console.log(recipesFound);
     arrOfRecipes.push(recipesFound);
-    return arrOfRecipes;
-    this.setState({ itemsFound: arrOfRecipes})
+    // console.log(arrOfRecipes);
+    let arrOfCookbooks = [];
+    var recipesFound = Object.values(allRecipes).filter(item =>
+      item.username.includes(wordSearch)
+    );
+    let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
+    this.setState({ itemsFound: arrOfRecipes });
   };
 
   logout = () => {
     firebase.auth().signOut();
-    console.log(firebase.auth().currentUser);
+    // console.log(firebase.auth().currentUser);
     localStorage.removeItem("login");
     this.setState({ username: "" });
   };
@@ -66,7 +72,7 @@ class Header extends Component {
     return (
       <div>
         <Link to="/edit" className="newRecipeBtn">
-          <i className="icon add i24"></i>
+          <i className="icon add i24" />
           New recipe
         </Link>
         <div className="accountLinks">
@@ -86,7 +92,7 @@ class Header extends Component {
   };
 
   render() {
-    // console.log(this.state.recipeObject)
+    // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
         <Link to="/" className="logo">
@@ -100,12 +106,13 @@ class Header extends Component {
             ref={r => (this.searchInput = r)}
           />
 
-          <Link to="/search" 
-            className="searchbar" 
+          <Link
+            to="/search"
+            className="searchbar"
             onClick={this.performSearch}
             itemsfound={this.state.itemsFound}
           >
-            <i className="icon search i24"></i>
+            <i className="icon search i24" />
           </Link>
         </form>
         {this.state.username

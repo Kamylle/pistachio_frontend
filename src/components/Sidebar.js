@@ -99,7 +99,7 @@ class Sidebar extends Component {
   }
 
   showCookbookAddButtonOnConflictClear = () => {
-    //try {
+    try {
       console.log("THIS.STATE.USERCOOKBOOKS =", this.state.userCookbooks);
       const userCookbookTitles = this.state.userCookbooks.map(cb => {
         return cb.title.value
@@ -113,7 +113,7 @@ class Sidebar extends Component {
         return <button disabled>Add</button>
       }
       return <button onClick={this.handleAddCookbook}>Add</button>
-    //} catch(err) { console.log(err)}
+    } catch(err) { console.log(err)}
   }
 
   render() {
