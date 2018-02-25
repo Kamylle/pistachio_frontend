@@ -203,7 +203,7 @@ class CreateRecipePage extends Component {
   };
 
   handleNewCookbookAddition = async evt  => {
-    evt.preventDefault(); 
+    evt.preventDefault();
     this.newCookbookInputField.value = ""; // Clears the new cookbook name input field upon submission
     this.setAppState({ newCookbookAdded: true });
 
@@ -256,7 +256,7 @@ class CreateRecipePage extends Component {
   }
 
   getSelectableCookbooksList = () => {
-    const defaultUnselectableOption = [<option disabled>Select A Cookbook...</option>];
+    const defaultUnselectableOption = [<option disabled>Select A Cookbook...</option>]
     const newCookbookSelectableOption = <option value="newCookbook">Create New Cookbook...</option>
 
     try {
