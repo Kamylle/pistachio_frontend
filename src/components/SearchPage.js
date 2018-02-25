@@ -23,7 +23,7 @@ class SearchPage extends Component {
       <div className="flexContain">
         <SidebarSearch />
         <div id="main" className="Search cardContain">
-          <RecipeCard cookbookID={this.state.itemsfound} />
+          {/* <RecipeCard cookbookID={this.state.itemsfound} /> */}
           {/* <Cookbook cookbookID={this.props.recipeID} /> */}
         </div>
       </div>

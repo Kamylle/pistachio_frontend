@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L6D79bTvNPraX2ywaOp", // Change back to this later after testing: this.props.recipeID
+      recipeID: window.location.href.split("/").pop(),
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -23,9 +23,7 @@ class RecipePage extends Component {
     //Will therefore require username from state
     if (this.state.loaded) {
       try {
-        const userID = this.props.userID;
-        const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
-        return `/recipe/${userID}/${prettifiedPath}`;
+        return `/recipe/${this.state.recipeID}`;
       } catch (err) {
         return "/recipe";
       }
@@ -40,7 +38,6 @@ class RecipePage extends Component {
   getRecipeImage = () => {
     return this.state.recipeObject.img
   }
-
 
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
@@ -100,7 +97,8 @@ class RecipePage extends Component {
 
   componentWillMount = () => {
     let recipe = {};
-    
+  
+
     recipesRef
       .child(this.state.recipeID)
       .once("value")
@@ -161,9 +159,11 @@ class RecipePage extends Component {
             </div>
             <div className="container">
               <h1>{this.getRecipeTitle()}</h1>
-              <p>For: {this.state.recipeObject.yieldNb} people</p>
-              <p>Cook time : {this.state.recipeObject.cookTime}</p>
-              <p>Preparation time: {this.state.recipeObject.prepTime}</p>
+              <div className="recipeInfos">
+                <p>Preparation time: {this.state.recipeObject.prepTime}</p>
+                <p>Cook time : {this.state.recipeObject.cookTime}</p>
+                <p>Render: {this.state.recipeObject.yieldNb} portion</p>
+              </div>
               <ul className="ingredientsList">
                 <h3> Ingredients </h3>
                 <hr align="left"/>

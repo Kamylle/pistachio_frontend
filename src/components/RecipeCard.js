@@ -19,9 +19,7 @@ class RecipeCard extends Component {
     //Will therefore require username from state
     if (this.state.loaded) {
       try {
-        const userID = this.props.userID;
-        const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
-        return `/recipe/${userID}/${prettifiedPath}`;
+        return `/recipe/${this.props.recipeID}`;
       } catch (err) {
         return "/recipe";
       }
@@ -71,6 +69,7 @@ class RecipeCard extends Component {
   };
 
     render() {
+      console.log(this.props)
         { return !this.state.loaded 
             ? <div className="card">
                 <h2>Loading Mock Card Here For Testing Purposes</h2>

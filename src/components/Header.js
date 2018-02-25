@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../scripts/firebase";
-import { recipesRef } from "../scripts/db";
+import { recipesRef, accountsRef } from "../scripts/db";
 
 class Header extends Component {
   constructor(props) {
@@ -16,15 +16,15 @@ class Header extends Component {
   }
 
   componentWillMount = () => {
-    let recipe = {};
+    let recipes = {};
     // let creatorObject = {};
 
     recipesRef
-      // .child(this.state.recipeID)
+      // .child("/Recipes")
       .once("value")
       .then(snapshot => {
-        recipe = snapshot.val();
-        // console.log(recipe)
+        recipes = snapshot.val();
+        console.log(recipes)
         // return recipe.people.creatorID;
       })
       // .then(userID => {
@@ -32,7 +32,7 @@ class Header extends Component {
       // })
       .then(() => {
         this.setState({
-          recipeObject: recipe,
+          recipeObject: recipes,
           // creatorObject: creatorObj.val(),
           loaded: true,
           itemsFound: []
@@ -48,18 +48,21 @@ class Header extends Component {
     let allRecipes = this.state.recipeObject;
     let arrOfRecipes = [];
     var recipesFound = Object.values(allRecipes).filter(item =>
-      item.recipe.includes(wordSearch)
+      item.recipe.toLowerCase().includes(wordSearch)
     );
     // console.log(recipesFound);
     arrOfRecipes.push(recipesFound);
     // console.log(arrOfRecipes);
-    let arrOfCookbooks = [];
-    var recipesFound = Object.values(allRecipes).filter(item =>
-      item.username.includes(wordSearch)
-    );
-    let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
-    console.log(arrOfItemsFound)
-    this.setState({ itemsFound: arrOfItemsFound });
+    // let arrOfCookbooks = [];
+    // var booksFound = Object.values(allRecipes).filter(item =>
+    //   item.username.includes(wordSearch)
+    // );
+    // arrOfCookbooks.push(booksFound);
+    // console.log(arrOfRecipes, arrOfCookbooks);
+    // let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
+    // console.log(arrOfItemsFound)
+    // this.setState({ itemsFound: arrOfRecipes });
+    return arrOfRecipes;
   };
 
   logout = () => {
