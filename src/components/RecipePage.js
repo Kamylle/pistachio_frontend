@@ -151,8 +151,8 @@ class RecipePage extends Component {
                 <hr align="left"/>
                 {this.getRecipeIndredients()}
               </ul>
-              <div className="anecdote displayDesktop">
-                <h3>Anecdote</h3>
+              <div className="notes displayDesktop">
+                <h3>Notes</h3>
                 <hr align="left"/>
                 <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
               </div>
@@ -161,13 +161,13 @@ class RecipePage extends Component {
                 <hr align="left"/>
                 {this.getPrepSteps()}
               </ul>
-              <div className="notes">
+              <div className="notes displayMobile">
                 <h3>Notes</h3>
                 <hr align="left"/>
                 <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
               </div>
-              <div className="anecdote displayMobile">
-                <h3>Anecdote</h3>
+              <div className="anecdote">
+                <h3>Anectdotes</h3>
                 <hr align="left"/>
                 <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
               </div>

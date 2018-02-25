@@ -339,7 +339,7 @@ aside {
       column-count: 2;
     }
     h1 {
-      font-size: 3em;
+      font-size: 3.5em;
       text-transform: uppercase;
       font-family: $sans-font;
       padding-bottom: 1em;
@@ -365,7 +365,7 @@ aside {
       li {
       }
     }
-    .anecdote {
+    .notes {
       &.displayDesktop {
         display: none;
         @include bp-md {
@@ -384,8 +384,11 @@ aside {
         break-before: always;
       }
     }
-    .notes {
-
+    .anecdote {
+      @include bp-md {
+        border: 2px solid $primaryLight;
+        padding: 3em;
+      }
     }
   }
   .recipeImg {
