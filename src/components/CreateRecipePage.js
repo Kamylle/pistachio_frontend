@@ -367,9 +367,9 @@ class CreateRecipePage extends Component {
                 onChange={this.handleIngredientChange(idx, "unit")}
               >
                 <option value="unit">Unit</option>
-                <option value="Cups">Cups</option>
-                <option value="Tbs">Tbs</option>
-                <option value="Tsp">Tsp</option>
+                <option value="cups">cups</option>
+                <option value="tbs">tbs</option>
+                <option value="tsp">tsp</option>
                 <option value="ml">ml</option>
                 <option value="g">g</option>
               </select>
