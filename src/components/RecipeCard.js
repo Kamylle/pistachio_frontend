@@ -19,9 +19,7 @@ class RecipeCard extends Component {
     //Will therefore require username from state
     if (this.state.loaded) {
       try {
-        const userID = this.props.userID;
-        const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
-        return `/recipe/${userID}/${prettifiedPath}`;
+        return `/recipe/${this.props.recipeID}`;
       } catch (err) {
         return "/recipe";
       }
