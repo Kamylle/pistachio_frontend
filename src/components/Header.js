@@ -66,7 +66,8 @@ class Header extends Component {
     return (
       <div>
         <Link to="/edit" className="newRecipeBtn">
-          + New recipe
+          <i className="icon add i24"></i>
+          New recipe
         </Link>
         <div className="accountLinks">
           <p>Welcome {this.state.username}</p>
@@ -99,8 +100,12 @@ class Header extends Component {
             ref={r => (this.searchInput = r)}
           />
 
-          <Link to="/search" className="searchbar" onClick={this.performSearch} itemsfound={this.state.itemsFound}>
-            <i>O</i>
+          <Link to="/search" 
+            className="searchbar" 
+            onClick={this.performSearch}
+            itemsfound={this.state.itemsFound}
+          >
+            <i className="icon search i24"></i>
           </Link>
         </form>
         {this.state.username

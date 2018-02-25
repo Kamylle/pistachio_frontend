@@ -38,7 +38,7 @@ export const usersRef = rootRef.child('/Users');
 //     newID += `@${Date.now() / 1}`; // Appends current time after the '@' to further prevent unlikely but unfortunate conflicts
 //     return newID;
 //   }
-  
+
 //   return randomizer();
 // }
 
@@ -61,76 +61,77 @@ export const usersRef = rootRef.child('/Users');
 // const getLastCookbookID = () => {} // Usage: to add a new author with the "next available cookbook ID".
 // const removeCookbook = cookbookID => {}
 
-// const setPrettifiedCookbookPath = async cookbookID => { 
-//   const titleVal = await cookbooksRef
-//     .child(`${cookbookID}/title/value`)
-//     .on('value', snapshot => {
-//       console.log(snapshot.val());
-//       cookbooksRef.child(`${cookbookID}/title`)
-//       .update(
-//         { prettifiedPath: snapshot.val()
-//           .toLowerCase()
-//           .replace(/\s/g,"-")
-//           .replace(/&/g,"and")
-//           .replace(/!/g,"")
-//           .replace(/\//g,"")
-//           .replace(/\\/g,"")
-//           .replace(/\@/g,"")
-//           .replace(/\#/g,"")
-//           .replace(/\$/g,"")
-//           .replace(/\%/g,"")
-//           .replace(/\?/g,"")
-//           .replace(/\*/g,"")
-//           .replace(/\//g,"")
-//           .replace(/\)/g,"")
-//           .replace(/\(/g,"")
-//           .replace(/\,/g,"")
-//           .replace(/\;/g,"")
-//           .replace(/é/g,"e")
-//           .replace(/É/g,"e")
-//           .replace(/è/g,"e")
-//           .replace(/È/g,"e")
-//           .replace(/ë/g,"e")
-//           .replace(/Ë/g,"e")
-//           .replace(/ê/g,"e")
-//           .replace(/Ê/g,"e")
-//           .replace(/á/g,"a")
-//           .replace(/Á/g,"a")
-//           .replace(/à/g,"a")
-//           .replace(/À/g,"a")
-//           .replace(/ä/g,"a")
-//           .replace(/Ä/g,"a")
-//           .replace(/â/g,"a")
-//           .replace(/Â/g,"a")
-//           .replace(/ã/g,"a")
-//           .replace(/Ã/g,"a")
-//           .replace(/ó/g,"o")
-//           .replace(/Ó/g,"o")
-//           .replace(/ò/g,"o")
-//           .replace(/Ò/g,"o")
-//           .replace(/ö/g,"o")
-//           .replace(/Ö/g,"o")
-//           .replace(/ô/g,"o")
-//           .replace(/Ô/g,"o")
-//           .replace(/í/g,"i")
-//           .replace(/Í/g,"i")
-//           .replace(/ì/g,"i")
-//           .replace(/Ì/g,"i")
-//           .replace(/î/g,"i")
-//           .replace(/Î/g,"i")
-//           .replace(/ï/g,"i")
-//           .replace(/Ï/g,"i")
-//           .replace(/ñ/g,"n")
-//           .replace(/Ñ/g,"n")
-//           .replace(/æ/g,"ae")
-//           .replace(/Æ/g,"ae")
-//           .replace(/ß/g,"ss")
-//           .replace(/Œ/g,"oe")
-//           .replace(/œ/g,"oe")
-//         }
-//       )
-//     });
-// }
+export const setPrettifiedCookbookPath = async cookbookID => {
+  await cookbooksRef
+    .child(`${cookbookID}/title/value`)
+    .on('value', snapshot => {
+      console.log(snapshot.val());
+      cookbooksRef.child(`${cookbookID}/title`)
+      .update(
+        { prettifiedPath: snapshot.val()
+          .toLowerCase()
+          .replace(/\s/g,"-")
+          .replace(/&/g,"and")
+          .replace(/!/g,"")
+          .replace(/\//g,"")
+          .replace(/\\/g,"")
+          .replace(/@/g,"")
+          .replace(/#/g,"")
+          .replace(/\$/g,"")
+          .replace(/%/g,"")
+          .replace(/\?/g,"")
+          .replace(/\*/g,"")
+          .replace(/\//g,"")
+          .replace(/\)/g,"")
+          .replace(/\(/g,"")
+          .replace(/,/g,"")
+          .replace(/;/g,"")
+          .replace(/'/g,"")
+          .replace(/é/g,"e")
+          .replace(/É/g,"e")
+          .replace(/è/g,"e")
+          .replace(/È/g,"e")
+          .replace(/ë/g,"e")
+          .replace(/Ë/g,"e")
+          .replace(/ê/g,"e")
+          .replace(/Ê/g,"e")
+          .replace(/á/g,"a")
+          .replace(/Á/g,"a")
+          .replace(/à/g,"a")
+          .replace(/À/g,"a")
+          .replace(/ä/g,"a")
+          .replace(/Ä/g,"a")
+          .replace(/â/g,"a")
+          .replace(/Â/g,"a")
+          .replace(/ã/g,"a")
+          .replace(/Ã/g,"a")
+          .replace(/ó/g,"o")
+          .replace(/Ó/g,"o")
+          .replace(/ò/g,"o")
+          .replace(/Ò/g,"o")
+          .replace(/ö/g,"o")
+          .replace(/Ö/g,"o")
+          .replace(/ô/g,"o")
+          .replace(/Ô/g,"o")
+          .replace(/í/g,"i")
+          .replace(/Í/g,"i")
+          .replace(/ì/g,"i")
+          .replace(/Ì/g,"i")
+          .replace(/î/g,"i")
+          .replace(/Î/g,"i")
+          .replace(/ï/g,"i")
+          .replace(/Ï/g,"i")
+          .replace(/ñ/g,"n")
+          .replace(/Ñ/g,"n")
+          .replace(/æ/g,"ae")
+          .replace(/Æ/g,"ae")
+          .replace(/ß/g,"ss")
+          .replace(/Œ/g,"oe")
+          .replace(/œ/g,"oe")
+        }
+      )
+    });
+}
 // // ---------------------------------------------------------------------
 // // 'Recipe' DB functions...
 // const addRecipe = recipeObject => {
@@ -143,7 +144,7 @@ export const usersRef = rootRef.child('/Users');
 // } // Usage: required to add a new author with the "next available recipe ID".
 // const removeRecipe = recipeID => {}
 
-// const setPrettifiedRecipePath = async recipeID => { 
+// const setPrettifiedRecipePath = async recipeID => {
 //   const titleVal = await recipesRef
 //     .child(`${recipeID}/title/value`)
 //     .on('value', snapshot => {

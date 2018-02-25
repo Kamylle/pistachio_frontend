@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import { Route } from "react-router";
 // import { Link } from "react-router-dom";
-import { recipesRef, usersRef } from "../scripts/db";
+import { recipesRef, accountsRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
 class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L63ojry_up-WEqoyl1l", // Change back to this later after testing: this.props.recipeID
+      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -17,7 +17,6 @@ class RecipePage extends Component {
       defaultImg: ''
     };
   }
-
 
   getRecipePath = () => {
     //TODO this function will return the path of the recipe
@@ -47,60 +46,7 @@ class RecipePage extends Component {
     return this.state.creatorObject.username;
   };
 
-  componentWillMount = () => {
-    let recipe = {};
-
-    recipesRef
-      .child(this.state.recipeID)
-      .once("value")
-      .then(snapshot => {
-        // console.log(snapshot.val());
-        recipe = snapshot.val();
-        // console.log(recipe);
-        return recipe.people.creatorID;
-      })
-      .then(creatorID => {
-        // console.log("creatorID =", creatorID);
-        return usersRef.child(creatorID).once("value");
-      })
-      .then(creatorObj => {
-        // console.log("creator Object =", creatorObj.val());
-        this.setState({
-          recipeID: recipe.recipeID,
-          recipeObject: recipe,
-          creatorObject: creatorObj.val()
-          // loaded: true
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-      //Set default Image
-      var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
-      .then((url) => {
-        console.log({ img: url })
-        this.setState({ defaultImg: url });
-      }).catch(function(error) {
-        // Handle any errors here
-      });
-  };
-
-  editRecipe = () => {
-    this.props.history.push("/edit", {recipeID: this.state.recipeID, recipeObject: this.state.recipeObject});
-  };
-
-  deleteRecipe = async () => {
-    
-    if(window.confirm('Are you sure you wish to delete this item?')) {
-    const db = firebase.database();
-    await db.ref(`Recipes/${this.state.recipeID}`).remove();
-  };
-}
-
-  render() {
-    // console.log(this.props);
-    // console.log(this.state)
+  getRecipeIndredients = () => {
     var ingredientsMap;
     if (this.state.recipeObject.ingredients) {
       ingredientsMap = this.state.recipeObject.ingredients.map(
@@ -113,6 +59,10 @@ class RecipePage extends Component {
     } else {
       ingredientsMap = <div />;
     }
+    return ingredientsMap;
+  }
+
+  getPrepSteps = () => {
     var prepMap;
     if (this.state.recipeObject.prep) {
       prepMap = this.state.recipeObject.prep.map((content, index) => (
@@ -121,31 +71,109 @@ class RecipePage extends Component {
     } else {
       prepMap = <div />;
     }
-    console.log(this.state)
+    return prepMap;
+  }
+
+  componentWillMount = async () => {
+    if (this.state.loaded) {
+    let recipe = {};
+
+    await recipesRef
+      .child(this.state.recipeID)
+      .once("value")
+      .then(snapshot => {
+        // console.log(snapshot.val());
+        recipe = snapshot.val();
+        // console.log(recipe);
+        return recipe.people.creatorID;
+      })
+      .then(creatorID => {
+        // console.log("creatorID =", creatorID);
+        return accountsRef.child(creatorID).once("value");
+      })
+      .then(creatorObj => {
+        // console.log("creator Object =", creatorObj.val());
+        this.setState({
+          recipeID: recipe.recipeID,
+          recipeObject: recipe,
+          creatorObject: creatorObj.val(),
+          loaded: true
+        });
+      })
+      .catch(err => {
+        console.log("RECIPEPAGE > COMPONENTWILLMOUNT ERROR = ", err);
+      });
+
+      //Set default Image
+      var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
+      .then((url) => {
+        this.setState({ defaultImg: url });
+      }).catch(function(error) {
+        // Handle any errors here
+      });
+    }
+  };
+
+  editRecipe = () => {
+    this.props.history.push("/edit", {recipeID: this.state.recipeID, recipeObject: this.state.recipeObject});
+  };
+
+  deleteRecipe = async () => {
+
+    if(window.confirm('Are you sure you wish to delete this item?')) {
+    const db = firebase.database();
+    await db.ref(`Recipes/${this.state.recipeID}`).remove();
+  };
+}
+
+  render() {
     return (
       <div id="main" className="Recipe">
-        {this.state.loaded ? (
-          "loading animation"
-        ) : (
-          <div className="container">
-            <h1>{this.getRecipeTitle()}</h1>
-            {this.state.img !== "" ? 
-            <img src={this.getRecipeImage()} alt="recipe pic"/> :
-            <img src={this.state.defaultImg} alt="default pic"/>}
-            <ul>
-              {ingredientsMap}
-              {/* <li>2 oeufs</li>
-              <li>180 ml (3/4 tasse) de farine tout usage non blanchie</li>
-              <li>30 ml (2 c. à soupe) de sucre</li>
-              <li>1 pincée de sel</li>
-              <li>Beurre pour badigeonner</li> */}
-            </ul>
-            <ul>{prepMap}</ul>
-            <div>
-              <button onClick={this.editRecipe}>Edit recipe</button>
+        {this.state.loaded 
+        ? ( "loading animation" )
+        : (
+          <div>
+            <div className="recipeImgContainer">
+              {this.state.img !== "" ?
+              <div className="recipeImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/> :
+                <div className="recipeImg" style={{backgroundImage: `url(${this.state.defaultImg})`}}/>
+              }
             </div>
-            <div>
-              <button onClick={this.deleteRecipe}>Delete recipe</button>
+            <div className="container">
+              <h1>{this.getRecipeTitle()}</h1>
+              <ul className="ingredientsList">
+                <h3> Ingredients </h3>
+                <hr align="left"/>
+                {this.getRecipeIndredients()}
+              </ul>
+              <div className="notes displayDesktop">
+                <h3>Notes</h3>
+                <hr align="left"/>
+                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+              </div>
+              <ul className="prepList">
+                <h3> Preparation </h3>
+                <hr align="left"/>
+                {this.getPrepSteps()}
+              </ul>
+              <div className="notes displayMobile">
+                <h3>Notes</h3>
+                <hr align="left"/>
+                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+              </div>
+              <div className="anecdote">
+                <h3>Anecdotes</h3>
+                <hr align="left"/>
+                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+              </div>
+              {/* <div>
+                <button onClick={this.deleteRecipe}>Delete recipe</button>
+              </div> */}
+            </div>
+            <div className="sideTools">
+              <i className="icon send i24"></i>
+              <i onClick={this.editRecipe} className="icon edit i24"></i>
+              <i className="icon print i24"></i>
             </div>
           </div>
         )};
@@ -155,54 +183,3 @@ class RecipePage extends Component {
 }
 
 export default RecipePage;
-
-// componentDidMount () {
-//Currently return anything after the pistach.io/recipe/
-// var recipeID = this.props.recipe;
-// console.log(recipeID)
-//TODO use this info from the path to fetch recipe details from firebase
-//When the recipe is loaded, change the state of isLoading to false so it renders the recipe
-// }
-
-// getRecipes = () => {
-//   var getRecipe = firebase.database().ref("RecipesTest/");
-//   getRecipe.on("value", function(snapshot) {
-//     var recipes = snapshot.val();
-//   });
-// };
-
-// getRecipe = () => {
-//   var getRecipe = firebase.database().ref("RecipesTest/");
-//   getRecipe.on("value", function(snapshot) {
-//     var recipes = snapshot.val();
-//     console.log(recipes)
-//   });
-
-// console.log(recipe1)
-// return (
-//     <div className="container">
-//       {/* <h1>{recipe1.recipe}</h1> */}
-//       <ul>
-//         <li>310 ml (1 1/4 tasse) de lait</li>
-//         <li>2 oeufs</li>
-//         <li>180 ml (3/4 tasse) de farine tout usage non blanchie</li>
-//         <li>30 ml (2 c. à soupe) de sucre</li>
-//         <li>1 pincée de sel</li>
-//         <li>Beurre pour badigeonner</li>
-//       </ul>
-//       <ul>
-//         <li>
-//           Dans un mélangeur, mélanger tous les ingrédients jusqu'à ce que la
-//           pâte soit lisse et homogène.
-//         </li>
-//         <li>
-//           Dans une poêle antiadhésive de 18 cm (7 po) légèrement badigeonnée
-//           de beurre, cuire de 8 à 10 crêpes, une à la fois, en les faisant
-//           dorer des deux côtés. Placer les crêpes cuites dans une assiette au
-//           fur et à mesure et couvrir de papier d'aluminium pour éviter
-//           qu'elles ne sèchent.
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };

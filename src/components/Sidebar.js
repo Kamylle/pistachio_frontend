@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { accountsRef, cookbooksRef } from "../scripts/db";
+import firebase from "../scripts/firebase";
+import { accountsRef, cookbooksRef, setPrettifiedCookbookPath } from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
@@ -10,7 +11,9 @@ class Sidebar extends Component {
           linkSlected: "all",
           cookbooksListLoaded: false,
           cookbookObjectsloaded: false,
-          userCookbooks: null
+          userCookbooks: [],
+          showAddCookbookFields: false,
+          newUserCookbookNameFromSidebar: ""
       }
   }
 
@@ -20,14 +23,19 @@ class Sidebar extends Component {
     accountsRef
     .child(`${this.state.userID}/cookbooksList`)
     .once('value')
-    .then(snap => { 
+    .then(snap => {
+      if (snap.val() !== null) {
       this.setState({
         cookbookIDs: snap.val(), cookbooksListLoaded: true
       });
       userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
+      console.log("USERCOOKBOOKSLIST =", userCookbooksList);
       return snap.val()
+      } else {
+        return 
+      }
     })
-    .then(async returnedUserCookbookList => 
+    .then(async returnedUserCookbookList =>
       await Promise.all(returnedUserCookbookList.map(cookbookID =>
         cookbooksRef
         .child(`${cookbookID}`)
@@ -36,10 +44,9 @@ class Sidebar extends Component {
       ))
     )
     .then((userCookbooks) => {
-      console.log("*** userCookbooks", userCookbooks);
       this.setState({ userCookbooks, cookbookObjectsloaded: true })
     })
-    .catch();
+    .catch(err => console.log("SIDEBAR - COMPONENTWILLMOUNT ERROR = ", err));
   }
 
   handleLinkSelect = (cookbookID) => () => {
@@ -49,10 +56,64 @@ class Sidebar extends Component {
 
   getCookbookTitle = idx => {
     try {
-      return this.state.cookbookObjectsloaded 
+      return this.state.cookbookObjectsloaded
         ? this.state.userCookbooks[idx].title.value
         : "..."
     } catch(err) {}
+  }
+
+  toggleAddCookbookFields = () => {
+    this.setState({ showAddCookbookFields: !this.state.showAddCookbookFields });
+  }
+
+  handleAddCookbook = async () => {
+      this.addNewCookbookFromSidebarField.value = ""; // Clears the new cookbook name input field upon submission
+      this.setState({ newCookbookAdded: true });
+
+      const db = firebase.database();
+      // First, we're creating the cookbook in "Cookbooks"...
+      const cookbookKey = await db.ref("Cookbooks/").push().key;
+      db.ref(`Cookbooks/${cookbookKey}`)
+      .set(
+        { ownerUserID: this.props.userID,
+          recipeIDs: [],
+          title: {
+            prettifiedPath: setPrettifiedCookbookPath(cookbookKey),
+            value: this.state.newUserCookbookNameFromSidebar
+          }
+        }
+      );
+      // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
+      const userCookbooks = this.state.cookbookIDs;
+      const updatedCookbooksList = userCookbooks.concat(cookbookKey);
+      console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+      db.ref(`Accounts/${this.props.userID}/cookbooksList`)
+      .set(updatedCookbooksList);
+
+      // TODO: Refresh Cookbooks List In Sidebar
+      this.toggleAddCookbookFields();
+    }
+
+  checkForCookbookNameConflict = () => {
+    this.setState({ newUserCookbookNameFromSidebar: this.addNewCookbookFromSidebarField.value});
+  }
+
+  showCookbookAddButtonOnConflictClear = () => {
+    //try {
+      console.log("THIS.STATE.USERCOOKBOOKS =", this.state.userCookbooks);
+      const userCookbookTitles = this.state.userCookbooks.map(cb => {
+        return cb.title.value
+      });
+      userCookbookTitles.push(""); // This should not be a valid cookbook name...
+
+      const cookbookNameIsValid = userCookbookTitles.every(
+        cbt => cbt.toLowerCase() !== this.state.newUserCookbookNameFromSidebar.toLowerCase());
+
+      if (!cookbookNameIsValid) {
+        return <button disabled>Add</button>
+      }
+      return <button onClick={this.handleAddCookbook}>Add</button>
+    //} catch(err) { console.log(err)}
   }
 
   render() {
@@ -72,7 +133,20 @@ class Sidebar extends Component {
               )))
             : <div>... Loading Cookbooks ...</div> }
         </ul>
-        <button>Create a new cookbook</button>
+        {
+          this.state.showAddCookbookFields
+          ? <div>
+              <input 
+                type="text" 
+                ref={ancfsf => this.addNewCookbookFromSidebarField = ancfsf}
+                placeholder="New Cookbook Name"
+                onChange={this.checkForCookbookNameConflict}/>
+              <div>
+                {this.state.showAddCookbookFields ? this.showCookbookAddButtonOnConflictClear() : null}
+                <button onClick={this.toggleAddCookbookFields}>Cancel</button>
+              </div>
+            </div>
+          : <button onClick={this.toggleAddCookbookFields}>Create a new cookbook</button>}
       </aside>
     )
   }
