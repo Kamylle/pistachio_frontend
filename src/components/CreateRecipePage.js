@@ -323,6 +323,7 @@ class CreateRecipePage extends Component {
               .concat(newCookbookSelectableOption)
 
     } catch(err) { 
+      console.log(err);
       return (newCookbookSelectableOption)
     }
   }
@@ -344,7 +345,7 @@ class CreateRecipePage extends Component {
     console.log(this.state);
     return (
       <div id="main">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="createRecipe">
           <h2>New Recipe</h2>
 
           <label>

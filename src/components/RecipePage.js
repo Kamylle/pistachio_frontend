@@ -4,6 +4,7 @@ import { Route } from "react-router";
 // import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
+import backgroundImgPattern from '../img/bg-green.jpg';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class RecipePage extends Component {
       creatorObject: {},
       loaded: false,
       img: '',
-      defaultImg: ''
+      defaultImg: backgroundImgPattern
     };
   }
 
@@ -125,12 +126,12 @@ class RecipePage extends Component {
         console.log(err);
       });
       //Set default Image
-      var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
-      .then((url) => {
-        this.setState({ defaultImg: url });
-      }).catch(function(error) {
-        // Handle any errors here
-      });
+      //var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
+      //.then((url) => {
+      //  this.setState({ defaultImg: url });
+      //}).catch(function(error) {
+      //  // Handle any errors here
+      //});
   };
 
   editRecipe = () => {

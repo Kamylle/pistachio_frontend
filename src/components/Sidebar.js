@@ -113,7 +113,7 @@ class Sidebar extends Component {
         return <button disabled>Add</button>
       }
       return <button onClick={this.handleAddCookbook}>Add</button>
-    } catch(err) { console.log(err)}
+    } catch(err) {"show Cookbook Add Button On Conflict Clear ERROR = ", console.log(err)}
   }
 
   render() {
@@ -156,9 +156,7 @@ class Sidebar extends Component {
                 placeholder="New Cookbook Name"
                 onChange={this.checkForCookbookNameConflict}/>
               <div>
-                {this.state.showAddCookbookFields ? 
-                  this.showCookbookAddButtonOnConflictClear() : 
-                  null}
+                {this.showCookbookAddButtonOnConflictClear()}
                 <button onClick={this.toggleAddCookbookFields}>Cancel</button>
               </div>
             </div>
