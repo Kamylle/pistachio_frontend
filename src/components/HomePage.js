@@ -5,8 +5,8 @@ import Sidebar from './Sidebar';
 import Cookbook from './Cookbook';
 
 class HomePage extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         sidebarSelect: "all",
         cookbookIDs: ["newCookbook"],

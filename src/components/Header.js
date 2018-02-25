@@ -58,7 +58,8 @@ class Header extends Component {
       item.username.includes(wordSearch)
     );
     let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
-    this.setState({ itemsFound: arrOfRecipes });
+    console.log(arrOfItemsFound)
+    this.setState({ itemsFound: arrOfItemsFound });
   };
 
   logout = () => {
