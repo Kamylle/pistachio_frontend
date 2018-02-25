@@ -342,18 +342,47 @@ aside.cookbookMarks {
   background-color: #ffffff; }
   .Recipe .container {
     background-color: #ffffff;
+    font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
     column-count: 1;
+    column-gap: 3em;
     max-width: 60em;
-    padding: 3em; }
+    padding: 3em 7%; }
+    @media only screen and (min-width: 40em) {
+      .Recipe .container {
+        padding: 3em; } }
     .Recipe .container > * {
-      break-inside: avoid; }
+      break-inside: avoid;
+      padding-bottom: 1.8em; }
     @media only screen and (min-width: 40em) {
       .Recipe .container {
         column-count: 2; } }
-    .Recipe .container .ingredientsList {
-      order: -1; }
-    .Recipe .container .anecdote {
-      order: 10; }
+    .Recipe .container h1 {
+      font-size: 3em;
+      text-transform: uppercase;
+      font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding-bottom: 1em; }
+    .Recipe .container h3 {
+      font-size: 1.6em;
+      padding-bottom: 0.5em; }
+    .Recipe .container li {
+      line-height: 1.2em;
+      padding-bottom: 0.6em; }
+    .Recipe .container hr {
+      border: 0.2em solid #cae47e;
+      width: 3em;
+      padding: 0;
+      margin-bottom: 1.6em;
+      background-color: #cae47e; }
+    .Recipe .container .anecdote.displayDesktop {
+      display: none; }
+      @media only screen and (min-width: 40em) {
+        .Recipe .container .anecdote.displayDesktop {
+          display: block; } }
+    .Recipe .container .anecdote.displayMobile {
+      display: block; }
+      @media only screen and (min-width: 40em) {
+        .Recipe .container .anecdote.displayMobile {
+          display: none; } }
     @media only screen and (min-width: 40em) {
       .Recipe .container .prepList {
         break-before: always; } }
