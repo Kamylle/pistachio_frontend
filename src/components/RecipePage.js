@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L68Sr3X_fpb5ZHI0V-_", // Change back to this later after testing: this.props.recipeID
+      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -79,7 +79,6 @@ class RecipePage extends Component {
     }
     return prepMap;
   }
-
 
   componentWillMount = () => {
     let recipe = {};

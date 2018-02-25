@@ -8,7 +8,7 @@ class Cookbook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cookbookID: "asdjfbjshdvfasdf", // Once completed, set back to: this.props.cookbookID
+            cookbookID: this.props.cookbookID, // Once completed, set back to: this.props.cookbookID
             cookbookObject: {},
             creatorObject: {}, // Required Anywhere ? Remove Later If Not
             cookbookTitle: null,
@@ -17,17 +17,18 @@ class Cookbook extends Component {
         }
     }
 
-    componentWillMount = () => {
+    componentWillMount = async () => {
 
       let cookbook = {};
       let cookbookRecipeIDs;
       let cookbookTtl;
 
-      cookbooksRef
+      await cookbooksRef
       .child(`${this.state.cookbookID}`)
       .once("value")
       .then(snapshot => { 
           cookbook = snapshot.val();
+          console.log("COOKBOOK =", cookbook);
           cookbookTtl = cookbook.title.value;
           cookbookRecipeIDs = cookbook.recipeIDs;
         //   console.log(cookbook.ownerUserID)
@@ -47,7 +48,7 @@ class Cookbook extends Component {
               loaded: true
           })
       })
-      .catch(err => { console.log(err) } );
+      .catch(err => { console.log("COOKBOOK.JS > COMPONENTWILLMOUNT ERROR =", err) } );
   }
 
     getClassName = () => {
@@ -75,14 +76,6 @@ class Cookbook extends Component {
                 <h3>{this.state.cookbookID}</h3>
             </header>
             <div className="cardContain">
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
-                {this.renderAllRecipe()}
                 {this.renderAllRecipe()}
             </div>
         </div>
