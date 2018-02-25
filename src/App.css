@@ -150,16 +150,15 @@ button {
   border-radius: 2px;
   box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
   margin: 0.5em 0;
-  padding: 0.7em 1em; }
-  button.secondaryBtn {
-    background-color: #262424;
-    color: #ffffff;
-    border: none; }
-    button.secondaryBtn:hover {
-      background-color: #000000;
-      color: #f4f3f2; }
-    button.secondaryBtn:active {
-      box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0); }
+  padding: 0.7em 1em;
+  background-color: #262424;
+  color: #ffffff;
+  border: none; }
+  button:hover {
+    background-color: #000000;
+    color: #f4f3f2; }
+  button:active {
+    box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0); }
 
 .googleSignInBtn {
   display: flex;
@@ -358,6 +357,7 @@ aside.cookbookMarks {
   .Recipe .container {
     background-color: #ffffff;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+    list-style-type: none;
     column-count: 1;
     column-gap: 3em;
     max-width: 60em;
@@ -388,6 +388,13 @@ aside.cookbookMarks {
       padding: 0;
       margin-bottom: 1.6em;
       background-color: #cae47e; }
+    .Recipe .container .recipeInfos {
+      font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 1.2em; }
+      .Recipe .container .recipeInfos p {
+        padding-bottom: 0.5em; }
     .Recipe .container .notes.displayDesktop {
       display: none; }
       @media only screen and (min-width: 40em) {
