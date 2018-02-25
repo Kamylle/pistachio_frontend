@@ -121,10 +121,24 @@ class Sidebar extends Component {
       <aside className="cookbookMarks">
       <h3>Cookbooks</h3>
         <ul>
-          <li onClick={this.handleLinkSelect("all")}>All recipes</li>
+          <li onClick={this.handleLinkSelect("all")}
+              className={
+                this.state.linkSlected === "all" ?
+                  "selected"
+                  :
+                  ""
+              }
+          >All recipes</li>
           { this.state.cookbooksListLoaded
             ? (this.state.cookbookIDs.map((cookbookID, idx) => (
-              <li onClick={this.handleLinkSelect(cookbookID)}>
+              <li onClick={this.handleLinkSelect(cookbookID)}
+                className={
+                  this.state.linkSlected === cookbookID ?
+                  "selected"
+                  :
+                  ""
+                }
+              >
                 {
                   this.state.cookbookObjectsloaded
                   ? `${this.getCookbookTitle(idx)}` : null
@@ -142,11 +156,13 @@ class Sidebar extends Component {
                 placeholder="New Cookbook Name"
                 onChange={this.checkForCookbookNameConflict}/>
               <div>
-                {this.state.showAddCookbookFields ? this.showCookbookAddButtonOnConflictClear() : null}
+                {this.state.showAddCookbookFields ? 
+                  this.showCookbookAddButtonOnConflictClear() : 
+                  null}
                 <button onClick={this.toggleAddCookbookFields}>Cancel</button>
               </div>
             </div>
-          : <button onClick={this.toggleAddCookbookFields}>Create a new cookbook</button>}
+          : <a onClick={this.toggleAddCookbookFields}>Create a new cookbook</a>}
       </aside>
     )
   }
