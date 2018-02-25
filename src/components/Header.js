@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../scripts/firebase";
-import {recipesRef } from '../scripts/db';
+import { recipesRef } from "../scripts/db";
 
 class Header extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Header extends Component {
     this.state = {
       username: this.props.username,
       recipeID: "-L632e0WKTgH0F-ElJt-", // Change back to this later after testing: this.props.recipeID
-      recipeObject: {},
+      recipeObject: {}
       // creatorObject: {}
     };
   }
@@ -33,7 +33,8 @@ class Header extends Component {
         this.setState({
           recipeObject: recipe,
           // creatorObject: creatorObj.val(),
-          loaded: true
+          loaded: true,
+          itemsFound: []
         });
       })
       .catch(err => {
@@ -44,16 +45,20 @@ class Header extends Component {
   performSearch = () => {
     let wordSearch = this.searchInput.value;
     let allRecipes = this.state.recipeObject;
-    console.log(allRecipes)
-    
-    Object.values(allRecipes).filter(item => item.recipe.includes(wordSearch))
-    
-  }
+    let arrOfRecipes = [];
+    var recipesFound = Object.values(allRecipes).filter(item =>
+      item.recipe.includes(wordSearch)
+    );
+    console.log(recipesFound);
+    arrOfRecipes.push(recipesFound);
+    return arrOfRecipes;
+    this.setState({ itemsFound: arrOfRecipes})
+  };
 
   logout = () => {
     firebase.auth().signOut();
     console.log(firebase.auth().currentUser);
-    localStorage.removeItem('login');
+    localStorage.removeItem("login");
     this.setState({ username: "" });
   };
 
@@ -87,17 +92,14 @@ class Header extends Component {
           Pistach.io
         </Link>
         <form>
-            <input 
-              type="text" 
-              name="name" 
-              placeholder="Search"
-              ref={ r => this.searchInput = r }
-            />
+          <input
+            type="text"
+            name="name"
+            placeholder="Search"
+            ref={r => (this.searchInput = r)}
+          />
 
-          <Link to="/search" 
-            className="searchbar" 
-            onClick={this.performSearch}
-          >
+          <Link to="/search" className="searchbar" onClick={this.performSearch} itemsfound={this.state.itemsFound}>
             <i>O</i>
           </Link>
         </form>
