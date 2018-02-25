@@ -9,7 +9,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L68Sr3X_fpb5ZHI0V-_", // Change back to this later after testing: this.props.recipeID
+      recipeID: window.location.href.split("/").pop(),
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -23,9 +23,7 @@ class RecipePage extends Component {
     //Will therefore require username from state
     if (this.state.loaded) {
       try {
-        const userID = this.props.userID;
-        const prettifiedPath = this.state.recipeObject.title.prettifiedPath;
-        return `/recipe/${userID}/${prettifiedPath}`;
+        return `/recipe/${this.state.recipeID}`;
       } catch (err) {
         return "/recipe";
       }
@@ -40,7 +38,6 @@ class RecipePage extends Component {
   getRecipeImage = () => {
     return this.state.recipeObject.img
   }
-
 
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
@@ -100,7 +97,8 @@ class RecipePage extends Component {
 
   componentWillMount = () => {
     let recipe = {};
-    
+  
+
     recipesRef
       .child(this.state.recipeID)
       .once("value")
