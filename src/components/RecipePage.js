@@ -48,11 +48,12 @@ class RecipePage extends Component {
 
   getRecipeIndredients = () => {
     var ingredientsMap;
+    var nbPeople = this.state.recipeObject.yield;
     if (this.state.recipeObject.ingredients) {
       ingredientsMap = this.state.recipeObject.ingredients.map(
         (content, index) => (
           <li key={index}>
-            {content.qty + " " + content.unit + " " + content.ingr}
+            {content.qty * nbPeople + " " + content.unit * nbPeople + " " + content.ingr * nbPeople}
           </li>
         )
       );
