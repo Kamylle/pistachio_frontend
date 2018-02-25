@@ -86,6 +86,7 @@ export const setPrettifiedCookbookPath = async cookbookID => {
           .replace(/\(/g,"")
           .replace(/,/g,"")
           .replace(/;/g,"")
+          .replace(/'/g,"")
           .replace(/é/g,"e")
           .replace(/É/g,"e")
           .replace(/è/g,"e")
