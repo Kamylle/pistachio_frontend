@@ -159,9 +159,11 @@ class RecipePage extends Component {
             </div>
             <div className="container">
               <h1>{this.getRecipeTitle()}</h1>
-              <p>For: {this.state.recipeObject.yieldNb} people</p>
-              <p>Cook time : {this.state.recipeObject.cookTime}</p>
-              <p>Preparation time: {this.state.recipeObject.prepTime}</p>
+              <div className="recipeInfos">
+                <p>Preparation time: {this.state.recipeObject.prepTime}</p>
+                <p>Cook time : {this.state.recipeObject.cookTime}</p>
+                <p>Render: {this.state.recipeObject.yieldNb} portion</p>
+              </div>
               <ul className="ingredientsList">
                 <h3> Ingredients </h3>
                 <hr align="left"/>
