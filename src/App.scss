@@ -210,6 +210,11 @@ aside {
           font-size: 1.1em;
           line-height: 0.8;
         }
+        &:hover {
+          background-color: $whitish;
+          font-weight: 600;
+          color: $primaryDark;
+        }
       }
     }
     a{
