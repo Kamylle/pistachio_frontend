@@ -56,15 +56,17 @@ class Cookbook extends Component {
     }
 
     renderAllRecipe = () => {
-        return (
-          this.state.recipeIDs.map((recipeID, idx) => (
-            <RecipeCard 
-              recipeID={recipeID}
-              username={this.props.username}
-              userID={this.props.userID}
-            />
-          ))
-        )
+        try {
+            return (
+            this.state.recipeIDs.map((recipeID, idx) => (
+                <RecipeCard 
+                recipeID={recipeID}
+                username={this.props.username}
+                userID={this.props.userID}
+                />
+            ))
+            )
+        } catch(err) { console.log("RENDER ALL RECIPES ERROR =", err) }
       }
 
     render() {
