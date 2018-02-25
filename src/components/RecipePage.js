@@ -9,10 +9,10 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L6Csw4Tqef-zDBw2qw4", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
-      loaded: false,
+      loaded: true,
       img: '',
       defaultImg: ''
     };
@@ -75,21 +75,45 @@ class RecipePage extends Component {
     return prepMap;
   }
 
-  componentWillMount = async () => {
+  getNotes = () => {
+    var notesMap;
+    if (this.state.recipeObject.ownerNotes) {
+      notesMap = this.state.recipeObject.ownerNotes.map((content, index) => (
+        <li key={index}>{content.note}</li>
+      ));
+    } else {
+      notesMap = <div />;
+    }
+    return notesMap;
+  }
+
+  getAnecdotes = () => {
+    var anecdotesMap;
+    if (this.state.recipeObject.ownerAnecdotes) {
+      anecdotesMap = this.state.recipeObject.ownerAnecdotes.map((content, index) => (
+        <li key={index}>{content.anecdote}</li>
+      ));
+    } else {
+      anecdotesMap = <div />;
+    }
+    return anecdotesMap;
+  }
+
+  componentWillMount = () => {
     if (this.state.loaded) {
     let recipe = {};
 
-    await recipesRef
+    recipesRef
       .child(this.state.recipeID)
       .once("value")
       .then(snapshot => {
-        // console.log(snapshot.val());
+        console.log(snapshot.val());
         recipe = snapshot.val();
-        // console.log(recipe);
+        console.log(recipe);
         return recipe.people.creatorID;
       })
       .then(creatorID => {
-        // console.log("creatorID =", creatorID);
+        console.log("creatorID =", creatorID);
         return accountsRef.child(creatorID).once("value");
       })
       .then(creatorObj => {
@@ -128,11 +152,13 @@ class RecipePage extends Component {
 }
 
   render() {
+    console.log(this.state.recipeObject)
     return (
       <div id="main" className="Recipe">
-        {this.state.loaded 
+        {/* {this.state.loaded 
         ? ( "loading animation" )
-        : (
+        :  */}
+        (
           <div>
             <div className="recipeImgContainer">
               {this.state.img !== "" ?
@@ -142,6 +168,9 @@ class RecipePage extends Component {
             </div>
             <div className="container">
               <h1>{this.getRecipeTitle()}</h1>
+              <p>For: {this.state.recipeObject.yieldNb} people</p>
+              <p>Cook time : {this.state.recipeObject.cookTime}</p>
+              <p>Preparation time: {this.state.recipeObject.prepTime}</p>
               <ul className="ingredientsList">
                 <h3> Ingredients </h3>
                 <hr align="left"/>
@@ -150,7 +179,7 @@ class RecipePage extends Component {
               <div className="notes displayDesktop">
                 <h3>Notes</h3>
                 <hr align="left"/>
-                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+                {this.getNotes()}
               </div>
               <ul className="prepList">
                 <h3> Preparation </h3>
@@ -160,12 +189,12 @@ class RecipePage extends Component {
               <div className="notes displayMobile">
                 <h3>Notes</h3>
                 <hr align="left"/>
-                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+                {this.getNotes()}
               </div>
               <div className="anecdote">
                 <h3>Anecdotes</h3>
                 <hr align="left"/>
-                <p> Morbi quis consequat est. Fusce tincidunt ullamcorper ipsum nec lobortis. Proin laoreet volutpat lorem. Maecenas nisl tortor, sodales ut malesuada a, sagittis quis elit. Etiam varius velit nec mauris sagittis laoreet. Nunc aliquam est vel orci faucibus ultrices. Suspendisse lacinia ipsum ac dui efficitur, at dictum nunc maximus.</p>
+                {this.getAnecdotes()}
               </div>
               {/* <div>
                 <button onClick={this.deleteRecipe}>Delete recipe</button>
