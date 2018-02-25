@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import { Route } from "react-router";
 // import { Link } from "react-router-dom";
-import { recipesRef, accountsRef } from "../scripts/db";
+import { recipesRef, usersRef } from "../scripts/db";
 import CreateRecipePage from "./CreateRecipePage";
 
 class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: "-L6Csw4Tqef-zDBw2qw4", // Change back to this later after testing: this.props.recipeID
+      recipeID: "-L68Sr3X_fpb5ZHI0V-_", // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       creatorObject: {},
-      loaded: true,
+      loaded: false,
       img: '',
       defaultImg: ''
     };
@@ -35,12 +35,12 @@ class RecipePage extends Component {
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
-    // console.log(this.state.recipeObject);
   };
 
   getRecipeImage = () => {
     return this.state.recipeObject.img
   }
+
 
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
@@ -48,7 +48,6 @@ class RecipePage extends Component {
 
   getRecipeIndredients = () => {
     var ingredientsMap;
-    // var nbPeople = this.state.recipeObject.yieldNb;
     if (this.state.recipeObject.ingredients) {
       ingredientsMap = this.state.recipeObject.ingredients.map(
         (content, index) => (
@@ -100,35 +99,33 @@ class RecipePage extends Component {
   }
 
   componentWillMount = () => {
-    if (this.state.loaded) {
     let recipe = {};
-
+    
     recipesRef
       .child(this.state.recipeID)
       .once("value")
       .then(snapshot => {
-        console.log(snapshot.val());
+        // console.log(snapshot.val());
         recipe = snapshot.val();
-        console.log(recipe);
+        // console.log(recipe);
         return recipe.people.creatorID;
       })
       .then(creatorID => {
-        console.log("creatorID =", creatorID);
-        return accountsRef.child(creatorID).once("value");
+        // console.log("creatorID =", creatorID);
+        return usersRef.child(creatorID).once("value");
       })
       .then(creatorObj => {
         // console.log("creator Object =", creatorObj.val());
         this.setState({
           recipeID: recipe.recipeID,
           recipeObject: recipe,
-          creatorObject: creatorObj.val(),
-          loaded: true
+          creatorObject: creatorObj.val()
+          // loaded: true
         });
       })
       .catch(err => {
-        console.log("RECIPEPAGE > COMPONENTWILLMOUNT ERROR = ", err);
+        console.log(err);
       });
-
       //Set default Image
       var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
       .then((url) => {
@@ -136,7 +133,6 @@ class RecipePage extends Component {
       }).catch(function(error) {
         // Handle any errors here
       });
-    }
   };
 
   editRecipe = () => {
@@ -144,7 +140,6 @@ class RecipePage extends Component {
   };
 
   deleteRecipe = async () => {
-
     if(window.confirm('Are you sure you wish to delete this item?')) {
     const db = firebase.database();
     await db.ref(`Recipes/${this.state.recipeID}`).remove();
@@ -152,13 +147,11 @@ class RecipePage extends Component {
 }
 
   render() {
-    console.log(this.state.recipeObject)
     return (
       <div id="main" className="Recipe">
-        {/* {this.state.loaded 
-        ? ( "loading animation" )
-        :  */}
-        (
+        {this.state.loaded ? (
+          "loading animation"
+        ) : (
           <div>
             <div className="recipeImgContainer">
               {this.state.img !== "" ?
@@ -211,5 +204,4 @@ class RecipePage extends Component {
     );
   }
 }
-
 export default RecipePage;
