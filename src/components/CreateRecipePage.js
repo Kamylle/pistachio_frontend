@@ -17,14 +17,13 @@ class CreateRecipePage extends Component {
       img: "",
       ownerAnecdotes: [
         {
-          0: "blabla",
-          1: "bla"
+          anecdote: ""
         }
       ],
       ownerNotes: [
         {
-          0: "blabla",
-          1: "bla"
+          note: ""
+          
         }
       ],
       people: {
@@ -133,7 +132,8 @@ class CreateRecipePage extends Component {
     const recipe = {
       ...this.state,
       ingredients: this.formatArray(this.state.ingredients),
-      prep: this.formatArray(this.state.prep)
+      prep: this.formatArray(this.state.prep),
+      ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
     console.log("Recipe sent");
@@ -201,6 +201,49 @@ class CreateRecipePage extends Component {
       prep: this.state.prep.filter((s, sidx) => idx !== sidx)
     });
   };
+
+  handleNoteChange = idx => evt => {
+    const newNote = this.state.ownerNotes.map((ownerNotes, sidx) => {
+      if (idx !== sidx) return ownerNotes;
+      else return { ...ownerNotes, note: evt.target.value };
+    });
+
+    this.setAppState({ ownerNotes: newNote });
+  };
+
+  handleAddNote = () => {
+    this.setAppState({
+      ownerNotes: this.state.ownerNotes.concat([{ note: "" }])
+    });
+  };
+
+  handleRemoveNote = idx => () => {
+    this.setAppState({
+      ownerNotes: this.state.ownerNotes.filter((s, sidx) => idx !== sidx)
+    });
+  };
+
+  handleAnecdotesChange = idx => evt => {
+    const newAnecdote = this.state.ownerAnecdotes.map((ownerAnecdotes, sidx) => {
+      if (idx !== sidx) return ownerAnecdotes;
+      else return { ...ownerAnecdotes, anecdote: evt.target.value };
+    });
+
+    this.setAppState({ ownerAnecdotes: newAnecdote });
+  };
+
+  handleAddAnecdote = () => {
+    this.setAppState({
+      ownerAnecdotes: this.state.ownerAnecdotes.concat([{ anecdote: "" }])
+    });
+  };
+
+  handleRemoveAnecdote = idx => () => {
+    this.setAppState({
+      ownerAnecdotes: this.state.ownerAnecdotes.filter((s, sidx) => idx !== sidx)
+    });
+  };
+
 
   handleNewCookbookAddition = async evt  => {
     evt.preventDefault();
@@ -318,7 +361,7 @@ class CreateRecipePage extends Component {
           <label>
             Preparation time
             <input
-              name="preptime"
+              name="prepTime"
               type="text"
               placeholder="Estimated preparation time"
               value={this.state.prepTime}
@@ -329,7 +372,7 @@ class CreateRecipePage extends Component {
           <label>
             Cook time
             <input
-              name="cooktime"
+              name="cookTime"
               type="text"
               placeholder="Estimated cook time"
               value={this.state.cookTime}
@@ -372,6 +415,17 @@ class CreateRecipePage extends Component {
                   <div>{this.checkForCookbookNameConflict()}</div>
                 </div> 
               : null}
+          </label>
+
+          <label>
+            For how many people?
+            <input
+              name="yieldNb"
+              type="number"
+              placeholder="Nb people"
+              value={this.state.yieldNb}
+              onChange={this.handleInputChange}
+            />
           </label>
 
           <h3>Ingredients</h3>
@@ -440,6 +494,51 @@ class CreateRecipePage extends Component {
           <button type="button" onClick={this.handleAddStep} className="small">
             Add Step
           </button>
+
+          <h3>Notes</h3>
+          {this.state.ownerNotes.map((ownerNotes, idx) => (
+            <div className="notes">
+              <Textarea
+                type="text"
+                placeholder={`Note #${idx + 1}`}
+                value={ownerNotes.note}
+                onChange={this.handleNoteChange(idx)}
+              />
+              <button
+                type="button"
+                onClick={this.handleRemoveNote(idx)}
+                className="small"
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={this.handleAddNote} className="small">
+            Add Note
+          </button>
+
+          <h3>Anecdotes</h3>
+          {this.state.ownerAnecdotes.map((ownerAnecdotes, idx) => (
+            <div className="notes">
+              <Textarea
+                type="text"
+                placeholder={`Anecdotes #${idx + 1}`}
+                value={ownerAnecdotes.anecdote}
+                onChange={this.handleAnecdotesChange(idx)}
+              />
+              <button
+                type="button"
+                onClick={this.handleRemoveAnecdote(idx)}
+                className="small"
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={this.handleAddAnecdote} className="small">
+            Add anecdote
+          </button>
+
 
           <input type="submit" value="Submit" />
         </form>
