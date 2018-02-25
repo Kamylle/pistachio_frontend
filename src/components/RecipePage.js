@@ -48,6 +48,7 @@ class RecipePage extends Component {
 
   getRecipeIndredients = () => {
     var ingredientsMap;
+    // var nbPeople = this.state.recipeObject.yieldNb;
     if (this.state.recipeObject.ingredients) {
       ingredientsMap = this.state.recipeObject.ingredients.map(
         (content, index) => (
