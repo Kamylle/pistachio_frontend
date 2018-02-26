@@ -15,7 +15,9 @@ class RecipePage extends Component {
       creatorObject: {},
       loaded: false,
       img: '',
-      defaultImg: backgroundImgPattern
+      defaultImg: backgroundImgPattern,
+      notes: "",
+      anecdotes: ""
     };
   }
 
@@ -117,7 +119,9 @@ class RecipePage extends Component {
           recipeID: recipe.recipeID,
           recipeObject: recipe,
           // creatorObject: creatorObj.val()
-          // loaded: true
+          loaded: true,
+          notes: recipe.ownerNotes[0],
+          anecdotes: recipe.ownerAnecdotes[0]
         });
       })
       .catch(err => {
@@ -144,9 +148,10 @@ class RecipePage extends Component {
 }
 
   render() {
+    console.log(this.state)
     return (
       <div id="main" className="Recipe">
-        {this.state.loaded ? (
+        {!this.state.loaded ? (
           "loading animation"
         ) : (
           <div>
@@ -168,29 +173,35 @@ class RecipePage extends Component {
                 <hr align="left"/>
                 {this.getRecipeIndredients()}
               </ul>
-              {this.state.recipeObject.ownerNotes !== "" ?
+              {this.state.notes.note !== "" ?
               (<div className="notes displayDesktop">
                 <h3>Notes</h3>
                 <hr align="left"/>
                 {this.getNotes()}
               </div>)
               :
-              (<div></div>)}
+              null}
               <ul className="prepList">
                 <h3> Preparation </h3>
                 <hr align="left"/>
                 {this.getPrepSteps()}
               </ul>
-              <div className="notes displayMobile">
+              {this.state.notes.note !== "" ?
+              (<div className="notes displayMobile">
                 <h3>Notes</h3>
                 <hr align="left"/>
                 {this.getNotes()}
-              </div>
-              <div className="anecdote">
+              </div>)
+              :
+              null}
+              {this.state.anecdotes.anecdote !== "" ?
+              (<div className="anecdote">
                 <h3>Anecdotes</h3>
                 <hr align="left"/>
                 {this.getAnecdotes()}
-              </div>
+              </div>)
+              :
+              null}
               {/* <div>
                 <button onClick={this.deleteRecipe}>Delete recipe</button>
               </div> */}
