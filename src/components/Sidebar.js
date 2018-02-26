@@ -14,7 +14,8 @@ class Sidebar extends Component {
           cookbookObjectsloaded: false,
           userCookbooks: [],
           showAddCookbookFields: false,
-          newUserCookbookNameFromSidebar: ""
+          newUserCookbookNameFromSidebar: "",
+          cookbookIDs: []
       }
   }
 
@@ -67,27 +68,31 @@ class Sidebar extends Component {
 
   handleAddCookbook = async () => {
       this.addNewCookbookFromSidebarField.value = ""; // Clears the new cookbook name input field upon submission
-      this.setState({ newCookbookAdded: true });
-
+      //console.log("New cookbook added")
       const db = firebase.database();
       // First, we're creating the cookbook in "Cookbooks"...
+      var cookbookObj = { ownerUserID: this.props.userID,
+        recipeIDs: [],
+        title: {
+          //prettifiedPath: setPrettifiedCookbookPath(cookbookKey),
+          value: this.state.newUserCookbookNameFromSidebar
+        }
+      }
       const cookbookKey = await db.ref("Cookbooks/").push().key;
       db.ref(`Cookbooks/${cookbookKey}`)
-      .set(
-        { ownerUserID: this.props.userID,
-          recipeIDs: [],
-          title: {
-            prettifiedPath: setPrettifiedCookbookPath(cookbookKey),
-            value: this.state.newUserCookbookNameFromSidebar
-          }
-        }
-      );
+      .set(cookbookObj);
       // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
       const userCookbooks = this.state.cookbookIDs;
       const updatedCookbooksList = userCookbooks.concat(cookbookKey);
-      console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+      //console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
       db.ref(`Accounts/${this.props.userID}/cookbooksList`)
-      .set(updatedCookbooksList);
+      .set(updatedCookbooksList)
+      .then((result)=>{
+        this.setState({
+          cookbookIDs: updatedCookbooksList,
+          userCookbooks: this.state.userCookbooks.concat(cookbookObj)
+        })
+      });
 
       // TODO: Refresh Cookbooks List In Sidebar
       this.toggleAddCookbookFields();
@@ -99,7 +104,7 @@ class Sidebar extends Component {
 
   showCookbookAddButtonOnConflictClear = () => {
     try {
-      console.log("THIS.STATE.USERCOOKBOOKS =", this.state.userCookbooks);
+      //console.log("THIS.STATE.USERCOOKBOOKS =", this.state.userCookbooks);
       const userCookbookTitles = this.state.userCookbooks.map(cb => {
         return cb.title.value
       });
@@ -116,7 +121,7 @@ class Sidebar extends Component {
   }
 
   toggleMenu = (e) => {
-    console.log("Function Called!")
+    //console.log("Function Called!")
     e.preventDefault();
     this.props.sidebarState(!this.props.sidebarState);
     //this.setState({toggleMenu: !this.state.toggleMenu})
@@ -125,7 +130,7 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <aside className="cookbookMarks">
+      <aside className="cookbookMarks" key={this.state.key}>
       <a className="menuBtn" onClick={this.toggleMenu}><i className="icon add i24"/></a>
       <h3>Cookbooks</h3>
         <ul>
