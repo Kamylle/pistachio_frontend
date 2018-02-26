@@ -9,7 +9,7 @@ class Sidebar extends Component {
       this.state = {
           userID: this.props.userID,
           linkSlected: "all",
-          toggleMenu: false,
+          //toggleMenu: false,
           cookbooksListLoaded: false,
           cookbookObjectsloaded: false,
           userCookbooks: [],
@@ -50,9 +50,10 @@ class Sidebar extends Component {
     .catch(err => console.log("SIDEBAR - COMPONENTWILLMOUNT ERROR = ", err));
   }
 
-  handleLinkSelect = (cookbookID) => () => {
+  handleLinkSelect = (cookbookID) => (e) => {
+    e.preventDefault();
     this.setState({ linkSlected: cookbookID });
-    this.props.sidebarState(cookbookID);
+    this.props.getSidebarSelect(cookbookID);
   }
 
   getCookbookTitle = idx => {
@@ -117,17 +118,17 @@ class Sidebar extends Component {
     } catch(err) {"show Cookbook Add Button On Conflict Clear ERROR = ", console.log(err)}
   }
 
-  toggleMenu = () => {
-    this.setState({toggleMenu: !this.state.toggleMenu})
-  }
-
-  getMenuClass = () => {
-    return this.state.toggleMenu ? "cookbookMarks hideMenu" : "cookbookMarks"
+  toggleMenu = (e) => {
+    console.log("Function Called!")
+    e.preventDefault();
+    this.props.sidebarState(!this.props.sidebarState);
+    //this.setState({toggleMenu: !this.state.toggleMenu})
+    
   }
 
   render() {
     return (
-      <aside className={this.getMenuClass()}>
+      <aside className="cookbookMarks">
       <a className="menuBtn" onClick={this.toggleMenu}><i className="icon add i24"/></a>
       <h3>Cookbooks</h3>
         <ul>

@@ -338,7 +338,12 @@ button {
 
 .Home {
   justify-content: center;
-  padding-left: 15em; }
+  padding-left: 15em;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
 
 aside.cookbookMarks {
   background-color: #ffffff;
@@ -377,13 +382,12 @@ aside.cookbookMarks {
     background-color: #262424;
     color: #ffffff;
     left: 15em; }
-  aside.cookbookMarks.hideMenu {
-    left: -15em;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease; }
+
+.hideMenu .cookbookMarks {
+  left: -15em; }
+
+.hideMenu .Home {
+  padding-left: 0; }
 
 .sideTools {
   background-color: #262424;
