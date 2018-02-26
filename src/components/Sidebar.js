@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../scripts/firebase";
-import { accountsRef, cookbooksRef, setPrettifiedCookbookPath } from "../scripts/db";
+import { accountsRef, cookbooksRef} from "../scripts/db";
 //import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
