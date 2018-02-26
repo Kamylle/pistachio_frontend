@@ -69,21 +69,22 @@ class RecipeCard extends Component {
   };
 
     render() {
-      console.log(this.props)
-        { return !this.state.loaded 
-            ? <div className="card">
-                <h2>Loading Mock Card Here For Testing Purposes</h2>
-            </div>
-            : (
-                <div className="card">
+      //console.log(this.props)
+        return (
+            <div className="card">
+              { !this.state.loaded 
+                ? ( <h2>Loading Mock Card Here For Testing Purposes</h2> )
+                : (
                     <Link to={this.getRecipePath()}>
                         <div className="cardImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/>
                         <h2>{this.getRecipeTitle()}</h2>
                         {/* <p>{this.getRecipeCreatorFullName()}</p> */}
                     </Link>  
-                </div>
-              )
-        }
+                  )
+              }
+            </div>
+          )
+      
     }
 }
 

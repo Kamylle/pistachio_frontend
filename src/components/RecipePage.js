@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import firebase from "../scripts/firebase";
-import { Route } from "react-router";
+//import { Route } from "react-router"; "TO REMOVE WARNING : 'Route' is defined but never used"
 // import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
-import CreateRecipePage from "./CreateRecipePage";
+// import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from '../img/bg-green.jpg';
 
 class RecipePage extends Component {

@@ -28,10 +28,8 @@ class Cookbook extends Component {
       .once("value")
       .then(snapshot => { 
           cookbook = snapshot.val();
-          console.log("COOKBOOK =", cookbook);
           cookbookTtl = cookbook.title.value;
           cookbookRecipeIDs = cookbook.recipeIDs;
-        //   console.log(cookbook.ownerUserID)
           return cookbook.ownerUserID;
       })
       .then(ownerUserID => {

@@ -19,7 +19,6 @@ class HomePage extends Component {
       await accountsRef
       .child(`${this.props.userID}/cookbooksList`)
       .on('value', snap => {
-        console.log("COOKBOOKS LIST SNAPVAL =", snap.val());
         if (snap.val() !== null) { 
           this.setState({ cookbookIDs: snap.val(), cookbooksFetchedFromDB: true })
         }

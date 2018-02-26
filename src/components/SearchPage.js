@@ -84,24 +84,24 @@ class SearchPage extends Component {
   };
 
   render() {
-    {
-      return !this.state.loaded ? (
-        <div>
-          <SidebarSearch />
-          <h2>Loading ...</h2>
-        </div>
-      ) : (
-        <div>
-          <SidebarSearch />
-          {this.state.itemsFound.map((item, idx) => (
-              <RecipeCard 
-                key={idx}
-                recipeID={item.recipeID}
-              />
-          ))};
-        </div>
-      );
-    }
+    return !this.state.loaded 
+      ? (
+          <div>
+            <SidebarSearch />
+            <h2>Loading ...</h2>
+          </div>
+        ) 
+      : (
+          <div>
+            <SidebarSearch />
+            {this.state.itemsFound.map((item, idx) => (
+                <RecipeCard 
+                  key={idx}
+                  recipeID={item.recipeID}
+                />
+            ))};
+          </div>
+        );
   }
 }
 
