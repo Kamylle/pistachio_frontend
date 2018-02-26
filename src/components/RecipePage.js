@@ -146,7 +146,6 @@ class RecipePage extends Component {
 }
 
   render() {
-    console.log(this.state.recipeObject.ownerNotes)
     return (
       <div id="main" className="Recipe">
         {this.state.loaded ? (
@@ -200,7 +199,9 @@ class RecipePage extends Component {
             </div>
             <div className="sideTools">
               <i className="icon send i24"></i>
-              <i onClick={this.editRecipe} className="icon edit i24"></i>
+              {this.props.username === this.state.recipeObject.username && 
+              (<i onClick={this.editRecipe} className="icon edit i24"></i>)}
+              
               <i className="icon print i24"></i>
             </div>
           </div>

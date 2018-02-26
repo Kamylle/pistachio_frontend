@@ -104,6 +104,7 @@ class App extends Component {
               userID={this.state.userID}
               username={this.state.username}
               location={routeProps.location}
+              history={routeProps.history}
               />
             )}
           />

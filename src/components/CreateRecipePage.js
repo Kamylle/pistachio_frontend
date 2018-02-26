@@ -162,7 +162,7 @@ class CreateRecipePage extends Component {
 
     console.log("Recipe sent");
     try {
-      console.log(this.props);
+      // console.log(this.props);
       // if (!this.props.recipeID) {
         await this.writeRecipe(recipe);
       // } else {
@@ -173,6 +173,7 @@ class CreateRecipePage extends Component {
     } catch (err) {
       console.log(err);
     }
+    this.props.history.push("/recipe/" + this.state.recipeID)
   };
 
   //dynamic forms from: https://goshakkk.name/array-form-inputs/
@@ -362,6 +363,12 @@ class CreateRecipePage extends Component {
       return <button disabled>Add Cookbook</button>
     }
     return <button onClick={this.handleNewCookbookAddition}>Add Cookbook</button>
+  }
+
+  cancelRecipe = () => {
+    this.setAppState( this.initialState )
+    // this.props.history.push("/")
+    
   }
 
   render() {
@@ -562,8 +569,9 @@ class CreateRecipePage extends Component {
             Add anecdote
           </button>
 
-          <div className="bottomBar">       
-            <button type="submit" value="Submit">Submit</button>
+          <div className="bottomBar">
+            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>     
+            <button type="submit" value="Submit">Save</button>
           </div>
         </form>
       </div>
