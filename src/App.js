@@ -110,7 +110,7 @@ class App extends Component {
           <Route
             path="/search"
             render={(routeProps) => (
-              <SearchPage/>
+              <SearchPage location={routeProps.location}/>
             )}
           />
           <Route

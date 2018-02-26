@@ -5,10 +5,11 @@ import Sidebar from './Sidebar';
 import Cookbook from './Cookbook';
 
 class HomePage extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         sidebarSelect: "all",
+        toggleSidebar: false,
         cookbookIDs: ["newCookbook"],
         cookbooksFetchedFromDB: false
       }
@@ -29,7 +30,7 @@ class HomePage extends Component {
       return this.state.cookbookIDs;
     }
 
-    getSidebarState = (stateFromSidebar) => {
+    getSidebarSelect = (stateFromSidebar) => {
       this.setState({sidebarSelect: stateFromSidebar})
     }
 
@@ -55,13 +56,22 @@ class HomePage extends Component {
       this.setUserCookbookIDs();
     }
 
+    toggleSidebar = () => {
+      this.setState({toggleSidebar : !this.state.toggleSidebar});
+    }
+
+    getContainerClassName = () => {
+      return this.state.toggleSidebar ? "flexContain hideMenu" : "flexContain"
+    }
+
     render() {
       return (
-        <div className="flexContain">
+        <div className={this.getContainerClassName()}>
           <Sidebar 
             userID={this.props.userID}
             username={this.props.username}
-            sidebarState={this.getSidebarState}
+            getSidebarSelect={this.getSidebarSelect}
+            sidebarState={this.toggleSidebar}
           />
           <div id="main" className="Home">
             {this.renderAllCookbooks()}

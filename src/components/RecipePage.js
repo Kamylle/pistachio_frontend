@@ -146,6 +146,7 @@ class RecipePage extends Component {
 }
 
   render() {
+    console.log(this.state.recipeObject.ownerNotes)
     return (
       <div id="main" className="Recipe">
         {this.state.loaded ? (
@@ -170,11 +171,14 @@ class RecipePage extends Component {
                 <hr align="left"/>
                 {this.getRecipeIndredients()}
               </ul>
-              <div className="notes displayDesktop">
+              {this.state.recipeObject.ownerNotes !== "" ?
+              (<div className="notes displayDesktop">
                 <h3>Notes</h3>
                 <hr align="left"/>
                 {this.getNotes()}
-              </div>
+              </div>)
+              :
+              (<div></div>)}
               <ul className="prepList">
                 <h3> Preparation </h3>
                 <hr align="left"/>

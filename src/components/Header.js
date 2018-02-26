@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import firebase from "../scripts/firebase";
-import { recipesRef } from "../scripts/db";
+import { withRouter } from 'react-router'
+
 
 class Header extends Component {
   constructor(props) {
@@ -11,62 +11,11 @@ class Header extends Component {
       recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       // creatorObject: {}
-      itemsFound: []
+      itemsFound: [],
+      searchInput: ""
     };
   }
 
-  componentWillMount = () => {
-    let recipe = {};
-    // let creatorObject = {};
-
-    recipesRef
-      // .child(this.state.recipeID)
-      .once("value")
-      .then(snapshot => {
-        recipe = snapshot.val();
-        // console.log(recipe)
-        // return recipe.people.creatorID;
-      })
-      // .then(userID => {
-      //   return accountsRef.child(userID).once("value");
-      // })
-      .then(() => {
-        this.setState({
-          recipeObject: recipe,
-          // creatorObject: creatorObj.val(),
-          loaded: true,
-          itemsFound: []
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  performSearch = () => {
-    let wordSearch = this.searchInput.value;
-    let allRecipes = this.state.recipeObject;
-    let arrOfRecipes = [];
-    var recipesFound = Object.values(allRecipes).filter(item =>
-      item.recipe.includes(wordSearch)
-    );
-    // console.log(recipesFound);
-    arrOfRecipes.push(recipesFound);
-    // console.log(arrOfRecipes);
-    let arrOfCookbooks = [];
-    var recipesFound = Object.values(allRecipes).filter(item =>
-      item.username.includes(wordSearch)
-    );
-    let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
-    this.setState({ itemsFound: arrOfRecipes });
-  };
-
-  logout = () => {
-    firebase.auth().signOut();
-    // console.log(firebase.auth().currentUser);
-    localStorage.removeItem("login");
-    this.setState({ username: "" });
-  };
 
   getHeaderContentLogguedIn = () => {
     return (
@@ -91,29 +40,35 @@ class Header extends Component {
     );
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.history.push("/search?searchTerm=" + this.state.searchInput)
+  }
+
   render() {
+    console.log(this.props);
     // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
         <Link to="/" className="logo hideOnMobile">
           Pistach.io
         </Link>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             name="name"
             placeholder="Search"
             ref={r => (this.searchInput = r)}
+            value={this.state.searchInput}
+            onChange={e => this.setState({ searchInput: e.target.value })}
           />
 
-          <Link
-            to="/search"
+          <button
             className="searchbar"
-            onClick={this.performSearch}
-            itemsfound={this.state.itemsFound}
+            type="submit"
           >
             <i className="icon search i24" />
-          </Link>
+          </button>
         </form>
         {this.state.username
           ? this.getHeaderContentLogguedIn()
@@ -123,4 +78,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
