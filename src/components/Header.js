@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import firebase from "../scripts/firebase";
-import { recipesRef, accountsRef } from "../scripts/db";
+
+
 
 class Header extends Component {
   constructor(props) {
@@ -11,66 +11,11 @@ class Header extends Component {
       recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
       // creatorObject: {}
-      itemsFound: []
+      itemsFound: [],
+      searchInput: ""
     };
   }
 
-  componentWillMount = () => {
-    let recipes = {};
-    // let creatorObject = {};
-
-    recipesRef
-      // .child("/Recipes")
-      .once("value")
-      .then(snapshot => {
-        recipes = snapshot.val();
-        console.log(recipes)
-        // return recipe.people.creatorID;
-      })
-      // .then(userID => {
-      //   return accountsRef.child(userID).once("value");
-      // })
-      .then(() => {
-        this.setState({
-          recipeObject: recipes,
-          // creatorObject: creatorObj.val(),
-          loaded: true,
-          itemsFound: []
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  performSearch = () => {
-    let wordSearch = this.searchInput.value;
-    let allRecipes = this.state.recipeObject;
-    let arrOfRecipes = [];
-    var recipesFound = Object.values(allRecipes).filter(item =>
-      item.recipe.toLowerCase().includes(wordSearch)
-    );
-    // console.log(recipesFound);
-    arrOfRecipes.push(recipesFound);
-    // console.log(arrOfRecipes);
-    // let arrOfCookbooks = [];
-    // var booksFound = Object.values(allRecipes).filter(item =>
-    //   item.username.includes(wordSearch)
-    // );
-    // arrOfCookbooks.push(booksFound);
-    // console.log(arrOfRecipes, arrOfCookbooks);
-    // let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
-    // console.log(arrOfItemsFound)
-    // this.setState({ itemsFound: arrOfRecipes });
-    return arrOfRecipes;
-  };
-
-  logout = () => {
-    firebase.auth().signOut();
-    // console.log(firebase.auth().currentUser);
-    localStorage.removeItem("login");
-    this.setState({ username: "" });
-  };
 
   getHeaderContentLogguedIn = () => {
     return (
@@ -108,13 +53,13 @@ class Header extends Component {
             name="name"
             placeholder="Search"
             ref={r => (this.searchInput = r)}
+            value={this.state.searchInput}
+            onChange={e => this.setState({ searchInput: e.target.value })}
           />
 
-          <Link
-            to="/search"
+          <Link to={"/search?searchTerm=" + this.state.searchInput}
             className="searchbar"
             onClick={this.performSearch}
-            itemsfound={this.state.itemsFound}
           >
             <i className="icon search i24" />
           </Link>
