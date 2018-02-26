@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import { withRouter } from 'react-router'
 
 
 class Header extends Component {
@@ -40,14 +40,20 @@ class Header extends Component {
     );
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.history.push("/search?searchTerm=" + this.state.searchInput)
+  }
+
   render() {
+    console.log(this.props);
     // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
         <Link to="/" className="logo hideOnMobile">
           Pistach.io
         </Link>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             name="name"
@@ -57,12 +63,12 @@ class Header extends Component {
             onChange={e => this.setState({ searchInput: e.target.value })}
           />
 
-          <Link to={"/search?searchTerm=" + this.state.searchInput}
+          <button
             className="searchbar"
-            onClick={this.performSearch}
+            type="submit"
           >
             <i className="icon search i24" />
-          </Link>
+          </button>
         </form>
         {this.state.username
           ? this.getHeaderContentLogguedIn()
@@ -72,4 +78,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

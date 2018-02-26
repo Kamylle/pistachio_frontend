@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 //import { Link } from 'react-router-dom';
 import SidebarSearch from "./SidebarSearch";
-import Cookbook from "./Cookbook";
+// import Cookbook from "./Cookbook";
 import RecipeCard from "./RecipeCard";
-import { recipesRef, accountsRef } from "../scripts/db";
+import { recipesRef } from "../scripts/db";
 import firebase from "../scripts/firebase";
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemsFound: "",
-      recipeObject: {}
+      itemsFound: [],
+      recipeObject: {},
+      loaded: false
     };
   }
 
@@ -23,36 +24,32 @@ class SearchPage extends Component {
   };
 
   componentDidMount() {
+    const searchTerm = new URLSearchParams(this.props.location.search).get(
+      "searchTerm"
+    );
+
     //fetch data
-    let recipes = {};
     recipesRef
       .once("value")
       .then(snapshot => {
-        recipes = snapshot.val();
+        return snapshot.val();
         // console.log(recipes)
         // return recipe.people.creatorID;
       })
       // .then(userID => {
       //   return accountsRef.child(userID).once("value");
       // })
-      .then(() => {
+      .then((recipes) => {
         this.setState({
           recipeObject: recipes,
           // creatorObject: creatorObj.val(),
           loaded: true,
           itemsFound: []
-        });
+        }, () => this.performSearch(searchTerm));
       })
       .catch(err => {
         console.log(err);
       });
-
-    // console.log(this.props);
-    const searchTerm = new URLSearchParams(this.props.location.search).get(
-      "searchTerm"
-    );
-    //filter function on data based on search term and setState
-    this.performSearch(searchTerm);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,21 +57,20 @@ class SearchPage extends Component {
     const searchTerm = new URLSearchParams(nextProps.location.search).get(
       "searchTerm"
     );
-    //filter function on data based on search term
-    //setState
+    //filter function on data based on search term and setState
     this.performSearch(searchTerm);
   }
 
   performSearch = searchTerm => {
+    console.log(searchTerm, this.state)
     let wordSearch = searchTerm;
     let allRecipes = this.state.recipeObject;
-    let arrOfRecipes = [];
     var recipesFound = Object.values(allRecipes).filter(item =>
       item.recipe.toLowerCase().includes(wordSearch)
     );
+    console.log(recipesFound)
     // console.log(recipesFound);
-    arrOfRecipes.push(recipesFound);
-    console.log(arrOfRecipes);
+    // console.log(arrOfRecipes);
     // let arrOfCookbooks = [];
     // var booksFound = Object.values(allRecipes).filter(item =>
     //   item.username.includes(wordSearch)
@@ -84,21 +80,28 @@ class SearchPage extends Component {
     // let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
     // console.log(arrOfItemsFound)
     // this.setState({ itemsFound: arrOfRecipes });
-    this.setState({ itemsFound: arrOfRecipes });
+    this.setState({ itemsFound: recipesFound, loaded: true });
   };
 
   render() {
-    console.log(this.state.itemsFound[0]);
-    return (
-      <div className="flexContain">
-        <SidebarSearch />
-        {/* {this.state.itemsFound[0].map((itemsFound, idx) => (
-          <div id="main" className="Search cardContain" key={idx}>
-            <RecipeCard recipeID={this.state.recipeObject.recipeID} />
-          </div>
-        ))}; */}
-      </div>
-    );
+    {
+      return !this.state.loaded ? (
+        <div>
+          <SidebarSearch />
+          <h2>Loading ...</h2>
+        </div>
+      ) : (
+        <div>
+          <SidebarSearch />
+          {this.state.itemsFound.map((item, idx) => (
+              <RecipeCard 
+                key={idx}
+                recipeID={item.recipeID}
+              />
+          ))};
+        </div>
+      );
+    }
   }
 }
 
