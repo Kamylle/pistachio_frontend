@@ -76,11 +76,36 @@ class CreateRecipePage extends Component {
 
   writeRecipe = async recipe => {
     const db = firebase.database();
-    console.log(this.props)
+    const selectedCookbook = this.state.cookbook;
+    let recipeIDsInCookbook = [];
+    // In order to push the new recipe to the selected cookbook, we'll need to
+    // get the existing recipes in the cookbook first (as this is the only way
+    // we can get firebase to push new things to an array...)
+      await db.ref(`Cookbooks/${selectedCookbook}`)
+      .child('recipeIDs')
+      .once("value", snap => { 
+        console.log("RECIPES ALREADY IN THE COOKBOOK =", snap.val());
+        recipeIDsInCookbook.push(...snap.val());
+      });
+      console.log("RECIPES ALREADY IN THE COOKBOOK AFTER DB ASSIGN=", recipeIDsInCookbook);
     const recipeKey = this.props.location.state
       ? this.props.location.state.recipeID
       : await db.ref("Recipes/").push().key;
     db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
+    // Push the new recipeKey into the array of existing recipes (if any) in the selected cookbook :
+    recipeIDsInCookbook.push(recipeKey);
+
+    const flattenedRecipeIDs = [].concat.apply([], recipeIDsInCookbook);
+    console.log(flattenedRecipeIDs);
+
+    const articles = {};
+    flattenedRecipeIDs.forEach((article, articleIdx) => {
+      return Object.assign(articles, 
+            { [articleIdx]: article }
+      );
+    });
+    // Overwrite the existing array ('recipeIDs branch') with the newly updated recipeIDs list :
+    db.ref(`Cookbooks/`).child(`${selectedCookbook}/recipeIDs`).set(articles);
   };
 
   // editRecipe = async (recipe, recipeKey) => {
@@ -243,7 +268,6 @@ class CreateRecipePage extends Component {
       ownerAnecdotes: this.state.ownerAnecdotes.filter((s, sidx) => idx !== sidx)
     });
   };
-
 
   handleNewCookbookAddition = async evt  => {
     evt.preventDefault();
