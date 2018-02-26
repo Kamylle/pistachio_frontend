@@ -122,6 +122,9 @@ button {
     @include bp-md {
       height: $header-height;
     }
+    @include printQuery {
+      display: none;
+    };
     a {
       padding: 0 0.5em;
       @include bp-md {
@@ -492,6 +495,9 @@ aside {
     @include bp-md {
       padding: 3em;
     }
+    @include printQuery{
+      font-size: 0.8em;
+    };
     & > * {
       break-inside: avoid;
       padding-bottom: 1.8em;
@@ -500,15 +506,28 @@ aside {
       column-count: 2;
     }
     h1 {
-      font-size: 3.5em;
+      font-size: 2em;
       text-transform: uppercase;
       font-family: $sans-font;
       padding-bottom: 1em;
+      @include bp-md {
+        font-size: 2.75em
+      }
+      @include bp-lg {
+        font-size: 3.5em
+      }
+      @include printQuery {
+        font-size: 1.8em;
+        padding-bottom: 0.5em;
+      };
     }
     h3 {
       font-size: 1.6em;
       padding-bottom: 0.5em;
     }
+    @include printQuery{
+      //font-size: 0.6em;
+    };
     li {
       line-height: 1.2em;
       padding-bottom: 0.6em;
@@ -526,14 +545,23 @@ aside {
       font-family: $sans-font;
       font-weight: 600;
       text-transform: uppercase;
-      font-size: 1.2em;
+      font-size: 1.2em;;
       p {
         padding-bottom: 0.5em;
+        @include printQuery {
+          display: inline-block;
+          font-size: 0.9em;
+          padding-right: 1em;
+        }
       }
     }
     .ingredientsList {
       li {
       }
+      @include printQuery {
+        display: inline-block;
+        width: 50%;
+      };
     }
     .notes {
       &.displayDesktop {
@@ -555,6 +583,9 @@ aside {
       @include bp-md {
         break-before: always;
       }
+      @include printQuery {
+        break-before: avoid;
+      }
     }
     .anecdote {
       @include bp-md {
@@ -565,9 +596,14 @@ aside {
   }
   .recipeImg {
     width: 100%;
-    height: 20em;
+    height: 20vw;
+    min-height: 10em;
+    max-height: 30em;
     background-size: cover;
     background-position: center;
+    @include printQuery {
+      display: none;
+    };
   }
 
 }

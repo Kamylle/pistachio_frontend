@@ -175,7 +175,7 @@ class RecipePage extends Component {
                 {this.getNotes()}
               </div>)
               :
-              (<div></div>)}
+              (null)}
               <ul className="prepList">
                 <h3> Preparation </h3>
                 <hr align="left"/>

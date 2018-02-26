@@ -572,7 +572,7 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>     
+            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>  
             <button type="submit" value="Submit">Save</button>
           </div>
         </form>

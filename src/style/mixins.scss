@@ -51,6 +51,12 @@ html {
   }
 }
 
+@mixin printQuery {
+  @media print {
+    @content;
+  }
+}
+
 
 /*Transitions*/
 
