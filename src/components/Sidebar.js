@@ -145,6 +145,7 @@ class Sidebar extends Component {
           { this.state.cookbooksListLoaded
             ? (this.state.cookbookIDs.map((cookbookID, idx) => (
               <li onClick={this.handleLinkSelect(cookbookID)}
+              key={idx}
                 className={
                   this.state.linkSlected === cookbookID ?
                   "selected"

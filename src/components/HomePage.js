@@ -39,6 +39,7 @@ class HomePage extends Component {
           this.state.cookbookIDs.map((cookbookID, idx) => (
             <Cookbook 
               cookbookID={cookbookID}
+              key={idx}
               
               isHidden={
                 this.state.sidebarSelect === "all" ? false :

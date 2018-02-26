@@ -16,13 +16,6 @@ class SearchPage extends Component {
     };
   }
 
-  logout = () => {
-    firebase.auth().signOut();
-    // console.log(firebase.auth().currentUser);
-    localStorage.removeItem("login");
-    this.setState({ username: "" });
-  };
-
   componentDidMount() {
     const searchTerm = new URLSearchParams(this.props.location.search).get(
       "searchTerm"
