@@ -8,6 +8,14 @@ html {
 
 /*Media Queries*/
 
+@mixin bp-mobileOnly {
+  //ONLY for small screns
+  //480px
+  @media only screen and (max-width: 30em) {
+    @content;
+  }
+}
+
 @mixin bp-sm {
   //480px
   @media only screen and (min-width: 30em) {

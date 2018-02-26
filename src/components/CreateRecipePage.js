@@ -344,11 +344,12 @@ class CreateRecipePage extends Component {
   render() {
     console.log(this.state);
     return (
-      <div id="main">
-        <form onSubmit={this.handleSubmit} className="createRecipe">
+      <div id="main" className="flexContain newRecipeContainer">
+        <header>
           <h2>New Recipe</h2>
-
-          <label>
+        </header>
+        <form onSubmit={this.handleSubmit} className="createRecipe">
+          <label className="displayInlineBlock">
             Recipe
             <input
               name="recipe"
@@ -359,43 +360,8 @@ class CreateRecipePage extends Component {
             />
           </label>
 
-          <label>
-            Preparation time
-            <input
-              name="prepTime"
-              type="text"
-              placeholder="Estimated preparation time"
-              value={this.state.prepTime}
-              onChange={this.handleInputChange}
-            />
-          </label>
 
-          <label>
-            Cook time
-            <input
-              name="cookTime"
-              type="text"
-              placeholder="Estimated cook time"
-              value={this.state.cookTime}
-              onChange={this.handleInputChange}
-            />
-          </label>
-
-          <label>
-            Image
-            <input
-              name="image"
-              type="file"
-              // value={this.state.image}
-              onChange={this.handleImageInput}
-              // ref={r => this.img = r}
-            />
-          </label>
-          {this.state.img !== "" && (
-            <img src={this.state.img} alt="uploaded recipe img" />
-          )}
-
-          <label>
+          <label className="displayInlineBlock">
             Cookbook
             <select
               name="cookbook"
@@ -416,17 +382,6 @@ class CreateRecipePage extends Component {
                   <div>{this.checkForCookbookNameConflict()}</div>
                 </div> 
               : null}
-          </label>
-
-          <label>
-            For how many people?
-            <input
-              name="yieldNb"
-              type="number"
-              placeholder="Nb people"
-              value={this.state.yieldNb}
-              onChange={this.handleInputChange}
-            />
           </label>
 
           <h3>Ingredients</h3>
@@ -460,9 +415,8 @@ class CreateRecipePage extends Component {
               <button
                 type="button"
                 onClick={this.handleRemoveIngredient(idx)}
-                className="small"
+                className="small icon close i18"
               >
-                -
               </button>
             </div>
           ))}
@@ -486,15 +440,62 @@ class CreateRecipePage extends Component {
               <button
                 type="button"
                 onClick={this.handleRemoveStep(idx)}
-                className="small"
+                className="small icon close i18"
               >
-                -
               </button>
             </div>
           ))}
           <button type="button" onClick={this.handleAddStep} className="small">
             Add Step
           </button>
+          
+          <label>
+            Preparation time
+            <input
+              name="prepTime"
+              type="text"
+              placeholder="Estimated preparation time"
+              value={this.state.prepTime}
+              onChange={this.handleInputChange}
+            />
+          </label>
+
+          <label>
+            Cook time
+            <input
+              name="cookTime"
+              type="text"
+              placeholder="Estimated cook time"
+              value={this.state.cookTime}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          
+          <label>
+            For how many people?
+            <input
+              name="yieldNb"
+              type="number"
+              placeholder="Nb people"
+              value={this.state.yieldNb}
+              onChange={this.handleInputChange}
+            />
+          </label>
+
+          <label className="displayInlineBlock">
+            Image
+            <input
+              name="image"
+              type="file"
+              className="selectImgInput"
+              // value={this.state.image}
+              onChange={this.handleImageInput}
+              // ref={r => this.img = r}
+            />
+          </label>
+          {this.state.img !== "" && (
+            <img src={this.state.img} alt="uploaded recipe img" />
+          )}
 
           <h3>Notes</h3>
           {this.state.ownerNotes.map((ownerNotes, idx) => (
@@ -508,9 +509,8 @@ class CreateRecipePage extends Component {
               <button
                 type="button"
                 onClick={this.handleRemoveNote(idx)}
-                className="small"
+                className="small icon close i18"
               >
-                -
               </button>
             </div>
           ))}
@@ -530,9 +530,8 @@ class CreateRecipePage extends Component {
               <button
                 type="button"
                 onClick={this.handleRemoveAnecdote(idx)}
-                className="small"
+                className="small icon close i18"
               >
-                -
               </button>
             </div>
           ))}
@@ -540,8 +539,9 @@ class CreateRecipePage extends Component {
             Add anecdote
           </button>
 
-
-          <input type="submit" value="Submit" />
+          <div className="bottomBar">       
+            <button type="submit" value="Submit">Submit</button>
+          </div>
         </form>
       </div>
     );

@@ -1,8 +1,13 @@
 @import "variables.scss";
+@import "mixins.scss";
 
 .icon {
   display: inline-block;
+  @include transition (all, 0.3s, ease)
   //text-indent: -9999px;
+  &:hover {
+    opacity: 0.8;
+  }
   &.i24 {
       width: 24px;
       height: 24px;
@@ -10,39 +15,32 @@
       background-repeat: no-repeat;
       background-position: center;
   }
+  &.i18 {
+      width: 18px;
+      height: 18px;
+      background-size: 12px 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
   &.search {
     background-image: url("./img/icons/ic_search.svg");
-    &:hover {
-      background-image: url("./img/icons/ic_search.svg");
-      background-image: url("./img/icons/ic_search_green.svg");
-    }
   }
   &.add {
     background-image: url("./img/icons/ic_add_white.svg");
-    &:hover {
-      background-image: url("./img/icons/ic_add_white.svg");
-      background-image: url("./img/icons/ic_add_moss.svg");
-    }
   }
   &.send {
     background-image: url("./img/icons/ic_send_white.svg");
     &:hover {
-      background-image: url("./img/icons/ic_send_white.svg");
-      background-image: url("./img/icons/ic_send_moss.svg");
+
     }
   }
   &.edit {
     background-image: url("./img/icons/ic_edit_white.svg");
-    &:hover {
-      background-image: url("./img/icons/ic_edit_white.svg");
-      background-image: url("./img/icons/ic_edit_moss.svg");
-    }
   }
   &.print {
     background-image: url("./img/icons/ic_print_white.svg");
-    &:hover {
-      background-image: url("./img/icons/ic_print_white.svg");
-      background-image: url("./img/icons/ic_print_moss.svg");
-    }
+  }
+  &.close {
+    background-image: url("./img/icons/ic_close_black.svg");
   }
 }
