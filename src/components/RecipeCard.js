@@ -69,6 +69,7 @@ class RecipeCard extends Component {
   };
 
     render() {
+      console.log(this.props)
         { return !this.state.loaded 
             ? <div className="card">
                 <h2>Loading Mock Card Here For Testing Purposes</h2>

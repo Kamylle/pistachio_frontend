@@ -342,7 +342,7 @@ class CreateRecipePage extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
