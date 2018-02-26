@@ -19,8 +19,6 @@ class Sidebar extends Component {
   }
 
   componentWillMount = () => {
-    let userCookbooks = [];
-    let userCookbooksList = [];
     accountsRef
     .child(`${this.state.userID}/cookbooksList`)
     .once('value')
@@ -29,9 +27,8 @@ class Sidebar extends Component {
       this.setState({
         cookbookIDs: snap.val(), cookbooksListLoaded: true
       });
-      userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
-      console.log("USERCOOKBOOKSLIST =", userCookbooksList);
-      return snap.val()
+      let userCookbooksList = snap.val(); // snap.val() = An array of strings representing the user cookbooks' IDs
+      return userCookbooksList
       } else {
         return 
       }
@@ -115,7 +112,7 @@ class Sidebar extends Component {
         return <button disabled>Add</button>
       }
       return <button onClick={this.handleAddCookbook}>Add</button>
-    } catch(err) {"show Cookbook Add Button On Conflict Clear ERROR = ", console.log(err)}
+    } catch(err) {console.log(err)}
   }
 
   toggleMenu = (e) => {

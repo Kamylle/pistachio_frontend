@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidMount() {
     const state = JSON.parse(localStorage.getItem('login'));
-    this.setState(state, () => console.log(this.state.username));
+    this.setState(state/*, () => console.log(this.state.username)*/);
   }
 
   setLoginState = (state) => {

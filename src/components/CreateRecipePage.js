@@ -84,7 +84,9 @@ class CreateRecipePage extends Component {
       await db.ref(`Cookbooks/${selectedCookbook}`)
       .child('recipeIDs')
       .once("value", snap => { 
-        recipeIDsInCookbook.push(...snap.val()); // "= Recipes already in the user's cookbook"
+        if (snap.val() !== null) {
+          recipeIDsInCookbook.push(...snap.val()); // "= Recipes already in the user's cookbook"
+        }
       });
     const recipeKey = this.props.location.state
       ? this.props.location.state.recipeID
