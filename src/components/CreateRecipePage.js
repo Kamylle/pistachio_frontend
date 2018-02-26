@@ -59,7 +59,7 @@ class CreateRecipePage extends Component {
 
   componentDidMount() {
     //get localstorage state and set it
-    console.log(this.props.location.state);
+    // console.log(this.props.location.state);
     if (this.props.location.state) {
       this.setState(this.props.location.state.recipeObject);
     } else {
@@ -162,7 +162,7 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
-    console.log("Recipe sent");
+    // console.log("Recipe sent");
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -292,7 +292,7 @@ class CreateRecipePage extends Component {
     // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
     const userCookbooks = this.state.cookbookIDs;
     const updatedCookbooksList = userCookbooks.concat(cookbookKey);
-    console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+    // console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
     db.ref(`Accounts/${this.props.userID}/cookbooksList`)
     .set(updatedCookbooksList);
 
@@ -370,11 +370,18 @@ class CreateRecipePage extends Component {
   cancelRecipe = () => {
     this.setAppState( this.initialState )
     // this.props.history.push("/")
-    
   }
 
+  deleteRecipe = () => {
+    // if (window.confirm("Are you sure you wish to delete this item?")) {
+      const db = firebase.database();
+      db.ref(`Recipes/${this.state.recipeID}`).remove();
+      this.props.history.push("/");
+    // }
+  };
+
   render() {
-    // console.log(this.state);
+    // console.log(this.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
@@ -572,6 +579,7 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
+            <button onClick={this.deleteRecipe}>Delete recipe</button>
             <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>     
             <button type="submit" value="Submit">Save</button>
           </div>

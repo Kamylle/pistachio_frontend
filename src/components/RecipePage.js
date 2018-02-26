@@ -4,7 +4,7 @@ import firebase from "../scripts/firebase";
 // import { Link } from "react-router-dom";
 import { recipesRef, usersRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
-import backgroundImgPattern from '../img/bg-green.jpg';
+import backgroundImgPattern from "../img/bg-green.jpg";
 
 class RecipePage extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class RecipePage extends Component {
       recipeObject: {},
       creatorObject: {},
       loaded: false,
-      img: '',
+      img: "",
       defaultImg: backgroundImgPattern,
       notes: "",
       anecdotes: ""
@@ -39,8 +39,8 @@ class RecipePage extends Component {
   };
 
   getRecipeImage = () => {
-    return this.state.recipeObject.img
-  }
+    return this.state.recipeObject.img;
+  };
 
   getRecipeCreatorFullName = () => {
     return this.state.creatorObject.username;
@@ -60,7 +60,7 @@ class RecipePage extends Component {
       ingredientsMap = <div />;
     }
     return ingredientsMap;
-  }
+  };
 
   getPrepSteps = () => {
     var prepMap;
@@ -72,7 +72,7 @@ class RecipePage extends Component {
       prepMap = <div />;
     }
     return prepMap;
-  }
+  };
 
   getNotes = () => {
     var notesMap;
@@ -84,23 +84,23 @@ class RecipePage extends Component {
       notesMap = <div />;
     }
     return notesMap;
-  }
+  };
 
   getAnecdotes = () => {
     var anecdotesMap;
     if (this.state.recipeObject.ownerAnecdotes) {
-      anecdotesMap = this.state.recipeObject.ownerAnecdotes.map((content, index) => (
-        <li key={index}>{content.anecdote}</li>
-      ));
+      anecdotesMap = this.state.recipeObject.ownerAnecdotes.map(
+        (content, index) => <li key={index}>{content.anecdote}</li>
+      );
     } else {
       anecdotesMap = <div />;
     }
     return anecdotesMap;
-  }
+  };
 
   componentDidMount = () => {
     const recipeID = this.state.recipeID;
-    console.log('Im mounting')
+    console.log("Im mounting");
     recipesRef
       .child(recipeID)
       .once("value")
@@ -113,7 +113,7 @@ class RecipePage extends Component {
       //   // console.log("creatorID =", creatorID);
       //   return await usersRef.child(creatorID).once("value");
       // })
-      .then((recipe) => {
+      .then(recipe => {
         // console.log("creator Object =", creatorObj.val());
         this.setState({
           recipeID: recipe.recipeID,
@@ -127,28 +127,25 @@ class RecipePage extends Component {
       .catch(err => {
         console.log(err);
       });
-      //Set default Image
-      //var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
-      //.then((url) => {
-      //  this.setState({ defaultImg: url });
-      //}).catch(function(error) {
-      //  // Handle any errors here
-      //});
+    //Set default Image
+    //var img = firebase.storage().ref('/images/Riffelsee.JPG').getDownloadURL()
+    //.then((url) => {
+    //  this.setState({ defaultImg: url });
+    //}).catch(function(error) {
+    //  // Handle any errors here
+    //});
   };
 
   editRecipe = () => {
-    this.props.history.push("/edit", {recipeID: this.state.recipeID, recipeObject: this.state.recipeObject});
+    this.props.history.push("/edit", {
+      recipeID: this.state.recipeID,
+      recipeObject: this.state.recipeObject
+    });
   };
 
-  deleteRecipe = async () => {
-    if(window.confirm('Are you sure you wish to delete this item?')) {
-    const db = firebase.database();
-    await db.ref(`Recipes/${this.state.recipeID}`).remove();
-  };
-}
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div id="main" className="Recipe">
         {!this.state.loaded ? (
@@ -156,10 +153,17 @@ class RecipePage extends Component {
         ) : (
           <div>
             <div className="recipeImgContainer">
-              {this.getRecipeImage() !== "" ?
-              <div className="recipeImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/> :
-                <div className="recipeImg" style={{backgroundImage: `url(${this.state.defaultImg})`}}/>
-              }
+              {this.getRecipeImage() !== "" ? (
+                <div
+                  className="recipeImg"
+                  style={{ backgroundImage: `url(${this.getRecipeImage()})` }}
+                />
+              ) : (
+                <div
+                  className="recipeImg"
+                  style={{ backgroundImage: `url(${this.state.defaultImg})` }}
+                />
+              )}
             </div>
             <div className="container">
               <h1>{this.getRecipeTitle()}</h1>
@@ -170,48 +174,43 @@ class RecipePage extends Component {
               </div>
               <ul className="ingredientsList">
                 <h3> Ingredients </h3>
-                <hr align="left"/>
+                <hr align="left" />
                 {this.getRecipeIndredients()}
               </ul>
-              {this.state.notes.note !== "" ?
-              (<div className="notes displayDesktop">
-                <h3>Notes</h3>
-                <hr align="left"/>
-                {this.getNotes()}
-              </div>)
-              :
-              null}
+              {this.state.notes.note !== "" ? (
+                <div className="notes displayDesktop">
+                  <h3>Notes</h3>
+                  <hr align="left" />
+                  {this.getNotes()}
+                </div>
+              ) : null}
               <ul className="prepList">
                 <h3> Preparation </h3>
-                <hr align="left"/>
+                <hr align="left" />
                 {this.getPrepSteps()}
               </ul>
-              {this.state.notes.note !== "" ?
-              (<div className="notes displayMobile">
-                <h3>Notes</h3>
-                <hr align="left"/>
-                {this.getNotes()}
-              </div>)
-              :
-              null}
-              {this.state.anecdotes.anecdote !== "" ?
-              (<div className="anecdote">
-                <h3>Anecdotes</h3>
-                <hr align="left"/>
-                {this.getAnecdotes()}
-              </div>)
-              :
-              null}
-              {/* <div>
-                <button onClick={this.deleteRecipe}>Delete recipe</button>
-              </div> */}
+              {this.state.notes.note !== "" ? (
+                <div className="notes displayMobile">
+                  <h3>Notes</h3>
+                  <hr align="left" />
+                  {this.getNotes()}
+                </div>
+              ) : null}
+              {this.state.anecdotes.anecdote !== "" ? (
+                <div className="anecdote">
+                  <h3>Anecdotes</h3>
+                  <hr align="left" />
+                  {this.getAnecdotes()}
+                </div>
+              ) : null}
             </div>
             <div className="sideTools">
-              <i className="icon send i24"></i>
-              {this.props.username === this.state.recipeObject.username && 
-              (<i onClick={this.editRecipe} className="icon edit i24"></i>)}
-              
-              <i className="icon print i24"></i>
+              <i className="icon send i24" />
+              {this.props.username === this.state.recipeObject.username && (
+                <i onClick={this.editRecipe} className="icon edit i24" />
+              )}
+
+              <i className="icon print i24" />
             </div>
           </div>
         )};
