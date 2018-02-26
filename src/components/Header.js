@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router'
+import firebase from 'firebase'
 
 
 class Header extends Component {
@@ -16,6 +17,12 @@ class Header extends Component {
     };
   }
 
+  logout = () => {
+    firebase.auth().signOut();
+    // console.log(firebase.auth().currentUser);
+    localStorage.removeItem("login");
+    this.setState({ username: "" });
+  };
 
   getHeaderContentLogguedIn = () => {
     return (

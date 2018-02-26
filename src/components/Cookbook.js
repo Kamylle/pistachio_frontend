@@ -18,16 +18,17 @@ class Cookbook extends Component {
     }
 
     componentWillMount = async () => {
-
+        // console.log(this.state.cookbookID)
       let cookbook = {};
       let cookbookRecipeIDs;
       let cookbookTtl;
 
       await cookbooksRef
-      .child(`${this.state.cookbookID}`)
+      .child(this.state.cookbookID)
       .once("value")
       .then(snapshot => {
           cookbook = snapshot.val();
+        //   console.log(cookbook)
           cookbookTtl = cookbook.title.value;
           cookbookRecipeIDs = cookbook.recipeIDs;
           return cookbook.ownerUserID;
@@ -58,6 +59,7 @@ class Cookbook extends Component {
         return (
         this.state.recipeIDs.map((recipeID, idx) => (
             <RecipeCard 
+            key={idx}
             recipeID={recipeID}
             username={this.props.username}
             userID={this.props.userID}
@@ -67,6 +69,7 @@ class Cookbook extends Component {
       }
 
     render() {
+        // console.log(this.state.cookbookID)
       return this.state.loaded
       ? (
         <div className={this.getClassName()}>
