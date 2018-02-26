@@ -59,7 +59,7 @@ class CreateRecipePage extends Component {
 
   componentDidMount() {
     //get localstorage state and set it
-    console.log(this.props.location.state);
+    //console.log(this.props.location.state);
     if (this.props.location.state) {
       this.setState(this.props.location.state.recipeObject);
     } else {
@@ -162,7 +162,7 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
-    console.log("Recipe sent");
+    //console.log("Recipe sent");
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -173,7 +173,7 @@ class CreateRecipePage extends Component {
       //reset state
       this.setAppState(this.initialState);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
     this.props.history.push("/recipe/" + this.state.recipeID)
   };
@@ -292,7 +292,7 @@ class CreateRecipePage extends Component {
     // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
     const userCookbooks = this.state.cookbookIDs;
     const updatedCookbooksList = userCookbooks.concat(cookbookKey);
-    console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+    //console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
     db.ref(`Accounts/${this.props.userID}/cookbooksList`)
     .set(updatedCookbooksList);
 
@@ -349,7 +349,7 @@ class CreateRecipePage extends Component {
               .concat(newCookbookSelectableOption)
 
     } catch(err) { 
-      console.log(err);
+      //console.log(err);
       return (newCookbookSelectableOption)
     }
   }
