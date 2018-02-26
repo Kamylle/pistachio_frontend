@@ -50,7 +50,7 @@ class Header extends Component {
     // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
-        <Link to="/" className="logo hideOnMobile">
+        <Link to="/" refresh="true" className="logo hideOnMobile">
           Pistach.io
         </Link>
         <form onSubmit={this.handleSubmit}>

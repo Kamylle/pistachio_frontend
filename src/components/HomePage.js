@@ -9,7 +9,7 @@ class HomePage extends Component {
       super(props);
       this.state = {
         sidebarSelect: "all",
-        toggleSidebar: false,
+        toggleSidebar: true,
         cookbookIDs: ["newCookbook"],
         cookbooksFetchedFromDB: false
       }
