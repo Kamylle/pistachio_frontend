@@ -10,7 +10,7 @@ class RecipePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeID: window.location.href.split("/").pop(),
+      recipeID: props.recipeID,
       recipeObject: {},
       creatorObject: {},
       loaded: false,
@@ -19,18 +19,18 @@ class RecipePage extends Component {
     };
   }
 
-  getRecipePath = () => {
-    //TODO this function will return the path of the recipe
-    //Will therefore require username from state
-    if (this.state.loaded) {
-      try {
-        return `/recipe/${this.state.recipeID}`;
-      } catch (err) {
-        return "/recipe";
-      }
-    }
-    return "/recipe";
-  };
+  // getRecipePath = () => {
+  //   //TODO this function will return the path of the recipe
+  //   //Will therefore require username from state
+  //   if (this.state.loaded) {
+  //     try {
+  //       return `/recipe/${this.state.recipeID}`;
+  //     } catch (err) {
+  //       return "/recipe";
+  //     }
+  //   }
+  //   return "/recipe";
+  // };
 
   getRecipeTitle = () => {
     return this.state.recipeObject.recipe;
@@ -96,29 +96,27 @@ class RecipePage extends Component {
     return anecdotesMap;
   }
 
-  componentWillMount = () => {
-    let recipe = {};
-  
-
+  componentDidMount = () => {
+    const recipeID = this.state.recipeID;
+    console.log('Im mounting')
     recipesRef
-      .child(this.state.recipeID)
+      .child(recipeID)
       .once("value")
       .then(snapshot => {
         // console.log(snapshot.val());
-        recipe = snapshot.val();
-        // console.log(recipe);
-        return recipe.people.creatorID;
+        return snapshot.val();
+        // return recipe.people.creatorID;
       })
-      .then(creatorID => {
-        // console.log("creatorID =", creatorID);
-        return usersRef.child(creatorID).once("value");
-      })
-      .then(creatorObj => {
+      // .then(async creatorID => {
+      //   // console.log("creatorID =", creatorID);
+      //   return await usersRef.child(creatorID).once("value");
+      // })
+      .then((recipe) => {
         // console.log("creator Object =", creatorObj.val());
         this.setState({
           recipeID: recipe.recipeID,
           recipeObject: recipe,
-          creatorObject: creatorObj.val()
+          // creatorObject: creatorObj.val()
           // loaded: true
         });
       })
