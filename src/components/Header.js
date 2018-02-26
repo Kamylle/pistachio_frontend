@@ -22,10 +22,10 @@ class Header extends Component {
       <div>
         <Link to="/edit" className="newRecipeBtn">
           <i className="icon add i24" />
-          New recipe
+          <span className="hideOnMobile">New recipe</span>
         </Link>
         <div className="accountLinks">
-          <p>Welcome {this.state.username}</p>
+          <p className="hideOnMobile">Welcome {this.state.username}</p>
           <a onClick={this.logout}>Logout</a>
         </div>
       </div>
@@ -44,7 +44,7 @@ class Header extends Component {
     // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>
-        <Link to="/" className="logo">
+        <Link to="/" className="logo hideOnMobile">
           Pistach.io
         </Link>
         <form>

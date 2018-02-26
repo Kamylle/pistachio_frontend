@@ -8,6 +8,14 @@ html {
 
 /*Media Queries*/
 
+@mixin bp-mobileOnly {
+  //ONLY for small screns
+  //480px
+  @media only screen and (max-width: 30em) {
+    @content;
+  }
+}
+
 @mixin bp-sm {
   //480px
   @media only screen and (min-width: 30em) {
@@ -41,4 +49,15 @@ html {
   @media only screen and (min-width: 100em) {
     @content;
   }
+}
+
+
+/*Transitions*/
+
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+    -webkit-transition: $what $time $how;
+    -moz-transition:    $what $time $how;
+    -ms-transition:     $what $time $how;
+    -o-transition:      $what $time $how;
+    transition:         $what $time $how;
 }

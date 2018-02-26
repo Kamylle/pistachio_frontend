@@ -54,6 +54,7 @@ html {
   box-sizing: inherit; }
 
 /*Media Queries*/
+/*Transitions*/
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -89,39 +90,48 @@ h6 {
 p {
   line-height: 1.2em; }
 
+/*Utils*/
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+/*Media Queries*/
+/*Transitions*/
 .icon {
-  display: inline-block; }
+  display: inline-block;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+  .icon:hover {
+    opacity: 0.8; }
   .icon.i24 {
     width: 24px;
     height: 24px;
     background-size: 16px 16px;
     background-repeat: no-repeat;
     background-position: center; }
+  .icon.i18 {
+    width: 18px;
+    height: 18px;
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: center; }
   .icon.search {
     background-image: url("./img/icons/ic_search.svg"); }
-    .icon.search:hover {
-      background-image: url("./img/icons/ic_search.svg");
-      background-image: url("./img/icons/ic_search_green.svg"); }
   .icon.add {
     background-image: url("./img/icons/ic_add_white.svg"); }
-    .icon.add:hover {
-      background-image: url("./img/icons/ic_add_white.svg");
-      background-image: url("./img/icons/ic_add_moss.svg"); }
   .icon.send {
     background-image: url("./img/icons/ic_send_white.svg"); }
-    .icon.send:hover {
-      background-image: url("./img/icons/ic_send_white.svg");
-      background-image: url("./img/icons/ic_send_moss.svg"); }
   .icon.edit {
     background-image: url("./img/icons/ic_edit_white.svg"); }
-    .icon.edit:hover {
-      background-image: url("./img/icons/ic_edit_white.svg");
-      background-image: url("./img/icons/ic_edit_moss.svg"); }
   .icon.print {
     background-image: url("./img/icons/ic_print_white.svg"); }
-    .icon.print:hover {
-      background-image: url("./img/icons/ic_print_white.svg");
-      background-image: url("./img/icons/ic_print_moss.svg"); }
+  .icon.close {
+    background-image: url("./img/icons/ic_close_black.svg"); }
 
 html, body, #root {
   width: 100%;
@@ -138,7 +148,12 @@ html, body, #root {
   color: #ffffff; }
 
 a, button {
-  cursor: pointer; }
+  cursor: pointer;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease; }
 
 a {
   color: #262424;
@@ -146,19 +161,33 @@ a {
   a:hover {
     color: #000000; }
 
+.displayInlineBlock {
+  display: inline-block !important; }
+
+@media only screen and (max-width: 30em) {
+  .hideOnMobile {
+    display: none !important; } }
+
 button {
   border-radius: 2px;
   box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
   margin: 0.5em 0;
   padding: 0.7em 1em;
-  background-color: #262424;
+  background-color: #acc85c;
   color: #ffffff;
   border: none; }
   button:hover {
-    background-color: #000000;
+    background-color: #89a240;
     color: #f4f3f2; }
   button:active {
     box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0); }
+  button.secondaryBtn {
+    background-color: #262424;
+    display: block; }
+    button.secondaryBtn:hover {
+      box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+      background-color: #000000;
+      color: #f4f3f2; }
 
 .googleSignInBtn {
   display: flex;
@@ -196,15 +225,22 @@ button {
     .App > header form {
       display: flex;
       margin: 0;
-      align-items: center; }
+      align-items: center;
+      justify-content: flex-end;
+      flex-grow: 2; }
       .App > header form input {
         box-shadow: none;
-        background-color: #ffffff;
+        background-color: #ffffff !important;
         border: none;
         font-size: 1.2em;
         margin: 0;
         text-align: right;
-        letter-spacing: 0.03em; }
+        letter-spacing: 0.03em;
+        width: 50%;
+        padding: 0; }
+        @media only screen and (min-width: 40em) {
+          .App > header form input {
+            font-size: 1.6em; } }
         .App > header form input:focus {
           outline: none; }
           .App > header form input:focus::placeholder {
@@ -212,9 +248,14 @@ button {
         .App > header form input::placeholder {
           color: #d1cfcf; }
     .App > header .logo {
-      font-size: 2em;
+      text-transform: uppercase;
+      font-size: 4vw;
       font-weight: 600;
-      padding-left: 0.4em; }
+      padding-left: 0.4em;
+      letter-spacing: 0.16em; }
+      @media only screen and (min-width: 40em) {
+        .App > header .logo {
+          font-size: 1.6em; } }
     .App > header .accountLinks {
       display: block;
       text-align: right;
@@ -226,6 +267,13 @@ button {
         line-height: 1.2em; }
       .App > header .accountLinks a {
         color: #89a240; }
+        .App > header .accountLinks a:hover {
+          color: #cae47e; }
+      .App > header .accountLinks p {
+        display: none; }
+        @media only screen and (min-width: 60em) {
+          .App > header .accountLinks p {
+            display: block; } }
     .App > header div {
       display: flex; }
     .App > header .newRecipeBtn {
@@ -233,12 +281,25 @@ button {
       background-color: #262424;
       font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: #ffffff;
-      padding: 1.5em; }
+      padding: 1em 1.5em;
+      line-height: 2em; }
+      .App > header .newRecipeBtn i {
+        position: relative;
+        top: 0.4em; }
+      .App > header .newRecipeBtn span {
+        padding-left: 0.5em;
+        display: none; }
+        @media only screen and (min-width: 60em) {
+          .App > header .newRecipeBtn span {
+            display: inline-block; } }
       .App > header .newRecipeBtn:hover {
-        background-color: #000000; }
+        background-color: #89a240; }
   .App aside {
     width: 15em;
     flex: none;
+    position: fixed;
+    z-index: 99;
+    height: 100%;
     padding-top: 4em;
     background-color: #ffffff; }
   .App #main {
@@ -254,7 +315,8 @@ button {
   width: 100%; }
 
 .Home {
-  justify-content: center; }
+  justify-content: center;
+  padding-left: 15em; }
 
 aside.cookbookMarks {
   background-color: #ffffff;
@@ -264,7 +326,12 @@ aside.cookbookMarks {
   aside.cookbookMarks ul {
     padding: 1em 0; }
     aside.cookbookMarks ul li {
-      padding: 1em; }
+      padding: 1em;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease; }
       aside.cookbookMarks ul li.selected {
         background-color: rgba(38, 36, 36, 0.06);
         border-left: 0.2em solid #89a240;
@@ -286,17 +353,41 @@ aside.cookbookMarks {
   position: fixed;
   right: 0;
   top: 7em;
-  padding: 0.2em 0; }
+  padding: 0.2em 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
   .sideTools:hover {
     background-color: #000000; }
   .sideTools i {
     display: block;
     padding: 1.2em; }
 
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #89a240;
+  display: flex;
+  justify-content: flex-end; }
+  .bottomBar button {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    background-color: #89a240;
+    color: #262424;
+    font-size: 1.2em;
+    font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+    .bottomBar button:hover {
+      color: #000000;
+      background-color: #acc85c; }
+
 .cookBookContainer {
   width: 100%;
-  flex-direction: column;
-  justify-content: center; }
+  flex-direction: column; }
   .cookBookContainer header {
     background-color: #89a240;
     background-image: url("./img/bg-green.jpg");
@@ -341,10 +432,20 @@ aside.cookbookMarks {
     display: inline-block;
     margin-bottom: 1em;
     width: 100%;
-    border-radius: 0.2em; }
+    border-radius: 0.2em;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease; }
     .cardContain .card:hover {
       box-shadow: 0 0 0 2px #89a240, 0 2px 3px 2px rgba(54, 40, 28, 0.07); }
     .cardContain .card:active {
+      -webkit-transition: all 0.1s ease;
+      -moz-transition: all 0.1s ease;
+      -ms-transition: all 0.1s ease;
+      -o-transition: all 0.1s ease;
+      transition: all 0.1s ease;
       box-shadow: 0 0 0 2px #d1cfcf; }
       .cardContain .card:active h2 {
         opacity: 0.85; }
@@ -477,41 +578,72 @@ input, textarea {
 
 label {
   display: block;
-  padding: 0.5em 0;
+  padding: 1em 0;
   font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
   letter-spacing: 0.06em;
-  font-size: 0.8em;
-  font-weight: 700; }
+  font-size: 1em;
+  font-weight: 600; }
 
-form {
-  margin: auto; }
-  form h2, form h3 {
-    padding: 0.5em; }
-  form input, form textarea, form select {
-    display: block;
-    padding: 0.5em;
-    margin: 0.5em; }
-  form label {
-    display: block;
-    padding: 0.5em; }
-  form textarea {
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 90%; }
-  form .step {
-    max-width: 600px; }
-  form .ingredient, form .step {
-    display: flex;
-    align-items: center; }
-    form .ingredient input, form .ingredient textarea, form .ingredient select, form .ingredient label, form .step input, form .step textarea, form .step select, form .step label {
-      display: inline-block; }
-    form .ingredient button, form .step button {
-      padding: 0.5em 1em;
-      margin: 0.5em; }
-  form img {
-    max-width: 4em;
-    max-height: 4em; }
+.newRecipeContainer header {
+  width: 100%;
+  background-color: #89a240;
+  background-image: url("./img/bg-green.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding: 8em 2em 3em; }
+  .newRecipeContainer header h2 {
+    max-width: 13em;
+    margin: auto;
+    font-size: 3em; }
 
 form.createRecipe {
   background-color: #ffffff;
+  background-image: url();
   box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
-  padding: 4em; }
+  padding: 4em;
+  margin: auto;
+  max-width: 40em;
+  position: relative;
+  border-radius: 0.3em;
+  top: -2em; }
+  form.createRecipe h2, form.createRecipe h3 {
+    padding: 1.5em 0.5em 0.5em 0; }
+  form.createRecipe input, form.createRecipe textarea, form.createRecipe select {
+    display: block;
+    padding: 0.5em;
+    margin: 0.5em;
+    margin-left: 0; }
+  form.createRecipe label {
+    display: block;
+    padding: 1.5em 0.5em 0.8em 0; }
+  form.createRecipe textarea {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    min-width: 30em;
+    max-width: 30em; }
+  form.createRecipe .ingredient, form.createRecipe .step, form.createRecipe .notes {
+    display: flex;
+    align-items: center; }
+    form.createRecipe .ingredient input, form.createRecipe .ingredient textarea, form.createRecipe .ingredient select, form.createRecipe .ingredient label, form.createRecipe .step input, form.createRecipe .step textarea, form.createRecipe .step select, form.createRecipe .step label, form.createRecipe .notes input, form.createRecipe .notes textarea, form.createRecipe .notes select, form.createRecipe .notes label {
+      display: inline-block; }
+  form.createRecipe .selectImgInput {
+    background-color: #ffffff;
+    box-shadow: none;
+    border: none; }
+  form.createRecipe img {
+    max-width: 4em;
+    max-height: 4em; }
+  form.createRecipe .close {
+    background-color: #f4f3f2;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    padding: 0.8em; }
+    form.createRecipe .close:hover {
+      background-color: #cae47e;
+      padding: 0.8em; }
+    form.createRecipe .close:focus {
+      padding: 0.8em;
+      background-color: #d1cfcf; }

@@ -22,6 +22,7 @@ html, body, #root{
 
 a, button {
   cursor: pointer;
+  @include transition (all, 0.4s, ease);
 }
 
 a {
@@ -29,6 +30,16 @@ a {
   text-decoration: none;
   &:hover {
     color: $blackest;
+  }
+}
+
+.displayInlineBlock {
+  display: inline-block !important;
+}
+
+.hideOnMobile {
+  @include bp-mobileOnly {
+    display: none !important;
   }
 }
 
@@ -45,17 +56,24 @@ button {
   box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0.1);
   margin: 0.5em 0;
   padding: 0.7em 1em;
-  background-color: $black;
+  background-color: $primaryMed;
   color: $white;
   border: none;
     &:hover {
-      background-color: $blackest;
+      background-color: $primaryDark;
       color: $grayLight;
     }
     &:active {
       box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
     }
     &.secondaryBtn {
+      background-color: $black;
+      display: block;
+      &:hover {
+        box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+        background-color: $blackest;
+        color: $grayLight;
+      }
     }
 }
 .googleSignInBtn {
@@ -108,14 +126,21 @@ button {
       display: flex;
       margin: 0;
       align-items: center;
+      justify-content: flex-end;
+      flex-grow: 2;
       input {
         box-shadow: none;
-        background-color: $white;
+        background-color: $white !important;
         border: none;
         font-size: 1.2em;
         margin: 0;
         text-align: right;
         letter-spacing: 0.03em;
+        width: 50%;
+        padding: 0;
+        @include bp-md {
+          font-size: 1.6em;
+        }
         &:focus {
           outline: none;
           &::placeholder {
@@ -128,9 +153,14 @@ button {
       }
     }
     .logo {
-      font-size: 2em;
+      text-transform: uppercase;
+      font-size: 4vw;
       font-weight: 600;
       padding-left: 0.4em;
+      letter-spacing: 0.16em;
+      @include bp-md {
+        font-size: 1.6em;
+      }
     }
     .accountLinks {
       display: block;
@@ -144,6 +174,15 @@ button {
       }
       a {
         color: $primaryDark;
+        &:hover {
+          color: $primaryLight;
+        }
+      }
+      p {
+        display: none;
+        @include bp-lg {
+          display: block;
+        }
       }
     }
     div {
@@ -154,16 +193,31 @@ button {
       background-color: $black;
       font-family: $sans-font;
       color: $white;
-      padding: 1.5em;
+      padding: 1em 1.5em;
+      line-height: 2em;
+      i {
+        position: relative;
+        top: 0.4em;
+      }
+      span {
+        padding-left: 0.5em;
+          display: none;
+          @include bp-lg {
+            display: inline-block;
+          }
+      }
       &:hover {
-        background-color: $blackest;
+        background-color: $primaryDark;
       }
     }
   }
 
   aside{
-    width: 15em;
+    width: $sidebar-width;
     flex: none;
+    position: fixed;
+    z-index: 99;
+    height: 100%;
     padding-top: $header-height;
     background-color: $white;
   }
@@ -186,6 +240,7 @@ button {
 
 .Home {
   justify-content: center;
+  padding-left: $sidebar-width;
 }
 //  ######  #### ########  ######## ########     ###    ########   ######
 // ##    ##  ##  ##     ## ##       ##     ##   ## ##   ##     ## ##    ##
@@ -206,6 +261,7 @@ aside {
       padding: 1em 0;
       li{
         padding: 1em;
+        @include transition (all, 0.5s, ease)
         &.selected {
           background-color: rgba(38, 36, 36, 0.06);
           border-left: 0.2em solid $primaryDark;
@@ -243,12 +299,37 @@ aside {
   right: 0;
   top: $header-height + 3em;
   padding: 0.2em 0;
+  @include transition (all, 0.5s, ease)
   &:hover {
     background-color: $blackest;
   }
   i {
     display: block;
     padding: 1.2em;
+  }
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $primaryDark;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    background-color: $primaryDark;
+    color: $black;
+    font-size: 1.2em;
+    font-family: $serif-font;
+    &:hover {
+      color: $blackest;
+      background-color: $primaryMed;
+    }
+
   }
 }
 
@@ -263,7 +344,7 @@ aside {
 .cookBookContainer {
   width: 100%;
   flex-direction: column;
-  justify-content: center;
+  //justify-content: center;
   header {
     background-color: $primaryDark;
     background-image: url("./img/bg-green.jpg");
@@ -318,10 +399,12 @@ aside {
      margin-bottom: 1em;
      width: 100%;
      border-radius: 0.2em;
+     @include transition (all, 0.5s, ease)
      &:hover {
        box-shadow: 0 0 0 2px $primaryDark, 0 2px 3px 2px rgba(54, 40, 28, 0.07);
      }
      &:active {
+       @include transition (all, 0.1s, ease)
        box-shadow: 0 0 0 2px $grayMed;
        h2 {
          opacity: 0.85;
@@ -530,56 +613,88 @@ input, textarea {
 
 label {
     display: block;
-    padding: 0.5em 0;
+    padding: 1em 0;
     font-family: $serif-font;
     letter-spacing: 0.06em;
-    font-size: 0.8em;
-    font-weight: 700;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 
+.newRecipeContainer {
+    header {
+      width: 100%;
+      background-color: $primaryDark;
+      background-image: url("./img/bg-green.jpg");
+      background-size: cover;
+      background-position: center;
+      color: $white;
+      padding: 8em 2em 3em;
+      h2 {
+        max-width: 13em;
+        margin: auto;
+        font-size: 3em;
+      }
+    }
+}
 
-form {
+form.createRecipe {
+  background-color: $white;
+  background-image: url();
+  box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
+  padding: 4em;
   margin: auto;
+  max-width: 40em;
+  position: relative;
+  border-radius: 0.3em;
+  top: -2em;
     h2, h3 {
-        padding: 0.5em;
+        padding: 1.5em 0.5em 0.5em 0;
     }
     input, textarea, select {
         display: block;
         padding: 0.5em;
         margin:  0.5em;
+        margin-left: 0;
     }
     label {
         display: block;
-        padding: 0.5em;
+        padding: 1.5em 0.5em 0.8em 0;
     }
     textarea {
       font-family: $sans-font;
-      width: 90%;
+      min-width: 30em;
+      max-width: 30em;
     }
-    .step {
-      max-width: 600px;
-    }
-    .ingredient, .step {
+    .ingredient, .step, .notes {
       display: flex;
       align-items: center;
       input, textarea, select, label {
         display: inline-block;
       }
-      button {
-        padding: 0.5em 1em;
-        margin: 0.5em;
-      }
+    }
+    .selectImgInput {
+      background-color: $white;
+      box-shadow: none;
+      border: none;
     }
     img {
       max-width: 4em;
       max-height: 4em;
     }
-}
-form.createRecipe {
-  background-color: $white;
-  box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
-  padding: 4em;
+    .close {
+      background-color: $grayLight;
+      @include transition (all, 0.2s, ease);
+      padding: 0.8em;
+      &:hover {
+        background-color: $primaryLight;
+        padding: 0.8em;
+      }
+      &:focus {
+        padding: 0.8em;
+        background-color: $grayMed;
+      }
+    }
 }
 
 //  ######  ########  ########    ###    ######## ########    ########  ########  ######  #### ########  ########
