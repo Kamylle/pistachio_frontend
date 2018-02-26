@@ -17,13 +17,14 @@ class App extends Component {
     super();
     this.state = {
       userID: undefined,
-      username: undefined
+      username: undefined,
+      persist: false
     }
   }
 
   componentDidMount() {
     const state = JSON.parse(localStorage.getItem('login'));
-    this.setState(state/*, () => console.log(this.state.username)*/);
+    this.setState({ ...state, persist: true }, () => console.log(this.state.username));
   }
 
   setLoginState = (state) => {
@@ -38,6 +39,7 @@ class App extends Component {
   }
 
   render() {
+    if(!this.state.persist) return <div/>
     if (!this.state.username) {
       return (
         <div className="App">
@@ -51,10 +53,10 @@ class App extends Component {
           /> */}
           <Switch>
             <Route
-              path="/recipe/:recipe"
+              path="/recipe/:recipeID"
               render={(routeProps) => (
                 <RecipePage 
-                  recipe={routeProps.match.params.recipe}
+                  recipeID={routeProps.match.params.recipeID}
                 />
               )}
             />
@@ -87,10 +89,10 @@ class App extends Component {
             )}
           />
           <Route
-            path="/recipe"
+            path="/recipe/:recipeID"
             render={(routeProps) => (
               <RecipePage
-              recipe={routeProps.match.params.recipe}
+              recipeID={routeProps.match.params.recipeID}
               userID={this.state.userID}
               username={this.state.username}
               history={routeProps.history}
@@ -104,6 +106,7 @@ class App extends Component {
               userID={this.state.userID}
               username={this.state.username}
               location={routeProps.location}
+              history={routeProps.history}
               />
             )}
           />
