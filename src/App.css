@@ -234,6 +234,9 @@ button {
       align-items: center;
       justify-content: flex-end;
       flex-grow: 2; }
+      .App > header form .searchbar {
+        background-color: rgba(255, 255, 255, 0);
+        box-shadow: none; }
       .App > header form input {
         box-shadow: none;
         background-color: #ffffff !important;
@@ -467,6 +470,8 @@ aside.cookbookMarks {
   @media only screen and (min-width: 100em) {
     .cardContain {
       column-count: 6; } }
+  .cardContain.searchContain {
+    padding-top: 4em; }
   .cardContain .card {
     box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
     background-color: #ffffff;

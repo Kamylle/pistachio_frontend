@@ -26,7 +26,7 @@ class Cookbook extends Component {
       await cookbooksRef
       .child(`${this.state.cookbookID}`)
       .once("value")
-      .then(snapshot => { 
+      .then(snapshot => {
           cookbook = snapshot.val();
           console.log("COOKBOOK =", cookbook);
           cookbookTtl = cookbook.title.value;
@@ -39,8 +39,8 @@ class Cookbook extends Component {
           .child(ownerUserID)
           .once("value")
       })
-      .then(creatorObj => { 
-          this.setState({ 
+      .then(creatorObj => {
+          this.setState({
               cookbookObject: cookbook,
               cookbookTitle: cookbookTtl,
               creatorObject: creatorObj.val(),
@@ -59,7 +59,7 @@ class Cookbook extends Component {
         try {
             return (
             this.state.recipeIDs.map((recipeID, idx) => (
-                <RecipeCard 
+                <RecipeCard
                 recipeID={recipeID}
                 username={this.props.username}
                 userID={this.props.userID}
@@ -70,18 +70,17 @@ class Cookbook extends Component {
       }
 
     render() {
-      return this.state.loaded 
+      return this.state.loaded
       ? (
         <div className={this.getClassName()}>
             <header>
                 <h1>{this.state.cookbookTitle}</h1>
-                <h3>{this.state.cookbookID}</h3>
             </header>
             <div className="cardContain">
                 {this.renderAllRecipe()}
             </div>
         </div>
-        ) 
+        )
       : null
     }
   }
