@@ -504,7 +504,7 @@ class CreateRecipePage extends Component {
           </label>
           
           <label>
-            For how many people?
+            Number of servings
             <input
               name="yieldNb"
               type="number"

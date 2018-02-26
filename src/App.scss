@@ -134,6 +134,10 @@ button {
       align-items: center;
       justify-content: flex-end;
       flex-grow: 2;
+      .searchbar {
+        background-color: $transparentColor;
+        box-shadow: none;
+      }
       input {
         box-shadow: none;
         background-color: $white !important;
@@ -256,7 +260,7 @@ button {
   width: 100%;
 }
 
-.Home {
+.Home{
   justify-content: center;
   padding-left: $sidebar-width;
   @include transition (all, 0.5s, ease)
@@ -428,6 +432,9 @@ aside {
   }
   @include bp-xxl {
     column-count: 6;
+  }
+  &.searchContain {
+    padding-top: $header-height;
   }
 
 

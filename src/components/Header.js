@@ -46,7 +46,7 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     // console.log(this.state.itemsFound, this.state.recipeID, this.state.username);
     return (
       <header>

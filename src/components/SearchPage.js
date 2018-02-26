@@ -86,19 +86,23 @@ class SearchPage extends Component {
   render() {
     {
       return !this.state.loaded ? (
-        <div>
-          <SidebarSearch />
+        <div className="flexContain">
+          {/* <SidebarSearch /> */}
           <h2>Loading ...</h2>
         </div>
       ) : (
-        <div>
-          <SidebarSearch />
-          {this.state.itemsFound.map((item, idx) => (
-              <RecipeCard 
-                key={idx}
-                recipeID={item.recipeID}
-              />
-          ))};
+        <div className="flexContain">
+          {/* <SidebarSearch /> */}
+          <div id="main" className="Search">
+            <div className="cardContain searchContain">
+              {this.state.itemsFound.map((item, idx) => (
+                  <RecipeCard 
+                    key={idx}
+                    recipeID={item.recipeID}
+                  />
+              ))}
+            </div>
+          </div>
         </div>
       );
     }
