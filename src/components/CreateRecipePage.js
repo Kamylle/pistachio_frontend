@@ -59,7 +59,11 @@ class CreateRecipePage extends Component {
 
   componentDidMount() {
     //get localstorage state and set it
+<<<<<<< HEAD
     //console.log(this.props.location.state);
+=======
+    // console.log(this.props.location.state);
+>>>>>>> d844c36e322473681f26041b051c65f937dad552
     if (this.props.location.state) {
       this.setState(this.props.location.state.recipeObject);
     } else {
@@ -162,7 +166,11 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
+<<<<<<< HEAD
     //console.log("Recipe sent");
+=======
+    // console.log("Recipe sent");
+>>>>>>> d844c36e322473681f26041b051c65f937dad552
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -292,7 +300,11 @@ class CreateRecipePage extends Component {
     // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
     const userCookbooks = this.state.cookbookIDs;
     const updatedCookbooksList = userCookbooks.concat(cookbookKey);
+<<<<<<< HEAD
     //console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+=======
+    // console.log("UPDATED COOKBOOKS LIST = ", updatedCookbooksList);
+>>>>>>> d844c36e322473681f26041b051c65f937dad552
     db.ref(`Accounts/${this.props.userID}/cookbooksList`)
     .set(updatedCookbooksList);
 
@@ -370,11 +382,18 @@ class CreateRecipePage extends Component {
   cancelRecipe = () => {
     this.setAppState( this.initialState )
     // this.props.history.push("/")
-    
   }
 
+  deleteRecipe = () => {
+    // if (window.confirm("Are you sure you wish to delete this item?")) {
+      const db = firebase.database();
+      db.ref(`Recipes/${this.state.recipeID}`).remove();
+      this.props.history.push("/");
+    // }
+  };
+
   render() {
-    // console.log(this.state);
+    // console.log(this.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
@@ -572,7 +591,8 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>  
+            <button onClick={this.deleteRecipe}>Delete recipe</button>
+            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>     
             <button type="submit" value="Submit">Save</button>
           </div>
         </form>
