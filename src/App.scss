@@ -108,7 +108,7 @@ button {
 
   & > header {
     z-index: 100;
-    height: $header-height;
+    height: $header-height-mobile;
     font-family: $serif-font;
     width: 100%;
     position: fixed;
@@ -119,8 +119,14 @@ button {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 0 40px 4px rgba(54, 39, 28, 0.1);
+    @include bp-md {
+      height: $header-height;
+    }
     a {
-      padding: 0 1em;
+      padding: 0 0.5em;
+      @include bp-md {
+        padding: 0 1em;
+      }
     }
     form {
       display: flex;
@@ -189,12 +195,16 @@ button {
         display: flex;
     }
     .newRecipeBtn {
-      height: $header-height;
+      height: $header-height-mobile;
       background-color: $black;
       font-family: $sans-font;
       color: $white;
-      padding: 1em 1.5em;
+      padding: 0.5em 0.8em;
       line-height: 2em;
+      @include bp-md {
+        height: $header-height;
+        padding: 1em 1.5em;
+      }
       i {
         position: relative;
         top: 0.4em;
@@ -216,19 +226,27 @@ button {
     width: $sidebar-width;
     flex: none;
     position: fixed;
+    left: 0;
     z-index: 99;
     height: 100%;
-    padding-top: $header-height;
+    padding-top: $header-height-mobile;
     background-color: $white;
+    @include transition (all, 0.5s, ease)
+    @include bp-md {
+      padding-top: $header-height;
+    }
   }
 
   #main {
-    padding-top: $header-height;
+    padding-top: $header-height-mobile;
     display: flex;
     flex-wrap: wrap;
     flex-grow: 4;
     .isHidden {
       display: none;
+    }
+    @include bp-md {
+      padding-top: $header-height;
     }
   }
 }
@@ -255,7 +273,7 @@ aside {
     background-color: $white;
     font-family: $serif-font;
     h3 {
-      padding: 2em 1em 1em;
+      padding: 0 1em 1em;
     }
     ul {
       padding: 1em 0;
@@ -282,6 +300,20 @@ aside {
       color: $primaryDark;
       font-weight: 600;
     }
+    .menuBtn {
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      padding: 0.5em;
+      background-color: $black;
+      color: $white;
+      left: $sidebar-width;
+
+    }
+    &.hideMenu {
+      left: -$sidebar-width;
+      @include transition (all, 0.2s, ease)
+    }
   }
 }
 
@@ -300,6 +332,7 @@ aside {
   top: $header-height + 3em;
   padding: 0.2em 0;
   @include transition (all, 0.5s, ease)
+
   &:hover {
     background-color: $blackest;
   }

@@ -9,6 +9,7 @@ class Sidebar extends Component {
       this.state = {
           userID: this.props.userID,
           linkSlected: "all",
+          toggleMenu: false,
           cookbooksListLoaded: false,
           cookbookObjectsloaded: false,
           userCookbooks: [],
@@ -116,9 +117,18 @@ class Sidebar extends Component {
     } catch(err) {"show Cookbook Add Button On Conflict Clear ERROR = ", console.log(err)}
   }
 
+  toggleMenu = () => {
+    this.setState({toggleMenu: !this.state.toggleMenu})
+  }
+
+  getMenuClass = () => {
+    return this.state.toggleMenu ? "cookbookMarks hideMenu" : "cookbookMarks"
+  }
+
   render() {
     return (
-      <aside className="cookbookMarks">
+      <aside className={this.getMenuClass()}>
+      <a className="menuBtn" onClick={this.toggleMenu}><i className="icon add i24"/></a>
       <h3>Cookbooks</h3>
         <ul>
           <li onClick={this.handleLinkSelect("all")}
