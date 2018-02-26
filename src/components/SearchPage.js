@@ -102,6 +102,14 @@ class SearchPage extends Component {
                   />
               ))}
             </div>
+            {/* <div className="cardContain searchContain">
+              {this.state.itemsFound.map((item, idx) => (
+                  <RecipeCard 
+                    key={idx}
+                    recipeID={item.recipeID}
+                  />
+              ))}
+            </div> */}
           </div>
         </div>
       );
