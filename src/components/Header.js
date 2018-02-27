@@ -19,6 +19,7 @@ class Header extends Component {
 
   logout = () => {
     this.props.logout();
+    this.props.history.push('/');
   };
 
   getHeaderContentLogguedIn = () => {

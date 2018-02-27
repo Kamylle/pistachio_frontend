@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import Textarea from "react-textarea-autosize";
 import { accountsRef, cookbooksRef, setPrettifiedCookbookPath } from "../scripts/db";
-import Cookbook from "./Cookbook";
+// import Cookbook from "./Cookbook";
 //import { Link } from 'react-router-dom';
 
 class CreateRecipePage extends Component {
@@ -379,23 +379,23 @@ class CreateRecipePage extends Component {
     .then(snapshot => {
       // console.log(snapshot.val());
       temp = snapshot.val();
-      console.log("test2 should return the complete DB: ", temp);
+      // console.log("test2 should return the complete DB: ", temp);
       Object.keys(temp).forEach((key) => {
         if (temp[key]) {
 
         
           if(temp[key].recipeIDs) {
-            console.log("test3 should return recipe ID list of present user: ", temp[key].recipeIDs)
+            // console.log("test3 should return recipe ID list of present user: ", temp[key].recipeIDs)
             for(var i = 0; i < Object.keys(temp[key].recipeIDs).length; i++) {
-              console.log("test4 should return present recipe inspected: ", temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]])
+              // console.log("test4 should return present recipe inspected: ", temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]])
               if(recipeID === temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]]) {
-                console.log("_____")
-                console.log("_____")
-                console.log("_____")
-                console.log("test5 MATCH")
-                console.log("_____")
-                console.log("_____")
-                console.log("_____")
+                // console.log("_____")
+                // console.log("_____")
+                // console.log("_____")
+                // console.log("test5 MATCH")
+                // console.log("_____")
+                // console.log("_____")
+                // console.log("_____")
                 delete temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]]
               }
             }
@@ -410,11 +410,11 @@ class CreateRecipePage extends Component {
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      // db.ref("Recipes/" + this.state.recipeID).remove();
+      db.ref("Recipes/" + this.state.recipeID).remove();
       // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
       this.deleteRecipeFromCookbook(this.state.recipeID);
-      // localStorage.removeItem('state')
-      // this.props.history.push("/");          
+      localStorage.removeItem('state')
+      this.props.history.push("/");          
     }
   };
 
