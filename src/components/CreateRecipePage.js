@@ -624,9 +624,8 @@ class CreateRecipePage extends Component {
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
               { this.state.cookbook === "" ? 
-                <button disabled onclick="window.location.href='#cookbookSelection'" 
-                className="saveBtn disabled">
-                  Select A Cookbook First
+                <button disabled className="saveBtn disabled">
+                  <a href='#cookbookSelection'>Select A Cookbook First</a>
                 </button> 
                 : 
                 <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>

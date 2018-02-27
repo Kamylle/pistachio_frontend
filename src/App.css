@@ -308,6 +308,10 @@ a {
 .displayInlineBlock {
   display: inline-block !important; }
 
+.flexContain {
+  display: flex;
+  width: 100%; }
+
 @media only screen and (max-width: 30em) {
   .hideOnMobile {
     display: none !important; } }
@@ -358,6 +362,15 @@ button {
   min-height: 100vh;
   background-color: #f9f9f9;
   display: flex; }
+
+.Home {
+  justify-content: center;
+  padding-left: 15em;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
 
 .App > header {
   z-index: 100;
@@ -515,19 +528,6 @@ aside {
     #main {
       padding-top: 4em; } }
 
-.flexContain {
-  display: flex;
-  width: 100%; }
-
-.Home {
-  justify-content: center;
-  padding-left: 15em;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease; }
-
 aside.cookbookMarks {
   background-color: #ffffff;
   font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
@@ -610,14 +610,14 @@ aside.cookbookMarks {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #89a240;
+  background-color: #f4f3f2;
   display: flex;
   justify-content: space-between; }
   .bottomBar button {
     box-shadow: none;
     border-radius: 0;
     margin: 0;
-    background-color: #89a240;
+    background-color: #f4f3f2;
     color: #262424;
     font-size: 1em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
@@ -625,17 +625,19 @@ aside.cookbookMarks {
       background-color: #262424;
       color: #ffffff; }
       .bottomBar button.saveBtn.disabled {
-        background-color: #262424;
-        color: #8d8786; }
-        .bottomBar button.saveBtn.disabled:hover {
-          background-color: #262424;
+        background-color: #262424; }
+        .bottomBar button.saveBtn.disabled a {
           color: #8d8786; }
+        .bottomBar button.saveBtn.disabled:hover {
+          background-color: #262424; }
+          .bottomBar button.saveBtn.disabled:hover a {
+            color: #8d8786; }
       .bottomBar button.saveBtn:hover {
         color: #f4f3f2;
         background-color: #000000; }
     .bottomBar button:hover {
       color: #000000;
-      background-color: #758f2a; }
+      background-color: #d1cfcf; }
 
 .cookBookContainer {
   width: 100%;
@@ -648,6 +650,9 @@ aside.cookbookMarks {
     color: #ffffff;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+    .cookBookContainer header h3 {
+      margin-top: 0.7em;
+      color: #262424; }
   .cookBookContainer.otherUser header {
     background-color: #262424;
     background-image: url("./img/bg-black.jpg"); }
@@ -673,7 +678,7 @@ aside.cookbookMarks {
   padding: 1em 0;
   font-size: 0.8em; }
   .addRecipe:hover {
-    color: #cae47e; }
+    opacity: 0.6; }
   .addRecipe i {
     position: relative;
     top: 0.2em;

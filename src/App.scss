@@ -42,6 +42,11 @@ a {
   display: inline-block !important;
 }
 
+.flexContain {
+  display: flex;
+  width: 100%;
+}
+
 .hideOnMobile {
   @include bp-mobileOnly {
     display: none !important;
@@ -119,6 +124,12 @@ button {
   min-height: 100vh;
   background-color: $whitish;
   display: flex;
+}
+
+.Home{
+  justify-content: center;
+  padding-left: $sidebar-width;
+  @include transition (all, 0.5s, ease)
 }
 
 .App > header {
@@ -300,17 +311,6 @@ button {
   }
 }
 
-.flexContain {
-  display: flex;
-  width: 100%;
-}
-
-.Home{
-  justify-content: center;
-  padding-left: $sidebar-width;
-  @include transition (all, 0.5s, ease)
-}
-
 //  ######  #### ########  ######## ########     ###    ########   ######
 // ##    ##  ##  ##     ## ##       ##     ##   ## ##   ##     ## ##    ##
 // ##        ##  ##     ## ##       ##     ##  ##   ##  ##     ## ##
@@ -418,14 +418,14 @@ aside {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: $primaryDark;
+  background-color: $grayLight;
   display: flex;
   justify-content: space-between;
   button {
     box-shadow: none;
     border-radius: 0;
     margin: 0;
-    background-color: $primaryDark;
+    background-color: $grayLight;
     color: $black;
     font-size: 1em;
     font-family: $serif-font;
@@ -434,10 +434,14 @@ aside {
       color: $white;
       &.disabled {
         background-color: $black;
-        color: $grayDark;
+        a {
+          color: $grayDark;
+        }
         &:hover {
           background-color: $black;
-          color: $grayDark;
+          a {
+            color: $grayDark;
+          }
         }
       }
       &:hover {
@@ -447,9 +451,8 @@ aside {
     }
     &:hover {
       color: $blackest;
-      background-color: $primaryDarker;
+      background-color: $grayMed;
     }
-
   }
 }
 
@@ -473,6 +476,10 @@ aside {
     color: $white;
     padding: 6em 2em 4em;
     font-family: $serif-font;
+    h3 {
+      margin-top: 0.7em;
+      color: $black;
+    }
   }
   &.otherUser {
     header {
@@ -510,7 +517,7 @@ aside {
   padding: 1em 0;
   font-size: 0.8em;
   &:hover {
-    color: $primaryLight;
+    opacity: 0.6;
   }
   i {
     position: relative;
