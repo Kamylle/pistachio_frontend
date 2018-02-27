@@ -321,10 +321,11 @@ button {
       box-shadow: none;
       background-color: #ffffff !important;
       border: 0px solid #ffffff;
-      font-size: 1.2em;
+      font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+      font-size: 1.1em;
       margin: 0;
       text-align: right;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       width: 50%;
       padding: 0;
       outline: none; }
@@ -332,6 +333,7 @@ button {
         .App > header form input {
           font-size: 1.6em; } }
       .App > header form input:focus, .App > header form input:active {
+        letter-spacing: 0;
         outline: none;
         border: 0; }
         .App > header form input:focus::placeholder, .App > header form input:active::placeholder {
@@ -396,6 +398,9 @@ button {
     .App > header .newRecipeBtn i {
       position: relative;
       top: 3px; }
+      @media only screen and (min-width: 40em) {
+        .App > header .newRecipeBtn i {
+          top: 6px; } }
     .App > header .newRecipeBtn span {
       padding-left: 0.5em;
       display: none; }
@@ -571,6 +576,9 @@ aside.cookbookMarks {
     color: #ffffff;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+  .cookBookContainer.otherUser header {
+    background-color: #262424;
+    background-image: url("./img/bg-black.jpg"); }
 
 .Add {
   justify-content: left; }

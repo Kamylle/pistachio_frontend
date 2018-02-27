@@ -95,23 +95,31 @@ class SearchPage extends Component {
         <div className="flexContain">
           {/* <SidebarSearch /> */}
           <div id="main" className="Search">
-            <div className="cardContain searchContain">
-            My recipes
-              {this.state.myItemsFound.map((item, idx) => (
-                  <RecipeCard 
-                    key={idx}
-                    recipeID={item.recipeID}
-                  />
-              ))}
+            <div className="flexContain cookBookContainer">
+            <header>
+              <h1>Your recipes</h1>
+            </header>
+              <div className="cardContain">
+                {this.state.myItemsFound.map((item, idx) => (
+                    <RecipeCard 
+                      key={idx}
+                      recipeID={item.recipeID}
+                    />
+                ))}
+              </div>
             </div>
-            <div className="cardContain searchContain">
-            Recipes from other users
-              {this.state.itemsFound.map((item, idx) => (
-                  <RecipeCard 
-                    key={idx}
-                    recipeID={item.recipeID}
-                  />
-              ))}
+            <div className="flexContain cookBookContainer otherUser">
+              <header>
+                <h1>Recipes from other users</h1>
+              </header>
+              <div className="cardContain">
+                {this.state.itemsFound.map((item, idx) => (
+                    <RecipeCard 
+                      key={idx}
+                      recipeID={item.recipeID}
+                    />
+                ))}
+              </div>
             </div>
           </div>
         </div>
