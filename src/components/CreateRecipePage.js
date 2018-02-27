@@ -373,11 +373,11 @@ class CreateRecipePage extends Component {
   }
 
   deleteRecipe = () => {
-    // if (window.confirm("Are you sure you wish to delete this item?")) {
+     if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
       db.ref(`Recipes/${this.state.recipeID}`).remove();
       this.props.history.push("/");
-    // }
+     }
   };
 
   render() {
@@ -385,7 +385,7 @@ class CreateRecipePage extends Component {
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
-          <h2>New Recipe</h2>
+          <h2>Edit Recipe</h2>
         </header>
         <form onSubmit={this.handleSubmit} className="createRecipe">
           <label className="displayInlineBlock">
@@ -583,9 +583,11 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button onClick={this.deleteRecipe}>Delete recipe</button>
-            <button type="reset" value="Cancel" onClick={this.cancelRecipe}>Cancel</button>     
-            <button type="submit" value="Submit">Save</button>
+            <button onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
+            <div>
+              <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
+              <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
+            </div>
           </div>
         </form>
       </div>

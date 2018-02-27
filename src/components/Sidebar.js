@@ -131,7 +131,7 @@ class Sidebar extends Component {
   render() {
     return (
       <aside className="cookbookMarks" key={this.state.key}>
-      <a className="menuBtn" onClick={this.toggleMenu}><i className="icon add i24"/></a>
+      <a className="menuBtn" onClick={this.toggleMenu}><i/></a>
       <h3>Cookbooks</h3>
         <ul>
           <li onClick={this.handleLinkSelect("all")}
@@ -163,15 +163,15 @@ class Sidebar extends Component {
         </ul>
         {
           this.state.showAddCookbookFields
-          ? <div>
+          ? <div className="addCookbook">
               <input 
                 type="text" 
                 ref={ancfsf => this.addNewCookbookFromSidebarField = ancfsf}
                 placeholder="New Cookbook Name"
                 onChange={this.checkForCookbookNameConflict}/>
               <div>
+                <button onClick={this.toggleAddCookbookFields} className="tertiaryBtn">Cancel</button>
                 {this.showCookbookAddButtonOnConflictClear()}
-                <button onClick={this.toggleAddCookbookFields}>Cancel</button>
               </div>
             </div>
           : <a onClick={this.toggleAddCookbookFields}>Create a new cookbook</a>}
