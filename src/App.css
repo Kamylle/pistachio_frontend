@@ -139,6 +139,82 @@ html {
   .icon.menu {
     background-image: url("./img/icons/ic_menu-w.svg"); }
 
+#navIcon {
+  position: relative;
+  top: 5px;
+  left: 2px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out 0.25s;
+  -moz-transition: .5s ease-in-out 0.25s;
+  -o-transition: .5s ease-in-out 0.25s;
+  transition: .5s ease-in-out 0.25s;
+  cursor: pointer; }
+
+#navIcon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: #ffffff;
+  opacity: 1;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out 0.25s;
+  -moz-transition: .25s ease-in-out 0.25s;
+  -o-transition: .25s ease-in-out 0.25s;
+  transition: .25s ease-in-out 0.25s; }
+
+#navIcon span:nth-child(1) {
+  top: 7px;
+  width: 0%;
+  left: 50%; }
+
+#navIcon span:nth-child(2) {
+  top: 7px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+#navIcon span:nth-child(3) {
+  top: 7px;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+
+#navIcon span:nth-child(4) {
+  top: 7px;
+  width: 0%;
+  left: 50%; }
+
+.hideMenu #navIcon span:nth-child(1) {
+  top: 0px;
+  width: 20px;
+  left: 0; }
+
+.hideMenu #navIcon span:nth-child(2) {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.hideMenu #navIcon span:nth-child(3) {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.hideMenu #navIcon span:nth-child(4) {
+  top: 14px;
+  width: 20px;
+  left: 0; }
+
 .sk-chasing-dots {
   margin: 40px auto;
   width: 40px;
@@ -497,13 +573,7 @@ aside.cookbookMarks {
       -o-transition: all 0.3s ease;
       transition: all 0.3s ease;
       width: 24px;
-      height: 24px;
-      background-size: 16px 16px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url("./img/icons/ic_close_white.svg"); }
-      aside.cookbookMarks .menuBtn i:hover {
-        opacity: 0.8; }
+      height: 24px; }
   aside.cookbookMarks .addCookbook {
     padding: 1em; }
     aside.cookbookMarks .addCookbook div {
@@ -514,10 +584,6 @@ aside.cookbookMarks {
 
 .hideMenu .cookbookMarks {
   left: -15em; }
-  .hideMenu .cookbookMarks .menuBtn i {
-    background-image: url("./img/icons/ic_menu-w.svg"); }
-    .hideMenu .cookbookMarks .menuBtn i:hover {
-      opacity: 0.8; }
 
 .hideMenu .Home {
   padding-left: 0; }
