@@ -61,7 +61,7 @@ class RecipeCard extends Component {
         this.setState({
           recipeObject: recipe,
         //   creatorObject: creatorObj.val(),
-          //loaded: true
+          loaded: true
         });
       })
       .catch(err => {
