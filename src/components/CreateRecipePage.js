@@ -55,6 +55,7 @@ class CreateRecipePage extends Component {
 
   componentWillMount = () => {
     this.getCookbooks();
+    localStorage.removeItem('state')
   }
 
   componentDidMount() {
@@ -368,15 +369,16 @@ class CreateRecipePage extends Component {
   }
 
   cancelRecipe = () => {
-    // this.setAppState( this.initialState )
+    this.setAppState( this.initialState )
     this.props.history.push("/")
   }
 
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("/Recipes" + this.state.recipeID).remove();
-    // this.props.history.push("/");
+      db.ref("Recipes/" + this.state.recipeID).remove();
+      localStorage.removeItem('state')
+      this.props.history.push("/");
     }
   };
 
@@ -583,7 +585,7 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
+            <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
               <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>

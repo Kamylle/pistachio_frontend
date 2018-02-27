@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import googleIcon from '../img/icon_google_login.svg';
 import firebase from '../scripts/firebase';
+import { accountsRef } from "../scripts/db";
 // const auth = firebase.auth();
 
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -51,6 +52,17 @@ class LoginPage extends Component {
       // The signed-in user info.
       var user = result.user;
       // var profile = result.additionalUserInfo.profile;
+
+      //fetch la database pour voir si user existe déjà
+      accountsRef
+      .once("value")
+      .then(snapshot => {
+        console.log(snapshot.val());
+        // return snapshot.val();
+        // return recipe.people.creatorID;
+      })
+
+      
       this.writeAccountData(user.uid, user.displayName, user.email);
       this.props.setUsernameAndID(user.displayName, user.uid);
     }).catch(function (error) {
