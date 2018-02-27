@@ -26,6 +26,7 @@ class LoginPage extends Component {
     auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
+    .then(this.setState())
     .catch(error => { this.setState({ error: error.message }); });
   }
 
@@ -35,11 +36,23 @@ class LoginPage extends Component {
     const password = this.password.value;
     const username = this.username.value;
     const auth = firebase.auth();
+    const db = firebase.database();
+    const defaultCookbookKey = await db.ref("Cookbooks/").push().key;
     try {
       const firebaseUser = await auth.createUserWithEmailAndPassword(email, password);
       await firebaseUser.updateProfile({ displayName: username });
       await this.writeAccountData(firebaseUser.uid, username, firebaseUser.email);
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
+      db.ref(`Accounts/${firebaseUser.uid}/cookbooksList`).set({ 0: defaultCookbookKey });
+      db.ref(`Cookbooks/${defaultCookbookKey}`)
+      .set(
+        { ownerUserID: firebaseUser.uid,
+          recipeIDs: [],
+          title: {
+            value: "Favorites"
+          }
+        }
+      )
     }
     catch (error) { this.setState({ error: error.message }); }
   }
@@ -67,10 +80,32 @@ class LoginPage extends Component {
 
   writeAccountData = async (userId, username, email) => {
     // const key = firebase.database().ref('/').push().key;
+    const currentCookbooks = [];
+    firebase.database().ref(`Accounts/${userId}/cookbooksList`).on("value", snap => currentCookbooks.push(snap.val()));
+    const flattenedCookbooksList = [].concat.apply([], currentCookbooks);
+    if (flattenedCookbooksList.length < 1) { 
+      const defaultCookbookKey = await firebase.database().ref("Cookbooks/").push().key;
+      firebase.database().ref(`Accounts/${userId}/cookbooksList`).set({ 0: defaultCookbookKey });
+      firebase.database().ref(`Cookbooks/${defaultCookbookKey}`)
+      .set(
+        { ownerUserID: userId,
+          recipeIDs: [],
+          title: {
+            value: "Favorites"
+          }
+        }
+      )
+     }
+     const existingCookbooksList = {};
+     flattenedCookbooksList.forEach((cookbook, cookbookIdx) => {
+      return Object.assign(existingCookbooksList, 
+            { [cookbookIdx]: cookbook }
+      );
+    });
     await firebase.database().ref('Accounts/' + userId).set({
       username,
       email,
-      // cookbooksList: [key]
+      cookbooksList: existingCookbooksList
     });
   }
 

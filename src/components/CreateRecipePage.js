@@ -55,6 +55,7 @@ class CreateRecipePage extends Component {
 
   componentWillMount = () => {
     this.getCookbooks();
+    localStorage.removeItem('state')
   }
 
   componentDidMount() {
@@ -274,7 +275,6 @@ class CreateRecipePage extends Component {
   handleNewCookbookAddition = async evt  => {
     evt.preventDefault();
     this.newCookbookInputField.value = ""; // Clears the new cookbook name input field upon submission
-    this.setAppState({ newCookbookAdded: true });
 
     const db = firebase.database();
     // First, we're creating the cookbook in "Cookbooks"...
@@ -289,6 +289,9 @@ class CreateRecipePage extends Component {
         }
       }
     );
+    this.setAppState({
+      cookbook: cookbookKey,
+    });
     // Then, we're adding the new cookbook into the user's 'cookbooks' list on his/her account...
     const userCookbooks = this.state.cookbookIDs;
     const updatedCookbooksList = userCookbooks.concat(cookbookKey);
@@ -306,7 +309,7 @@ class CreateRecipePage extends Component {
     .once('value')
     .then(snap => {
       this.setAppState({
-        cookbookIDs: snap.val(), cookbooksListLoaded: true
+        cookbookIDs: snap.val(), cookbooksListLoaded: true,
       })
       return snap.val() ; // snap.val() = An array of strings representing the user cookbooks' IDs
     })
@@ -339,8 +342,8 @@ class CreateRecipePage extends Component {
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
         // console.log(this.cookbookSelector.options[this.cookbookSelector.selectedIndex]);
-          return cbIdx === selectableCookbooks.length - 2 && selectableCookbooks.length > 2
-            ? <option selected value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
+          return cbIdx === selectableCookbooks.length - 1
+            ? <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
             : <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
       });
 
@@ -368,15 +371,16 @@ class CreateRecipePage extends Component {
   }
 
   cancelRecipe = () => {
-    // this.setAppState( this.initialState )
+    this.setAppState( this.initialState )
     this.props.history.push("/")
   }
 
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("/Recipes" + this.state.recipeID).remove();
-    // this.props.history.push("/");
+      db.ref("Recipes/" + this.state.recipeID).remove();
+      localStorage.removeItem('state')
+      this.props.history.push("/");
     }
   };
 
@@ -583,7 +587,7 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
+            <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
               <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
