@@ -124,6 +124,7 @@ class RecipePage extends Component {
           notes: recipe.ownerNotes[0],
           anecdotes: recipe.ownerAnecdotes[0]
         });
+        console.log(recipe)
       })
       .catch(err => {
         console.log(err);

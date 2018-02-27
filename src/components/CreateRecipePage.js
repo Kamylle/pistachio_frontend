@@ -176,7 +176,7 @@ class CreateRecipePage extends Component {
     } catch (err) {
       //console.log(err);
     }
-    this.props.history.push("/")
+    this.props.history.push("/recipe/" + this.state.recipeID)
   };
 
   //dynamic forms from: https://goshakkk.name/array-form-inputs/
