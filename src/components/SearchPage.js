@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 //import { Link } from 'react-router-dom';
-import SidebarSearch from "./SidebarSearch";
+// import SidebarSearch from "./SidebarSearch";
 // import Cookbook from "./Cookbook";
 import RecipeCard from "./RecipeCard";
 import { recipesRef } from "../scripts/db";
-import firebase from "../scripts/firebase";
+// import firebase from "../scripts/firebase";
 import LoadingAnimation from './LoadingAnimation';
 
 class SearchPage extends Component {
@@ -85,7 +85,7 @@ class SearchPage extends Component {
   };
 
   render() {
-    {
+    
       return !this.state.loaded ? (
         <div className="flexContain">
           {/* <SidebarSearch /> */}
@@ -116,7 +116,7 @@ class SearchPage extends Component {
           </div>
         </div>
       );
-    }
+    
   }
 }
 

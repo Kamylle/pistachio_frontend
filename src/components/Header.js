@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from 'react-router'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 
 class Header extends Component {
