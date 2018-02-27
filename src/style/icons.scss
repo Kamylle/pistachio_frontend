@@ -26,13 +26,10 @@
     background-image: url("./img/icons/ic_search.svg");
   }
   &.add {
-    background-image: url("./img/icons/ic_add_white.svg");
+    background-image: url("./img/icons/ic_add-w.svg");
   }
   &.send {
     background-image: url("./img/icons/ic_send_white.svg");
-    &:hover {
-
-    }
   }
   &.edit {
     background-image: url("./img/icons/ic_edit_white.svg");
@@ -42,5 +39,11 @@
   }
   &.close {
     background-image: url("./img/icons/ic_close_black.svg");
+  }
+  &.logout {
+    background-image: url("./img/icons/ic_logout.svg");
+  }
+  &.menu {
+    background-image: url("./img/icons/ic_menu-w.svg");
   }
 }

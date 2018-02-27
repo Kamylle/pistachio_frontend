@@ -33,7 +33,8 @@ class Header extends Component {
         </Link>
         <div className="accountLinks">
           <p className="hideOnMobile">Welcome {this.state.username}</p>
-          <a onClick={this.logout}>Logout</a>
+          <a className="hideOnMobile" onClick={this.logout}>Logout</a>
+          <i className="icon logout i24" onClick={this.logout} />
         </div>
       </div>
     );

@@ -123,7 +123,7 @@ html {
   .icon.search {
     background-image: url("./img/icons/ic_search.svg"); }
   .icon.add {
-    background-image: url("./img/icons/ic_add_white.svg"); }
+    background-image: url("./img/icons/ic_add-w.svg"); }
   .icon.send {
     background-image: url("./img/icons/ic_send_white.svg"); }
   .icon.edit {
@@ -132,6 +132,10 @@ html {
     background-image: url("./img/icons/ic_print_white.svg"); }
   .icon.close {
     background-image: url("./img/icons/ic_close_black.svg"); }
+  .icon.logout {
+    background-image: url("./img/icons/ic_logout.svg"); }
+  .icon.menu {
+    background-image: url("./img/icons/ic_menu-w.svg"); }
 
 html, body, #root {
   width: 100%;
@@ -149,6 +153,13 @@ html, body, #root {
 
 a, button {
   cursor: pointer;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease; }
+
+input, textarea, select {
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -ms-transition: all 0.4s ease;
@@ -188,6 +199,11 @@ button {
       box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
       background-color: #000000;
       color: #f4f3f2; }
+  button.tertiaryBtn {
+    background-color: #f4f3f2;
+    color: #262424; }
+    button.tertiaryBtn:hover {
+      background-color: #d1cfcf; }
 
 .googleSignInBtn {
   display: flex;
@@ -243,7 +259,7 @@ button {
       .App > header form input {
         box-shadow: none;
         background-color: #ffffff !important;
-        border: none;
+        border: 0px solid rgba(255, 255, 255, 0);
         font-size: 1.2em;
         margin: 0;
         text-align: right;
@@ -272,7 +288,13 @@ button {
       display: block;
       text-align: right;
       font-size: 0.8em;
-      padding: 1.4em 1.5em 0; }
+      padding: 1em 1em 0; }
+      @media only screen and (min-width: 40em) {
+        .App > header .accountLinks {
+          padding: 1.5em 1.5em 0; } }
+      @media only screen and (min-width: 60em) {
+        .App > header .accountLinks {
+          padding-top: 1.4em 1.5em 0; } }
       .App > header .accountLinks > * {
         display: block;
         padding: 0;
@@ -281,11 +303,16 @@ button {
         color: #89a240; }
         .App > header .accountLinks a:hover {
           color: #cae47e; }
-      .App > header .accountLinks p {
+      .App > header .accountLinks p, .App > header .accountLinks a {
         display: none; }
         @media only screen and (min-width: 60em) {
-          .App > header .accountLinks p {
+          .App > header .accountLinks p, .App > header .accountLinks a {
             display: block; } }
+      .App > header .accountLinks i {
+        cursor: pointer; }
+        @media only screen and (min-width: 60em) {
+          .App > header .accountLinks i {
+            display: none; } }
     .App > header div {
       display: flex; }
     .App > header .newRecipeBtn {
@@ -327,16 +354,17 @@ button {
     @media only screen and (min-width: 40em) {
       .App aside {
         padding-top: 4em; } }
-  .App #main {
-    padding-top: 3em;
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 4; }
-    .App #main .isHidden {
-      display: none; }
-    @media only screen and (min-width: 40em) {
-      .App #main {
-        padding-top: 4em; } }
+
+#main {
+  padding-top: 3em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 4; }
+  #main .isHidden {
+    display: none; }
+  @media only screen and (min-width: 40em) {
+    #main {
+      padding-top: 4em; } }
 
 .flexContain {
   display: flex;
@@ -388,9 +416,35 @@ aside.cookbookMarks {
     background-color: #262424;
     color: #ffffff;
     left: 15em; }
+    aside.cookbookMarks .menuBtn i {
+      display: inline-block;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+      width: 24px;
+      height: 24px;
+      background-size: 16px 16px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url("./img/icons/ic_close_white.svg"); }
+      aside.cookbookMarks .menuBtn i:hover {
+        opacity: 0.8; }
+  aside.cookbookMarks .addCookbook {
+    padding: 1em; }
+    aside.cookbookMarks .addCookbook div {
+      display: flex;
+      justify-content: flex-end; }
+    aside.cookbookMarks .addCookbook button {
+      margin-right: 0.5em; }
 
 .hideMenu .cookbookMarks {
   left: -15em; }
+  .hideMenu .cookbookMarks .menuBtn i {
+    background-image: url("./img/icons/ic_menu-w.svg"); }
+    .hideMenu .cookbookMarks .menuBtn i:hover {
+      opacity: 0.8; }
 
 .hideMenu .Home {
   padding-left: 0; }
@@ -419,15 +473,21 @@ aside.cookbookMarks {
   width: 100%;
   background-color: #89a240;
   display: flex;
-  justify-content: flex-end; }
+  justify-content: space-between; }
   .bottomBar button {
     box-shadow: none;
     border-radius: 0;
     margin: 0;
     background-color: #89a240;
     color: #262424;
-    font-size: 1.2em;
+    font-size: 1em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+    .bottomBar button.saveBtn {
+      background-color: #262424;
+      color: #ffffff; }
+      .bottomBar button.saveBtn:hover {
+        color: #cae47e;
+        background-color: #000000; }
     .bottomBar button:hover {
       color: #000000;
       background-color: #acc85c; }
@@ -651,9 +711,10 @@ input, textarea {
     display: block;
     padding: 0.6em 1em;
     margin: 0.5em 0;
-    border-radius: 2px; }
+    border-radius: 2px;
+    outline: 1px solid rgba(255, 255, 255, 0); }
     input:focus, input select:focus, textarea:focus, textarea select:focus {
-      outline: 2px solid #cae47e; }
+      outline: 1px solid #cae47e; }
 
 label {
   display: block;
@@ -680,31 +741,54 @@ form.createRecipe {
   background-color: #ffffff;
   background-image: url();
   box-shadow: 0 2px 3px 2px rgba(54, 40, 28, 0.07);
-  padding: 4em;
+  padding: 1em 10% 5em;
   margin: auto;
-  max-width: 40em;
+  max-width: 100%;
   position: relative;
-  border-radius: 0.3em;
   top: -2em; }
+  @media only screen and (min-width: 40em) {
+    form.createRecipe {
+      padding: 4em;
+      max-width: 40em;
+      border-radius: 0.3em; } }
   form.createRecipe h2, form.createRecipe h3 {
     padding: 1.5em 0.5em 0.5em 0; }
   form.createRecipe input, form.createRecipe textarea, form.createRecipe select {
     display: block;
     padding: 0.5em;
     margin: 0.5em;
-    margin-left: 0; }
+    margin-left: 0;
+    border: 1px solid #f4f3f2; }
+    form.createRecipe input:hover, form.createRecipe textarea:hover, form.createRecipe select:hover {
+      border: 1px solid #262424; }
+  form.createRecipe select {
+    border: 1px solid #262424; }
+    form.createRecipe select:hover {
+      border: 1px solid #acc85c; }
   form.createRecipe label {
     display: block;
     padding: 1.5em 0.5em 0.8em 0; }
   form.createRecipe textarea {
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    min-width: 30em;
-    max-width: 30em; }
+    min-width: 80%;
+    max-width: 80%; }
+    @media only screen and (min-width: 40em) {
+      form.createRecipe textarea {
+        min-width: 30em;
+        max-width: 30em; } }
   form.createRecipe .ingredient, form.createRecipe .step, form.createRecipe .notes {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1em; }
+    @media only screen and (min-width: 40em) {
+      form.createRecipe .ingredient, form.createRecipe .step, form.createRecipe .notes {
+        margin-bottom: 0; } }
     form.createRecipe .ingredient input, form.createRecipe .ingredient textarea, form.createRecipe .ingredient select, form.createRecipe .ingredient label, form.createRecipe .step input, form.createRecipe .step textarea, form.createRecipe .step select, form.createRecipe .step label, form.createRecipe .notes input, form.createRecipe .notes textarea, form.createRecipe .notes select, form.createRecipe .notes label {
-      display: inline-block; }
+      margin-bottom: 0; }
+      @media only screen and (min-width: 40em) {
+        form.createRecipe .ingredient input, form.createRecipe .ingredient textarea, form.createRecipe .ingredient select, form.createRecipe .ingredient label, form.createRecipe .step input, form.createRecipe .step textarea, form.createRecipe .step select, form.createRecipe .step label, form.createRecipe .notes input, form.createRecipe .notes textarea, form.createRecipe .notes select, form.createRecipe .notes label {
+          display: inline-block; } }
   form.createRecipe .selectImgInput {
     background-color: #ffffff;
     box-shadow: none;
