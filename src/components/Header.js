@@ -18,10 +18,7 @@ class Header extends Component {
   }
 
   logout = () => {
-    firebase.auth().signOut();
-    // console.log(firebase.auth().currentUser);
-    localStorage.removeItem("login");
-    this.setState({ username: "" });
+    this.props.logout();
   };
 
   getHeaderContentLogguedIn = () => {
@@ -43,13 +40,15 @@ class Header extends Component {
   getHeaderContentLogguedOut = () => {
     return (
       <div>
-        <Link to="/login">Login</Link>
+        <Link to="/">Login</Link>
       </div>
     );
   };
 
+
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ searchInput: "" })
     this.props.history.push("/search?searchTerm=" + this.state.searchInput)
   }
 

@@ -767,7 +767,7 @@ aside {
 input, textarea {
   background-color: $whitish;
   box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
-  border: 1px solid rgba(51, 42, 29, 0.1);
+  border: 1px solid $whitish;
 
   &, select {
     display: block;
@@ -840,7 +840,7 @@ form.createRecipe {
         margin-left: 0;
         border: 1px solid $grayLight;
         &:hover {
-          border: 1px solid $black;
+          border: 1px solid $primaryLight;
         }
     }
     select {

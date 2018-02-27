@@ -9,8 +9,8 @@
   height: 40px;
   position: relative;
   text-align: center;
-  -webkit-animation: sk-chasingDotsRotate 2s infinite linear;
-          animation: sk-chasingDotsRotate 2s infinite linear;
+  -webkit-animation: sk-chasingDotsRotate 1.5s infinite linear;
+          animation: sk-chasingDotsRotate 1.5s infinite linear;
         }
   .sk-chasing-dots .sk-child {
     width: 60%;
@@ -19,13 +19,16 @@
     position: absolute;
     top: 0;
     background-color: $primaryLight;
-    border-radius: 100%;
+    border-radius: 50%;
     -webkit-animation: sk-chasingDotsBounce 2s infinite ease-in-out;
             animation: sk-chasingDotsBounce 2s infinite ease-in-out;
         }
   .sk-chasing-dots .sk-dot2 {
+    background-color: $grayMed;
     top: auto;
     bottom: 0;
+    width: 40%;
+    height: 40%;
     -webkit-animation-delay: -1s;
             animation-delay: -1s; }
 

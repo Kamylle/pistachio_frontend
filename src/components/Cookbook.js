@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import RecipeCard from './RecipeCard';
 // import { firebase } from '../scripts/firebase';
 import { cookbooksRef, usersRef } from '../scripts/db';
+import LoadingAnimation from './LoadingAnimation';
 
 class Cookbook extends Component {
     constructor(props) {
@@ -81,7 +82,7 @@ class Cookbook extends Component {
             </div>
         </div>
         )
-      : null
+      : <LoadingAnimation/>
     }
   }
 

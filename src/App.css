@@ -143,8 +143,8 @@ html {
   height: 40px;
   position: relative;
   text-align: center;
-  -webkit-animation: sk-chasingDotsRotate 2s infinite linear;
-  animation: sk-chasingDotsRotate 2s infinite linear; }
+  -webkit-animation: sk-chasingDotsRotate 1.5s infinite linear;
+  animation: sk-chasingDotsRotate 1.5s infinite linear; }
 
 .sk-chasing-dots .sk-child {
   width: 60%;
@@ -153,13 +153,16 @@ html {
   position: absolute;
   top: 0;
   background-color: #cae47e;
-  border-radius: 100%;
+  border-radius: 50%;
   -webkit-animation: sk-chasingDotsBounce 2s infinite ease-in-out;
   animation: sk-chasingDotsBounce 2s infinite ease-in-out; }
 
 .sk-chasing-dots .sk-dot2 {
+  background-color: #d1cfcf;
   top: auto;
   bottom: 0;
+  width: 40%;
+  height: 40%;
   -webkit-animation-delay: -1s;
   animation-delay: -1s; }
 
@@ -779,7 +782,7 @@ aside.cookbookMarks {
 input, textarea {
   background-color: #f9f9f9;
   box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset;
-  border: 1px solid rgba(51, 42, 29, 0.1); }
+  border: 1px solid #f9f9f9; }
   input, input select, textarea, textarea select {
     display: block;
     padding: 0.6em 1em;
@@ -833,7 +836,7 @@ form.createRecipe {
     margin-left: 0;
     border: 1px solid #f4f3f2; }
     form.createRecipe input:hover, form.createRecipe textarea:hover, form.createRecipe select:hover {
-      border: 1px solid #262424; }
+      border: 1px solid #cae47e; }
   form.createRecipe select {
     border: 1px solid #262424; }
     form.createRecipe select:hover {

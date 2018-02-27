@@ -5,6 +5,7 @@ import SidebarSearch from "./SidebarSearch";
 import RecipeCard from "./RecipeCard";
 import { recipesRef } from "../scripts/db";
 import firebase from "../scripts/firebase";
+import LoadingAnimation from './LoadingAnimation';
 
 class SearchPage extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class SearchPage extends Component {
       return !this.state.loaded ? (
         <div className="flexContain">
           {/* <SidebarSearch /> */}
-          <h2>Loading ...</h2>
+          <LoadingAnimation/>
         </div>
       ) : (
         <div className="flexContain">

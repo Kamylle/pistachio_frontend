@@ -7,7 +7,7 @@ import CreateRecipePage from './components/CreateRecipePage';
 import SearchPage from './components/SearchPage';
 
 import Header from './components/Header';
-// import firebase from './scripts/firebase';
+import firebase from './scripts/firebase';
 import './App.css';
 
 // var user = firebase.auth().currentUser;
@@ -32,6 +32,14 @@ class App extends Component {
     this.setState(state, () => {
       localStorage.setItem('login', JSON.stringify(this.state));
     });
+  }
+
+  logout = (state) => {
+    // this.getUserCookbooks();
+    firebase.auth().signOut();
+    // console.log(firebase.auth().currentUser);
+    localStorage.removeItem("login");
+    this.setState({ username: "" });
   }
 
   setUsernameAndID = (username, userID) => {
@@ -77,6 +85,8 @@ class App extends Component {
         <Header 
           userID={this.state.userID}
           username={this.state.username}
+          // history={routeProps.history}
+          logout={this.logout}
         />
         <Switch>
           <Route
