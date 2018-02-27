@@ -162,7 +162,7 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
-    // console.log("Recipe sent");
+    console.log(recipe);
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -175,7 +175,7 @@ class CreateRecipePage extends Component {
     } catch (err) {
       //console.log(err);
     }
-    this.props.history.push("/recipe/" + this.state.recipeID)
+    this.props.history.push("/")
   };
 
   //dynamic forms from: https://goshakkk.name/array-form-inputs/
@@ -368,20 +368,20 @@ class CreateRecipePage extends Component {
   }
 
   cancelRecipe = () => {
-    this.setState( this.initialState )
+    // this.setState( this.initialState )
     this.props.history.push("/")
   }
 
   deleteRecipe = () => {
     // if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref(`Recipes/${this.state.recipeID}`).remove();
-      this.props.history.push("/");
+      db.ref("/Recipes" + this.props.location.state.recipeID).remove();
+    // this.props.history.push("/");
     // }
   };
 
   render() {
-    // console.log(this.state.recipeID);
+    // console.log(this.props.location.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
