@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import Textarea from "react-textarea-autosize";
 import { accountsRef, cookbooksRef, setPrettifiedCookbookPath } from "../scripts/db";
+import Cookbook from "./Cookbook";
 //import { Link } from 'react-router-dom';
 
 class CreateRecipePage extends Component {
@@ -84,10 +85,11 @@ class CreateRecipePage extends Component {
     // we can get firebase to push new things to an array...)
       await db.ref(`Cookbooks/${selectedCookbook}`)
       .child('recipeIDs')
-      .once("value", snap => { 
+      .once("value", snap => {
         if (snap.val() !== null) {
           recipeIDsInCookbook.push(...snap.val()); // "= Recipes already in the user's cookbook"
         }
+        console.log(snap.val())
       });
     const recipeKey = this.props.location.state
       ? this.props.location.state.recipeID
@@ -109,13 +111,6 @@ class CreateRecipePage extends Component {
       db.ref(`Cookbooks/${selectedCookbook}/recipeIDs`).set(articles);
     }
   };
-
-  // editRecipe = async (recipe, recipeKey) => {
-  //   const db = firebase.database();
-  //   await db
-  //     .ref(`Recipes/${recipeKey}`)
-  //     .set({ ...recipe, recipeID: recipeKey });
-  // };
 
   addImage = async img => {
     // console.log(img)
@@ -328,7 +323,7 @@ class CreateRecipePage extends Component {
   }
 
   getSelectableCookbooksList = () => {
-    const defaultUnselectableOption = [<option disabled>Select A Cookbook...</option>]
+    const defaultUnselectableOption = [<option selected>Select A Cookbook...</option>]
     const newCookbookSelectableOption = <option value="newCookbook">Create New Cookbook...</option>
 
     try {
@@ -341,10 +336,7 @@ class CreateRecipePage extends Component {
       }
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
-        // console.log(this.cookbookSelector.options[this.cookbookSelector.selectedIndex]);
-          return cbIdx === selectableCookbooks.length - 1
-            ? <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
-            : <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
+            return <option value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
       });
 
       return defaultUnselectableOption
@@ -379,20 +371,57 @@ class CreateRecipePage extends Component {
     this.props.history.push("/")
   }
 
+  deleteRecipeFromCookbook = (recipeID) => {
+    console.log("test1 should return recipe ID: ", recipeID )
+    var temp;
+    cookbooksRef
+    .once("value")
+    .then(snapshot => {
+      // console.log(snapshot.val());
+      temp = snapshot.val();
+      console.log("test2 should return the complete DB: ", temp);
+      Object.keys(temp).forEach((key) => {
+        if (temp[key]) {
+
+        
+          if(temp[key].recipeIDs) {
+            console.log("test3 should return recipe ID list of present user: ", temp[key].recipeIDs)
+            for(var i = 0; i < Object.keys(temp[key].recipeIDs).length; i++) {
+              console.log("test4 should return present recipe inspected: ", temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]])
+              if(recipeID === temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]]) {
+                console.log("_____")
+                console.log("_____")
+                console.log("_____")
+                console.log("test5 MATCH")
+                console.log("_____")
+                console.log("_____")
+                console.log("_____")
+                delete temp[key].recipeIDs[Object.keys(temp[key].recipeIDs)[i]]
+              }
+            }
+          }
+        }
+      })
+      cookbooksRef.set(temp);
+  })
+}
+
+
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("Recipes/" + this.state.recipeID).remove();
-      localStorage.removeItem('state')
-      this.props.history.push("/");
+      // db.ref("Recipes/" + this.state.recipeID).remove();
+      // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
+      this.deleteRecipeFromCookbook(this.state.recipeID);
+      // localStorage.removeItem('state')
+      // this.props.history.push("/");          
     }
   };
 
   render() {
-    console.log(this.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
-        <header>
+        <header id="cookbookSelection">
           <h2>Edit Recipe</h2>
         </header>
         <form onSubmit={this.handleSubmit} className="createRecipe">
@@ -594,7 +623,7 @@ class CreateRecipePage extends Component {
             <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
-              <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
+              { this.state.cookbook === "" ? <button disabled className="saveBtn"><a href="#cookbookSelection">Select A Cookbook First</a></button> : <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>}
             </div>
           </div>
         </form>

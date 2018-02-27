@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import firebase from "../scripts/firebase";
+// import firebase from "../scripts/firebase";
 //import { Route } from "react-router"; "TO REMOVE WARNING : 'Route' is defined but never used"
 // import { Link } from "react-router-dom";
-import { recipesRef, usersRef } from "../scripts/db";
+import { recipesRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from "../img/bg-green.jpg";
 import LoadingAnimation from './LoadingAnimation';
@@ -124,6 +124,7 @@ class RecipePage extends Component {
           notes: recipe.ownerNotes[0],
           anecdotes: recipe.ownerAnecdotes[0]
         });
+        console.log(recipe)
       })
       .catch(err => {
         console.log(err);

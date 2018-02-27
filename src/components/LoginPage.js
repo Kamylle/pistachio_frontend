@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import googleIcon from '../img/icon_google_login.svg';
 import firebase from '../scripts/firebase';
+import { accountsRef } from "../scripts/db";
 // const auth = firebase.auth();
 
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -63,9 +64,16 @@ class LoginPage extends Component {
       // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      // var profile = result.additionalUserInfo.profile;
-      this.writeAccountData(user.uid, user.displayName, user.email);
-      this.props.setUsernameAndID(user.displayName, user.uid);
+      accountsRef
+      .once("value")
+      .then(snapshot => {
+        console.log(snapshot.val());
+        const users = snapshot.val();
+        if(!users[user.uid]) {
+          this.writeAccountData(user.uid, user.displayName, user.email);
+        }
+        this.props.setUsernameAndID(user.displayName, user.uid);
+      })
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
