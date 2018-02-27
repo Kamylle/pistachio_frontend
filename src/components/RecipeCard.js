@@ -83,7 +83,7 @@ class RecipeCard extends Component {
                         :
                         <div className="cardImg" style={{backgroundImage: `url(${this.getRecipeImage()})`}}/>}
                         <h2>{this.getRecipeTitle()}</h2>
-                        <p>{this.getRecipeCreatorFullName()}</p>
+                        <h4 className="recipeBy">by {this.getRecipeCreatorFullName()}</h4>
                     </Link>  
                   )
               }

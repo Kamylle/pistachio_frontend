@@ -652,6 +652,12 @@ aside.cookbookMarks {
     background-color: #262424;
     background-image: url("./img/bg-black.jpg"); }
 
+.recipeBy {
+  display: none; }
+
+.otherUser .recipeBy {
+  display: block; }
+
 .Add {
   justify-content: left; }
 
@@ -700,6 +706,7 @@ aside.cookbookMarks {
     background-color: #ffffff;
     display: inline-block;
     margin-bottom: 1em;
+    padding-bottom: 1em;
     width: 100%;
     border-radius: 0.2em;
     -webkit-transition: all 0.5s ease;
@@ -728,8 +735,12 @@ aside.cookbookMarks {
       border-radius: 0.2em 0.2em 0 0; }
     .cardContain .card h2 {
       font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      padding: 1em;
+      padding: 1rem 1.5rem 0.3rem;
       line-height: 1.2em; }
+    .cardContain .card h4 {
+      padding: 0 1.5rem 0;
+      font-size: 0.8em;
+      color: #8d8786; }
 
 .Recipe {
   background-color: #ffffff; }

@@ -482,6 +482,16 @@ aside {
   }
 }
 
+.recipeBy {
+  display: none;
+}
+
+.otherUser {
+  .recipeBy {
+    display: block;
+  }
+}
+
 .Add {
   justify-content: left;
 }
@@ -539,6 +549,7 @@ aside {
      background-color: $white;
      display: inline-block;
      margin-bottom: 1em;
+     padding-bottom: 1em;
      width: 100%;
      border-radius: 0.2em;
      @include transition (all, 0.5s, ease)
@@ -563,8 +574,13 @@ aside {
      }
      h2 {
        font-family: $sans-font;
-       padding: 1em;
+       padding: 1rem 1.5rem 0.3rem;
        line-height: 1.2em;
+     }
+     h4 {
+       padding: 0 1.5rem 0;
+       font-size: 0.8em;
+       color: $grayDark;
      }
   }
 }
