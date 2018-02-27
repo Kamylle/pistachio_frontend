@@ -58,13 +58,14 @@ class LoginPage extends Component {
       .once("value")
       .then(snapshot => {
         console.log(snapshot.val());
+        const users = snapshot.val();
+        if(!users[user.uid]) {
+          this.writeAccountData(user.uid, user.displayName, user.email);
+        }
+        this.props.setUsernameAndID(user.displayName, user.uid);
         // return snapshot.val();
         // return recipe.people.creatorID;
       })
-
-      
-      this.writeAccountData(user.uid, user.displayName, user.email);
-      this.props.setUsernameAndID(user.displayName, user.uid);
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;

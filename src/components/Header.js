@@ -18,10 +18,7 @@ class Header extends Component {
   }
 
   logout = () => {
-    firebase.auth().signOut();
-    // console.log(firebase.auth().currentUser);
-    localStorage.removeItem("login");
-    this.setState({ username: "" });
+    this.props.logout();
   };
 
   getHeaderContentLogguedIn = () => {
@@ -48,9 +45,6 @@ class Header extends Component {
     );
   };
 
-  clearSearchInput = () => {
-
-  }
 
   handleSubmit = e => {
     e.preventDefault();
