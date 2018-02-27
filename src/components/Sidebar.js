@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../scripts/firebase";
 import { accountsRef, cookbooksRef} from "../scripts/db";
+import LoadingAnimation from './LoadingAnimation';
 //import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
@@ -159,7 +160,7 @@ class Sidebar extends Component {
                 }
               </li>
               )))
-            : <div>... Loading Cookbooks ...</div> }
+            : <LoadingAnimation/> }
         </ul>
         {
           this.state.showAddCookbookFields

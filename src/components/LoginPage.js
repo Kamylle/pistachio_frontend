@@ -98,7 +98,7 @@ class LoginPage extends Component {
             <h1>Pistach.io</h1>
             <p>Digital familial cookbook. <br/> Create, share and print your recipes.</p>
           </div>
-          {this.state.error !== '' && <p className="error">Error occured: {this.state.error}</p>}
+          {/* {this.state.error !== '' && <p className="error">Error occured: {this.state.error}</p>} */}
           {this.state.display === 'signin' ? (
             <div className="Login">
                 <div className="googleLogin">

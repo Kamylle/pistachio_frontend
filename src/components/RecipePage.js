@@ -5,6 +5,7 @@ import firebase from "../scripts/firebase";
 import { recipesRef, usersRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from "../img/bg-green.jpg";
+import LoadingAnimation from './LoadingAnimation';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -149,7 +150,7 @@ class RecipePage extends Component {
     return (
       <div id="main" className="Recipe">
         {!this.state.loaded ? (
-          "loading animation"
+          <LoadingAnimation/>
         ) : (
           <div>
             <div className="recipeImgContainer">
