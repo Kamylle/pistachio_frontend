@@ -106,7 +106,7 @@ class CreateRecipePage extends Component {
         );
       });
       // Overwrite the existing array ('recipeIDs branch') with the newly updated recipeIDs list :
-      db.ref(`Cookbooks/`).child(`${selectedCookbook}/recipeIDs`).set(articles);
+      db.ref(`Cookbooks/${selectedCookbook}/recipeIDs`).set(articles);
     }
   };
 
@@ -359,10 +359,14 @@ class CreateRecipePage extends Component {
 
   checkForCookbookNameConflict = () => {
     const userCookbookTitles = this.state.userCookbooks.map(cb => {
+      console.log("Cookbook Title Value =", cb.title.value);
       return cb.title.value
     });
     userCookbookTitles.push("Create New Cookbook...", ""); // These should not be valid cookbook names...
-    const cookbookNameIsValid = userCookbookTitles.every(cbt => cbt.toLowerCase() !== this.state.newUserCookbookName.toLowerCase());
+    let cookbookNameIsValid; // AM
+    try { // AM
+      cookbookNameIsValid = userCookbookTitles.every(cbt => cbt.toLowerCase() !== this.state.newUserCookbookName.toLowerCase()); // AM
+    } catch(err) { console.log(err); return false } // AM
     
     if (!cookbookNameIsValid) {
       return <button disabled>Add Cookbook</button>
