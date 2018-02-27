@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import firebase from '../scripts/firebase';
 import { recipesRef, accountsRef } from "../scripts/db";
+import LoadingAnimation from "./LoadingAnimation";
 
 class RecipeCard extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class RecipeCard extends Component {
       recipeID: this.props.recipeID, // Change back to this later after testing: this.props.recipeID
       recipeObject: {},
     //   creatorObject: {},
-      loaded: true
+      loaded: false
     };
   }
 
@@ -60,7 +61,7 @@ class RecipeCard extends Component {
         this.setState({
           recipeObject: recipe,
         //   creatorObject: creatorObj.val(),
-          loaded: true
+          //loaded: true
         });
       })
       .catch(err => {
@@ -73,7 +74,7 @@ class RecipeCard extends Component {
         return (
             <div className="card">
               { !this.state.loaded 
-                ? ( <h2>Loading Mock Card Here For Testing Purposes</h2> )
+                ? ( <LoadingAnimation/> )
                 : (
                     <Link to={this.getRecipePath()}>
                       { this.state.recipeObject.img === "" 

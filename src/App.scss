@@ -3,6 +3,7 @@
 @import "style/mixins.scss";
 @import "style/fonts.scss";
 @import "style/icons.scss";
+@import "style/loadingAnimation.scss";
 
 html, body, #root{
   width: 100%;
@@ -94,12 +95,14 @@ button {
   background-color: $white;
   box-shadow: 0 1px 5px 0 rgba(51, 42, 29, 0.1) inset ;
   border: 1px solid rgba(51, 42, 29, 0.1);
+  color: $black;
   img {
     height: 5em;
   }
   &:hover {
       background-color: $whitish;
       border: 1px solid rgba(51, 42, 29, 0.5);
+      color: $blackest;
   }
 }
 
@@ -277,7 +280,7 @@ button {
       padding-top: $header-height;
     }
   }
-}
+
 
 #main {
   padding-top: $header-height-mobile;
@@ -697,13 +700,19 @@ aside {
   background-image: url("./img/bg-coul.jpg");
   background-size: cover;
   align-items: flex-start;
-  padding: 0 15%;
+  padding: 0;
+  @include bp-sm {
+    padding: 0 15%;
+  };
   .container {
     padding: 3em 3em 1em;
     background-color: $white;
-    max-width: 18em;
+    width: 100%;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.29);
+    @include bp-sm {
+      max-width: 24em;
+    };
     .titleSection {
       padding-bottom: 1em;
       h1 {
@@ -734,6 +743,11 @@ aside {
     }
     input {
       display: block;
+      width: 100%;
+      border: 2px solid $white;
+      &:hover {
+        border: 2px solid $primaryLight;
+      }
     }
   }
   .error {
