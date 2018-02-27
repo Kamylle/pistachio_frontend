@@ -124,6 +124,8 @@ html {
     background-image: url("./img/icons/ic_search.svg"); }
   .icon.add {
     background-image: url("./img/icons/ic_add-w.svg"); }
+  .icon.addBlack {
+    background-image: url("./img/icons/ic_add.svg"); }
   .icon.send {
     background-image: url("./img/icons/ic_send_white.svg"); }
   .icon.edit {
@@ -319,10 +321,11 @@ button {
       box-shadow: none;
       background-color: #ffffff !important;
       border: 0px solid #ffffff;
-      font-size: 1.2em;
+      font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+      font-size: 1.1em;
       margin: 0;
       text-align: right;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       width: 50%;
       padding: 0;
       outline: none; }
@@ -330,6 +333,7 @@ button {
         .App > header form input {
           font-size: 1.6em; } }
       .App > header form input:focus, .App > header form input:active {
+        letter-spacing: 0;
         outline: none;
         border: 0; }
         .App > header form input:focus::placeholder, .App > header form input:active::placeholder {
@@ -353,7 +357,7 @@ button {
     display: block;
     text-align: right;
     font-size: 0.8em;
-    padding: 1em 1em 0; }
+    padding: 16px 16px 0; }
     @media only screen and (min-width: 40em) {
       .App > header .accountLinks {
         padding: 1.5em 1.5em 0; } }
@@ -393,7 +397,10 @@ button {
         padding: 1em 1.5em; } }
     .App > header .newRecipeBtn i {
       position: relative;
-      top: 0.4em; }
+      top: 3px; }
+      @media only screen and (min-width: 40em) {
+        .App > header .newRecipeBtn i {
+          top: 6px; } }
     .App > header .newRecipeBtn span {
       padding-left: 0.5em;
       display: none; }
@@ -569,6 +576,9 @@ aside.cookbookMarks {
     color: #ffffff;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+  .cookBookContainer.otherUser header {
+    background-color: #262424;
+    background-image: url("./img/bg-black.jpg"); }
 
 .Add {
   justify-content: left; }
@@ -578,6 +588,18 @@ aside.cookbookMarks {
   .Recipe .container {
     max-width: 40em;
     margin: auto; }
+
+.addRecipe {
+  display: block;
+  color: #262424;
+  padding: 1em 0;
+  font-size: 0.8em; }
+  .addRecipe:hover {
+    color: #cae47e; }
+  .addRecipe i {
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.5em; }
 
 .cardContain {
   position: relative;

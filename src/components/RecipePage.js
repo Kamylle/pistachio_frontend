@@ -212,7 +212,7 @@ class RecipePage extends Component {
                 <i onClick={this.editRecipe} className="icon edit i24" />
               )}
 
-              <i className="icon print i24" />
+              <i onClick={() => window.print()} className="icon print i24" />
             </div>
           </div>
         )};

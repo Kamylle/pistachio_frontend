@@ -161,10 +161,11 @@ button {
         box-shadow: none;
         background-color: $white !important;
         border: 0px solid $white;
-        font-size: 1.2em;
+        font-family: $serif-font;
+        font-size: 1.1em;
         margin: 0;
         text-align: right;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.05em;
         width: 50%;
         padding: 0;
         outline: none;
@@ -172,6 +173,7 @@ button {
           font-size: 1.6em;
         }
         &:focus, &:active {
+          letter-spacing: 0;
           outline: none;
           border: 0;
           &::placeholder {
@@ -204,7 +206,7 @@ button {
       display: block;
       text-align: right;
       font-size: 0.8em;
-      padding: 1em 1em 0;
+      padding: 16px 16px 0;
       @include bp-md {
         padding: 1.5em 1.5em 0;
       };
@@ -251,7 +253,10 @@ button {
       }
       i {
         position: relative;
-        top: 0.4em;
+        top: 3px;
+        @include bp-md {
+          top: 6px;
+        };
       }
       span {
         padding-left: 0.5em;
@@ -476,6 +481,12 @@ aside {
     padding: 6em 2em 4em;
     font-family: $serif-font;
   }
+  &.otherUser {
+    header {
+      background-color: $black;
+      background-image: url("./img/bg-black.jpg");
+    }
+  }
 }
 
 .Add {
@@ -490,16 +501,29 @@ aside {
   }
 }
 
+.addRecipe {
+  display: block;
+  color: $black;
+  padding: 1em 0;
+  font-size: 0.8em;
+  &:hover {
+    color: $primaryLight;
+  }
+  i {
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.5em;
+  }
+}
+
 .cardContain {
   position: relative;
   top: -3em;
   padding-left: 1em;
   padding-right: 1em;
-  //column-count: 1;
   column-gap: 1em;
   column-width: 15em;
   column-count: 1;
-  //column-span: all;
   @include bp-md {
     column-count: 2;
   }

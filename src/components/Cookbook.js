@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 // import { firebase } from '../scripts/firebase';
 import { cookbooksRef, usersRef } from '../scripts/db';
@@ -71,18 +71,28 @@ class Cookbook extends Component {
 
     render() {
         // console.log(this.state.cookbookID)
-      return this.state.loaded
-      ? (
-        <div className={this.getClassName()}>
-            <header>
-                <h1>{this.state.cookbookTitle}</h1>
-            </header>
-            <div className="cardContain">
-                {this.renderAllRecipe()}
-            </div>
-        </div>
-        )
-      : <LoadingAnimation/>
+        console.log("This state recipe IDs = " + this.state.recipeIDs)
+      return !this.state.loaded
+      ? 
+      <LoadingAnimation/>
+      :
+      ( <div className={this.getClassName()}>
+          <header>
+              <h1>{this.state.cookbookTitle}</h1>
+              { this.state.recipeIDs === undefined || this.state.recipeIDs.length <= 0 ?
+                <h3>You have no recipe in this cookbook yet 
+                    <Link to="/edit" className="addRecipe">
+                        <i className="icon addBlack i18" />Add a recipe
+                    </Link>
+                </h3>
+                
+                : null
+              }
+          </header>
+          <div className="cardContain">
+              {this.renderAllRecipe()}
+          </div>
+      </div> )
     }
   }
 
