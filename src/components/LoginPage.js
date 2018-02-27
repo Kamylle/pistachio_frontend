@@ -80,10 +80,32 @@ class LoginPage extends Component {
 
   writeAccountData = async (userId, username, email) => {
     // const key = firebase.database().ref('/').push().key;
+    const currentCookbooks = [];
+    firebase.database().ref(`Accounts/${userId}/cookbooksList`).on("value", snap => currentCookbooks.push(snap.val()));
+    const flattenedCookbooksList = [].concat.apply([], currentCookbooks);
+    if (flattenedCookbooksList.length < 1) { 
+      const defaultCookbookKey = await firebase.database().ref("Cookbooks/").push().key;
+      firebase.database().ref(`Accounts/${userId}/cookbooksList`).set({ 0: defaultCookbookKey });
+      firebase.database().ref(`Cookbooks/${defaultCookbookKey}`)
+      .set(
+        { ownerUserID: userId,
+          recipeIDs: [],
+          title: {
+            value: "Favorites"
+          }
+        }
+      )
+     }
+     const existingCookbooksList = {};
+     flattenedCookbooksList.forEach((cookbook, cookbookIdx) => {
+      return Object.assign(existingCookbooksList, 
+            { [cookbookIdx]: cookbook }
+      );
+    });
     await firebase.database().ref('Accounts/' + userId).set({
       username,
       email,
-      // cookbooksList: [key]
+      cookbooksList: existingCookbooksList
     });
   }
 
