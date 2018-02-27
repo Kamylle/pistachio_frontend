@@ -132,7 +132,14 @@ class Sidebar extends Component {
   render() {
     return (
       <aside className="cookbookMarks" key={this.state.key}>
-      <a className="menuBtn" onClick={this.toggleMenu}><i/></a>
+      <a className="menuBtn" onClick={this.toggleMenu}>
+        <i id="navIcon" >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </i>
+      </a>
       <h3>Cookbooks</h3>
         <ul>
           <li onClick={this.handleLinkSelect("all")}

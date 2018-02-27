@@ -364,13 +364,6 @@ aside {
         @include transition (all, 0.3s, ease)
         width: 24px;
         height: 24px;
-        background-size: 16px 16px;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url("./img/icons/ic_close_white.svg");
-        &:hover {
-          opacity: 0.8;
-        }
       }
     }
     .addCookbook {
@@ -389,14 +382,6 @@ aside {
 .hideMenu {
   .cookbookMarks {
     left: -$sidebar-width;
-    .menuBtn {
-      i {
-        background-image: url("./img/icons/ic_menu-w.svg");
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-    }
   }
   .Home {
     padding-left: 0;
