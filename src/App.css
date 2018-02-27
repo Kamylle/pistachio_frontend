@@ -124,6 +124,8 @@ html {
     background-image: url("./img/icons/ic_search.svg"); }
   .icon.add {
     background-image: url("./img/icons/ic_add-w.svg"); }
+  .icon.addBlack {
+    background-image: url("./img/icons/ic_add.svg"); }
   .icon.send {
     background-image: url("./img/icons/ic_send_white.svg"); }
   .icon.edit {
@@ -353,7 +355,7 @@ button {
     display: block;
     text-align: right;
     font-size: 0.8em;
-    padding: 1em 1em 0; }
+    padding: 16px 16px 0; }
     @media only screen and (min-width: 40em) {
       .App > header .accountLinks {
         padding: 1.5em 1.5em 0; } }
@@ -393,7 +395,7 @@ button {
         padding: 1em 1.5em; } }
     .App > header .newRecipeBtn i {
       position: relative;
-      top: 0.4em; }
+      top: 3px; }
     .App > header .newRecipeBtn span {
       padding-left: 0.5em;
       display: none; }
@@ -578,6 +580,18 @@ aside.cookbookMarks {
   .Recipe .container {
     max-width: 40em;
     margin: auto; }
+
+.addRecipe {
+  display: block;
+  color: #262424;
+  padding: 1em 0;
+  font-size: 0.8em; }
+  .addRecipe:hover {
+    color: #cae47e; }
+  .addRecipe i {
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.5em; }
 
 .cardContain {
   position: relative;

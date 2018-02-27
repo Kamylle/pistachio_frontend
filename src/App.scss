@@ -204,7 +204,7 @@ button {
       display: block;
       text-align: right;
       font-size: 0.8em;
-      padding: 1em 1em 0;
+      padding: 16px 16px 0;
       @include bp-md {
         padding: 1.5em 1.5em 0;
       };
@@ -251,7 +251,7 @@ button {
       }
       i {
         position: relative;
-        top: 0.4em;
+        top: 3px;
       }
       span {
         padding-left: 0.5em;
@@ -487,6 +487,21 @@ aside {
   .container {
     max-width: 40em;
     margin: auto;
+  }
+}
+
+.addRecipe {
+  display: block;
+  color: $black;
+  padding: 1em 0;
+  font-size: 0.8em;
+  &:hover {
+    color: $primaryLight;
+  }
+  i {
+    position: relative;
+    top: 0.2em;
+    margin-right: 0.5em;
   }
 }
 
