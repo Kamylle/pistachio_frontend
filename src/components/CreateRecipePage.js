@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import firebase from "../scripts/firebase";
 import Textarea from "react-textarea-autosize";
 import { accountsRef, cookbooksRef, setPrettifiedCookbookPath } from "../scripts/db";
-import Cookbook from "./Cookbook";
+// import Cookbook from "./Cookbook";
 //import { Link } from 'react-router-dom';
 
 class CreateRecipePage extends Component {
@@ -409,7 +409,7 @@ class CreateRecipePage extends Component {
 
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
-      const db = firebase.database();
+      // const db = firebase.database();
       // db.ref("Recipes/" + this.state.recipeID).remove();
       // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
       this.deleteRecipeFromCookbook(this.state.recipeID);

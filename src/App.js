@@ -85,7 +85,6 @@ class App extends Component {
         <Header 
           userID={this.state.userID}
           username={this.state.username}
-          // history={routeProps.history}
           logout={this.logout}
         />
         <Switch>

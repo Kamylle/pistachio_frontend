@@ -64,6 +64,7 @@ class LoginPage extends Component {
       // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
+      console.log(user)
       accountsRef
       .once("value")
       .then(snapshot => {
