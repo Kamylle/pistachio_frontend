@@ -11,6 +11,7 @@ class SearchPage extends Component {
     super(props);
     this.state = {
       itemsFound: [],
+      myItemsFound: [],
       recipeObject: {},
       loaded: false
     };
@@ -55,13 +56,19 @@ class SearchPage extends Component {
   }
 
   performSearch = searchTerm => {
-    console.log(searchTerm, this.state)
+    // console.log(searchTerm, this.state)
     let wordSearch = searchTerm;
     let allRecipes = this.state.recipeObject;
     var recipesFound = Object.values(allRecipes).filter(item =>
+      item.recipe.toLowerCase().includes(wordSearch) &&
+      !item.username.includes(this.props.username)
+    );
+    var myRecipesFound = Object.values(allRecipes).filter(item =>
+      item.username.includes(this.props.username) &&
       item.recipe.toLowerCase().includes(wordSearch)
     );
-    console.log(recipesFound)
+    // console.log(recipesFound)
+    // console.log(myRecipesFound)
     // console.log(recipesFound);
     // console.log(arrOfRecipes);
     // let arrOfCookbooks = [];
@@ -73,7 +80,7 @@ class SearchPage extends Component {
     // let arrOfItemsFound = [arrOfRecipes, ...arrOfCookbooks]
     // console.log(arrOfItemsFound)
     // this.setState({ itemsFound: arrOfRecipes });
-    this.setState({ itemsFound: recipesFound, loaded: true });
+    this.setState({ itemsFound: recipesFound, myItemsFound: myRecipesFound, loaded: true });
   };
 
   render() {
@@ -88,6 +95,16 @@ class SearchPage extends Component {
           {/* <SidebarSearch /> */}
           <div id="main" className="Search">
             <div className="cardContain searchContain">
+            My recipes
+              {this.state.myItemsFound.map((item, idx) => (
+                  <RecipeCard 
+                    key={idx}
+                    recipeID={item.recipeID}
+                  />
+              ))}
+            </div>
+            <div className="cardContain searchContain">
+            Recipes from other users
               {this.state.itemsFound.map((item, idx) => (
                   <RecipeCard 
                     key={idx}
@@ -95,14 +112,6 @@ class SearchPage extends Component {
                   />
               ))}
             </div>
-            {/* <div className="cardContain searchContain">
-              {this.state.itemsFound.map((item, idx) => (
-                  <RecipeCard 
-                    key={idx}
-                    recipeID={item.recipeID}
-                  />
-              ))}
-            </div> */}
           </div>
         </div>
       );

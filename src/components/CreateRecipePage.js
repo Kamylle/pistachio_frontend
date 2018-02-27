@@ -375,13 +375,13 @@ class CreateRecipePage extends Component {
   deleteRecipe = () => {
     // if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("/Recipes" + this.props.location.state.recipeID).remove();
+      db.ref("/Recipes" + this.state.recipeID).remove();
     // this.props.history.push("/");
     // }
   };
 
   render() {
-    // console.log(this.props.location.state.recipeID);
+    console.log(this.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>

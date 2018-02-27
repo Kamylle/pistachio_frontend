@@ -114,7 +114,10 @@ class App extends Component {
           <Route
             path="/search"
             render={(routeProps) => (
-              <SearchPage location={routeProps.location}/>
+              <SearchPage 
+              location={routeProps.location}
+              username={this.state.username}
+              />
             )}
           />
           <Route
