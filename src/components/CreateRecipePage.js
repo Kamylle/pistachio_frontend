@@ -328,7 +328,7 @@ class CreateRecipePage extends Component {
   }
 
   getSelectableCookbooksList = () => {
-    const defaultUnselectableOption = [<option disabled>Select A Cookbook...</option>]
+    const defaultUnselectableOption = [<option selected>Select A Cookbook...</option>]
     const newCookbookSelectableOption = <option value="newCookbook">Create New Cookbook...</option>
 
     try {
@@ -341,10 +341,7 @@ class CreateRecipePage extends Component {
       }
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
-        // console.log(this.cookbookSelector.options[this.cookbookSelector.selectedIndex]);
-          return cbIdx === selectableCookbooks.length - 1
-            ? <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
-            : <option value={this.state.cookbookIDs[cbIdx]}>{this.state.userCookbooks[cbIdx].title.value}</option>
+            return <option value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
       });
 
       return defaultUnselectableOption
@@ -392,7 +389,7 @@ class CreateRecipePage extends Component {
     console.log(this.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
-        <header>
+        <header id="cookbookSelection">
           <h2>Edit Recipe</h2>
         </header>
         <form onSubmit={this.handleSubmit} className="createRecipe">
@@ -594,7 +591,7 @@ class CreateRecipePage extends Component {
             <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
-              <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
+              { this.state.cookbook === "" ? <button disabled className="saveBtn"><a href="#cookbookSelection">Select A Cookbook First</a></button> : <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>}
             </div>
           </div>
         </form>
