@@ -95,6 +95,7 @@ class App extends Component {
               recipeID={routeProps.match.params.recipeID}
               userID={this.state.userID}
               username={this.state.username}
+              location={routeProps.location}
               history={routeProps.history}
               />
             )}

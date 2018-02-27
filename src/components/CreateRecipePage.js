@@ -57,22 +57,22 @@ class CreateRecipePage extends Component {
     this.getCookbooks();
   }
 
-  // componentDidMount() {
+  componentDidMount() {
     //get localstorage state and set it
     // console.log(this.props.location.state);
-    // if (this.props.location.state) {
-      // this.setState(this.props.location.state.recipeObject);
-    // } else {
-    //   // const state = JSON.parse(localStorage.getItem("state"));
-    //   this.setState(state);
-    // }
-  // }
+    if (this.props.location.state) {
+      this.setAppState(this.props.location.state.recipeObject);
+    } else {
+      const state = JSON.parse(localStorage.getItem("state"));
+      this.setAppState(state);
+    }
+  }
 
-  // setAppState = state => {
-  //   this.setState(state, () => {
-  //     localStorage.setItem("state", JSON.stringify(this.state));
-  //   });
-  // };
+  setAppState = state => {
+    this.setState(state, () => {
+      localStorage.setItem("state", JSON.stringify(this.state));
+    });
+  };
 
   writeRecipe = async recipe => {
     const db = firebase.database();
@@ -121,14 +121,14 @@ class CreateRecipePage extends Component {
     const storageRef = firebase.storage().ref("images/" + img.name);
     const snapshot = await storageRef.put(img);
     // console.log('Uploaded a blob or file!', snapshot);
-    this.setState({ img: snapshot.downloadURL });
+    this.setAppState({ img: snapshot.downloadURL });
   };
 
   handleNewCookbookInputChange = event => {
     const target = event.target;
     const value = target.value;
 
-    this.setState({
+    this.setAppState({
       newUserCookbookName: value
     });
   };
@@ -138,7 +138,7 @@ class CreateRecipePage extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
+    this.setAppState({
       [name]: value
     });
   };
@@ -162,7 +162,7 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
-    // console.log("Recipe sent");
+    console.log(recipe);
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -171,11 +171,11 @@ class CreateRecipePage extends Component {
       //   await this.editRecipe(recipe, this.props.recipeID);
       // }
       //reset state
-      this.setState(this.initialState);
+      this.setAppState(this.initialState);
     } catch (err) {
       //console.log(err);
     }
-    this.props.history.push("/recipe/" + this.state.recipeID)
+    this.props.history.push("/")
   };
 
   //dynamic forms from: https://goshakkk.name/array-form-inputs/
@@ -191,11 +191,11 @@ class CreateRecipePage extends Component {
       else return null;
     });
 
-    this.setState({ ingredients: newIngredients });
+    this.setAppState({ ingredients: newIngredients });
   };
 
   handleAddIngredient = () => {
-    this.setState({
+    this.setAppState({
       ingredients: this.state.ingredients.concat([
         { qty: "", unit: "", ingr: "" }
       ])
@@ -203,7 +203,7 @@ class CreateRecipePage extends Component {
   };
 
   handleRemoveIngredient = idx => () => {
-    this.setState({
+    this.setAppState({
       ingredients: this.state.ingredients.filter((s, sidx) => idx !== sidx)
     });
   };
@@ -214,17 +214,17 @@ class CreateRecipePage extends Component {
       else return { ...step, step: evt.target.value };
     });
 
-    this.setState({ prep: newStep });
+    this.setAppState({ prep: newStep });
   };
 
   handleAddStep = () => {
-    this.setState({
+    this.setAppState({
       prep: this.state.prep.concat([{ step: "" }])
     });
   };
 
   handleRemoveStep = idx => () => {
-    this.setState({
+    this.setAppState({
       prep: this.state.prep.filter((s, sidx) => idx !== sidx)
     });
   };
@@ -235,17 +235,17 @@ class CreateRecipePage extends Component {
       else return { ...ownerNotes, note: evt.target.value };
     });
 
-    this.setState({ ownerNotes: newNote });
+    this.setAppState({ ownerNotes: newNote });
   };
 
   handleAddNote = () => {
-    this.setState({
+    this.setAppState({
       ownerNotes: this.state.ownerNotes.concat([{ note: "" }])
     });
   };
 
   handleRemoveNote = idx => () => {
-    this.setState({
+    this.setAppState({
       ownerNotes: this.state.ownerNotes.filter((s, sidx) => idx !== sidx)
     });
   };
@@ -256,17 +256,17 @@ class CreateRecipePage extends Component {
       else return { ...ownerAnecdotes, anecdote: evt.target.value };
     });
 
-    this.setState({ ownerAnecdotes: newAnecdote });
+    this.setAppState({ ownerAnecdotes: newAnecdote });
   };
 
   handleAddAnecdote = () => {
-    this.setState({
+    this.setAppState({
       ownerAnecdotes: this.state.ownerAnecdotes.concat([{ anecdote: "" }])
     });
   };
 
   handleRemoveAnecdote = idx => () => {
-    this.setState({
+    this.setAppState({
       ownerAnecdotes: this.state.ownerAnecdotes.filter((s, sidx) => idx !== sidx)
     });
   };
@@ -274,7 +274,7 @@ class CreateRecipePage extends Component {
   handleNewCookbookAddition = async evt  => {
     evt.preventDefault();
     this.newCookbookInputField.value = ""; // Clears the new cookbook name input field upon submission
-    this.setState({ newCookbookAdded: true });
+    this.setAppState({ newCookbookAdded: true });
 
     const db = firebase.database();
     // First, we're creating the cookbook in "Cookbooks"...
@@ -305,7 +305,7 @@ class CreateRecipePage extends Component {
     .child(`${this.props.userID}/cookbooksList`)
     .once('value')
     .then(snap => {
-      this.setState({
+      this.setAppState({
         cookbookIDs: snap.val(), cookbooksListLoaded: true
       })
       return snap.val() ; // snap.val() = An array of strings representing the user cookbooks' IDs
@@ -319,7 +319,7 @@ class CreateRecipePage extends Component {
       ))
     )
     .then((userCookbooks) => {
-      this.setState({ userCookbooks, cookbookObjectsloaded: true })
+      this.setAppState({ userCookbooks, cookbookObjectsloaded: true })
     })
     .catch();
   }
@@ -368,20 +368,20 @@ class CreateRecipePage extends Component {
   }
 
   cancelRecipe = () => {
-    this.setState( this.initialState )
+    // this.setAppState( this.initialState )
     this.props.history.push("/")
   }
 
   deleteRecipe = () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref(`Recipes/${this.state.recipeID}`).remove();
-      this.props.history.push("/");
-     }
+      db.ref("/Recipes" + this.props.location.state.recipeID).remove();
+    // this.props.history.push("/");
+    }
   };
 
   render() {
-    // console.log(this.state.recipeID);
+    // console.log(this.props.location.state.recipeID);
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header>
