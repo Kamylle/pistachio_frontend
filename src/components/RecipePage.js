@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 // import firebase from "../scripts/firebase";
 //import { Route } from "react-router"; "TO REMOVE WARNING : 'Route' is defined but never used"
-// import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { recipesRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from "../img/bg-green.jpg";
 import LoadingAnimation from './LoadingAnimation';
-import ShareUrl from "share-url"
+import ShareUrl from "share-url";
+
+const routedRecipePage = withRouter(RecipePage);
 
 class RecipePage extends Component {
   constructor(props) {
@@ -242,3 +244,4 @@ class RecipePage extends Component {
   }
 }
 export default RecipePage;
+export default routedRecipePage;
