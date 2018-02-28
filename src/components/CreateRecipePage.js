@@ -416,7 +416,7 @@ class CreateRecipePage extends Component {
       }
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
-            return <option value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
+            return <option key={cbIdx} value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
       });
 
       return defaultUnselectableOption
@@ -451,10 +451,10 @@ class CreateRecipePage extends Component {
     this.props.history.push("/")
   }
 
-  deleteRecipeFromCookbook = (recipeID) => {
+  deleteRecipeFromCookbook = async (recipeID) => {
     console.log("test1 should return recipe ID: ", recipeID )
     var temp;
-    cookbooksRef
+    await cookbooksRef
     .once("value")
     .then(snapshot => {
       // console.log(snapshot.val());
@@ -487,18 +487,23 @@ class CreateRecipePage extends Component {
 }
 
 
-  deleteRecipe = () => {
+  deleteRecipe = async () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("Recipes/" + this.state.recipeID).remove();
+      await db.ref("Recipes/" + this.state.recipeID).remove();
       // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
-      this.deleteRecipeFromCookbook(this.state.recipeID);
+      await this.deleteRecipeFromCookbook(this.state.recipeID);
       localStorage.removeItem('state')
       this.props.history.push("/");          
     }
   };
 
   render() {
+    // About 'recipeEditMode' :
+    // Defining whether we're in 'Edit' mode or in 'Creation' mode
+    // will enable us to determine whether to display the 'Delete' button
+    // in the footer ('BottomBar')of this page.
+    const recipeEditMode = this.state.recipeID !== undefined ? true : false;
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header id="cookbookSelection">
@@ -702,12 +707,15 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
+            { recipeEditMode 
+              ? <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button> 
+              : <div className="deleteBtn"></div> 
+            }
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
-              { this.state.cookbook === "" ? 
+              { this.state.cookbook === "" || this.state.cookbook === "newCookbook" || this.state.cookbook === "Select A Cookbook..." ? 
                 <button disabled className="saveBtn disabled">
-                  <a href='#cookbookSelection'>Select A Cookbook First</a>
+                  <a href='#cookbookSelection'>Select A Cookbook Before Saving</a>
                 </button> 
                 : 
                 <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>

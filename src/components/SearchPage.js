@@ -48,7 +48,7 @@ class SearchPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    // console.log(nextProps);
     const searchTerm = new URLSearchParams(nextProps.location.search).get(
       "searchTerm"
     );
@@ -57,7 +57,7 @@ class SearchPage extends Component {
   }
 
   performSearch = searchTerm => {
-    // console.log(searchTerm, this.state)
+    console.log(searchTerm, this.state)
     let wordSearch = searchTerm;
     let allRecipes = this.state.recipeObject;
     var recipesFound = Object.values(allRecipes).filter(item =>
@@ -68,8 +68,8 @@ class SearchPage extends Component {
       item.username.includes(this.props.username) &&
       item.recipe.toLowerCase().includes(wordSearch)
     );
-    // console.log(recipesFound)
-    // console.log(myRecipesFound)
+    console.log(recipesFound)
+    console.log(myRecipesFound)
     // console.log(recipesFound);
     // console.log(arrOfRecipes);
     // let arrOfCookbooks = [];
@@ -102,7 +102,7 @@ class SearchPage extends Component {
               <div className="cardContain">
                 {this.state.myItemsFound.map((item, idx) => (
                     <RecipeCard 
-                      key={idx}
+                      // key={idx}
                       recipeID={item.recipeID}
                     />
                 ))}
@@ -115,7 +115,7 @@ class SearchPage extends Component {
               <div className="cardContain">
                 {this.state.itemsFound.map((item, idx) => (
                     <RecipeCard 
-                      key={idx}
+                      // key={idx}
                       recipeID={item.recipeID}
                     />
                 ))}
