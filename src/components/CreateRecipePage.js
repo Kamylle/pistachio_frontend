@@ -77,40 +77,120 @@ class CreateRecipePage extends Component {
   };
 
   writeRecipe = async recipe => {
-    const db = firebase.database();
+    const db = firebase.database(); 
+
+    // *** Check for a potential cookbook transfer first ***
+
+    // [ ...GATHERING REQUIRED DATA... ]
+
+    // Step 1 : Get the selected cookbooks's ID...
     const selectedCookbook = this.state.cookbook;
-    let recipeIDsInCookbook = [];
-    // In order to push the new recipe to the selected cookbook, we'll need to
-    // get the existing recipes in the cookbook first (as this is the only way
-    // we can get firebase to push new things to an array...)
-      await db.ref(`Cookbooks/${selectedCookbook}`)
+
+    // Step 2 : Get the list of existing recipes in the new/selected cookbook...
+    let recipeIDsFromSelectedCookbook = []; // Used for both recipeID content edits and cookbook transfers; so this is the first step.
+    console.log("*** SELECTED COOKBOOK ID = ", selectedCookbook);
+    await db.ref(`Cookbooks/${selectedCookbook}`)
+    .child('recipeIDs')
+    .once("value", snap => {
+      if (snap.val() !== null && snap.val() !== undefined) {
+        //console.log("recipeIDsFromSelectedCookbook =", recipeIDsFromSelectedCookbook);
+        console.log("Cookbooks > Selected Cookbook > RecipeIDs Value =", snap.val());
+        recipeIDsFromSelectedCookbook.push(...snap.val()); // "= Recipes already in the user's selected cookbook"
+      }
+      console.log("[ STEP 1 ] recipeIDsFromSelectedCookbook =", recipeIDsFromSelectedCookbook);
+    });
+
+    // Step 3 : Get the current recipe's ID
+    const recipeID = this.state.recipeID;
+
+    // Step 4 : Query the value of the recipeID's *current* cookbookID
+    let originalCookbookForRecipeID;
+    await db.ref(`Recipes/${recipeID}/cookbook`)
+    .once("value", snap => {
+      originalCookbookForRecipeID = snap.val();
+      console.log("[ STEP 4 ] originalCookbookForRecipeID =", originalCookbookForRecipeID);
+    });
+
+    // Step 5 : Evaluate whether the selected cookbookID and the current cookbook ID are the same.
+    const cookbookTransferIsRequired = selectedCookbook !== originalCookbookForRecipeID
+    if (cookbookTransferIsRequired) { // If they're different : we can proceed with the cookbook transfer on the DB...
+      
+      // Step 6 : Get the array of recipes in the original cookbook (from step 3);
+      let recipeIDsFromOriginalCookbook = [];
+      await db.ref(`Cookbooks/${originalCookbookForRecipeID}`)
       .child('recipeIDs')
       .once("value", snap => {
-        if (snap.val() !== null) {
-          recipeIDsInCookbook.push(...snap.val()); // "= Recipes already in the user's cookbook"
+        if (snap.val() !== null && snap.val() !== undefined) {
+          recipeIDsFromOriginalCookbook.push(...snap.val()); // "= Recipes already in the original cookbook"
         }
-        console.log(snap.val())
+        console.log("[ STEP 6 ] recipeIDsFromOriginalCookbook =", recipeIDsFromOriginalCookbook);
       });
-    const recipeKey = this.props.location.state
-      ? this.props.location.state.recipeID
-      : await db.ref("Recipes/").push().key;
-    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
-    // Push the new recipeKey into the array of existing recipes (if any) in the selected cookbook :
-    recipeIDsInCookbook.push(recipeKey);
 
-    const flattenedRecipeIDs = [].concat.apply([], recipeIDsInCookbook);
+      // * PART I >>> Removing the recipeID from the original cookbook's recipeIDs list,
+      //               then pushing the updated list back to the original cookbook *
 
-    if (!flattenedRecipeIDs.includes(this.state.recipeID)) { // "If user is in edit recipe mode: we won't push the recipe as a new object in firebase"
-      const articles = {};
-      flattenedRecipeIDs.forEach((article, articleIdx) => {
-        return Object.assign(articles, 
-              { [articleIdx]: article }
+      // Step 7 : First flatten the original cookbooks's recipeIDs (gathered at step # 6)...
+      const flattenedrecipeIDsFromOriginalCookbook = [].concat.apply([], recipeIDsFromOriginalCookbook);
+
+      // Step 8 : In the flattened array from steps # 6-11, get the index of the recipeID we're transfering...
+      const recipeIDIndexInOriginalCookbook = flattenedrecipeIDsFromOriginalCookbook.indexOf(recipeID);
+
+      // Step 9 : Remove the recipeID entry from the array of recipeIDs for the original cookbook...
+      flattenedrecipeIDsFromOriginalCookbook.splice(recipeIDIndexInOriginalCookbook, 1);
+
+      // Step 10 : Convert the modified array back into an object prior to setting the list back into the database for the original cookbook...
+      const recipeIDsFromOriginalCookbookObject = {};
+      flattenedrecipeIDsFromOriginalCookbook.forEach((recipeIDEntry, recipeIDEntryIndex) => {
+        return Object.assign(recipeIDsFromOriginalCookbookObject, 
+              { [recipeIDEntryIndex]: recipeIDEntry }
         );
       });
-      // Overwrite the existing array ('recipeIDs branch') with the newly updated recipeIDs list :
-      db.ref(`Cookbooks/${selectedCookbook}/recipeIDs`).set(articles);
+
+      // Step 11 : Set updated recipeIDs list back to the original cookbook's 'recipesIDs' on the database...
+      db.ref(`Cookbooks/${originalCookbookForRecipeID}/recipeIDs`).set(recipeIDsFromOriginalCookbookObject);
+    
+    // * END OF COOKBOOK UPDATE 'IF' BLOCK ! *
     }
+
+    // * PART II >>> Updating the recipeIDs on the new/selected cookbook *
+
+    // Step 12 : Check whether the recipeKey/ID already exists in our state.
+    //           This is required to get the appropriate key, depending on 
+    //           whether we're dealing with a NEW RECIPE or a RECIPE THAT NEEDS UPDATING...
+    const recipeKey = this.props.location.state // "If the recipeKey already exists..." // ? Dubious... Might just be 'this.state.recipeID'
+    ? this.props.location.state.recipeID // ? Dubious... Might just be 'this.state.recipeID'
+    : await db.ref("Recipes/").push().key; // "If the recipeKey does not already exist, set it in the DB and assign it to 'recipeKey'..."
+    
+    // Step 13 : Regardless of whether the key is new ('RECIPE CREATION') or already exists ('RECIPE EDIT'): 
+    //           We will be setting the updated recipe data on the database via a 'SET'...
+    db.ref(`Recipes/${recipeKey}`).set({ ...recipe, recipeID: recipeKey });
+
+    // The above takes care of the 'RECIPE' side of things...
+    // To complete the process, we need to handle this creation/update 
+    // within the selected cookbook for that recipe...
+
+    // Step 14 : Flatten the recipeIDsFromSelectedCookbook (back from step # 2) for proper transformation...
+    const flattenedrecipeIDsFromSelectedCookbook = [].concat.apply([], recipeIDsFromSelectedCookbook);
+    console.log("recipeIDsFromSelectedCookbook =", recipeIDsFromSelectedCookbook)
+    console.log("flattenedrecipeIDsFromSelectedCookbook BEFORE UPDATE =", flattenedrecipeIDsFromSelectedCookbook);
+    
+    // Step 15 : Push the recipeKey/ID to new cookbook's recipeIDs array...
+    flattenedrecipeIDsFromSelectedCookbook.push(recipeKey);
+    console.log("flattenedrecipeIDsFromSelectedCookbook AFTER UPDATE =", flattenedrecipeIDsFromSelectedCookbook);
+
+    // Step 16 : Convert the flattened array back into an object prior to setting the list back into the database for the selected cookbook...
+    const recipeIDsFromSelectedCookbookObject = {};
+    flattenedrecipeIDsFromSelectedCookbook.forEach((recipeIDEntry, recipeIDEntryIndex) => {
+      return Object.assign(recipeIDsFromSelectedCookbookObject, 
+            { [recipeIDEntryIndex]: recipeIDEntry }
+      );
+    });
+
+    // Step 17 : Set updated recipeIDs list back to the new/selected cookbook's 'recipesIDs' on the database...
+    db.ref(`Cookbooks/${selectedCookbook}/recipeIDs`).set(recipeIDsFromSelectedCookbookObject);
   };
+
+
 
   addImage = async img => {
     // console.log(img)
@@ -158,7 +238,7 @@ class CreateRecipePage extends Component {
       ownerNotes: this.formatArray(this.state.ownerNotes)
     };
 
-    console.log(recipe);
+    console.log("SUBMITTED RECIPE OBJECT = ", recipe);
     try {
       // console.log(this.props);
       // if (!this.props.recipeID) {
@@ -477,7 +557,7 @@ class CreateRecipePage extends Component {
               >
                 <option value="unit">Unit</option>
                 <option value="cups">cups</option>
-                <option value="tbs">tbs</option>
+                <option value="tbsp">tbsp</option>
                 <option value="tsp">tsp</option>
                 <option value="ml">ml</option>
                 <option value="g">g</option>
