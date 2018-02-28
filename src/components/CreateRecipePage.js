@@ -499,6 +499,11 @@ class CreateRecipePage extends Component {
   };
 
   render() {
+    // About 'recipeEditMode' :
+    // Defining whether we're in 'Edit' mode or in 'Creation' mode
+    // will enable us to determine whether to display the 'Delete' button
+    // in the footer ('BottomBar')of this page.
+    const recipeEditMode = this.state.recipeID !== undefined ? true : false;
     return (
       <div id="main" className="flexContain newRecipeContainer">
         <header id="cookbookSelection">
@@ -700,12 +705,15 @@ class CreateRecipePage extends Component {
           </button>
 
           <div className="bottomBar">
-            <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
+            { recipeEditMode 
+              ? <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button> 
+              : <div className="deleteBtn"></div> 
+            }
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
-              { this.state.cookbook === "" ? 
+              { this.state.cookbook === "" || this.state.cookbook === "newCookbook" || this.state.cookbook === "Select A Cookbook..." ? 
                 <button disabled className="saveBtn disabled">
-                  <a href='#cookbookSelection'>Select A Cookbook First</a>
+                  <a href='#cookbookSelection'>Select A Cookbook Before Saving</a>
                 </button> 
                 : 
                 <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
