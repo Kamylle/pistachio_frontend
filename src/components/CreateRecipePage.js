@@ -157,8 +157,8 @@ class CreateRecipePage extends Component {
     // Step 12 : Check whether the recipeKey/ID already exists in our state.
     //           This is required to get the appropriate key, depending on 
     //           whether we're dealing with a NEW RECIPE or a RECIPE THAT NEEDS UPDATING...
-    const recipeKey = this.props.location.state // "If the recipeKey already exists..." // ? Dubious... Might just be 'this.state.recipeID'
-    ? this.props.location.state.recipeID // ? Dubious... Might just be 'this.state.recipeID'
+    const recipeKey = this.state.recipeID // "If the recipeKey already exists..." // ? Dubious... Might just be 'this.state.recipeID'
+    ? this.state.recipeID // ? Dubious... Might just be 'this.state.recipeID'
     : await db.ref("Recipes/").push().key; // "If the recipeKey does not already exist, set it in the DB and assign it to 'recipeKey'..."
     
     // Step 13 : Regardless of whether the key is new ('RECIPE CREATION') or already exists ('RECIPE EDIT'): 
@@ -172,24 +172,24 @@ class CreateRecipePage extends Component {
     // Step 14 : Flatten the recipeIDsFromSelectedCookbook (back from step # 2) for proper transformation...
     const flattenedrecipeIDsFromSelectedCookbook = [].concat.apply([], recipeIDsFromSelectedCookbook);
     console.log("recipeIDsFromSelectedCookbook =", recipeIDsFromSelectedCookbook)
-    console.log("flattenedrecipeIDsFromSelectedCookbook BEFORE UPDATE =", flattenedrecipeIDsFromSelectedCookbook);
-    
-    // Step 15 : Push the recipeKey/ID to new cookbook's recipeIDs array...
-    flattenedrecipeIDsFromSelectedCookbook.push(recipeKey);
-    console.log("flattenedrecipeIDsFromSelectedCookbook AFTER UPDATE =", flattenedrecipeIDsFromSelectedCookbook);
 
-    // Step 16 : Convert the flattened array back into an object prior to setting the list back into the database for the selected cookbook...
+    // Step 15 : If we're in 'edit' mode, push the recipeKey/ID to new cookbook's recipeIDs array...
+    if (!flattenedrecipeIDsFromSelectedCookbook.includes(recipeKey)) { // "If user is in edit recipe mode: we won't push the recipe as a new object in firebase"
+      flattenedrecipeIDsFromSelectedCookbook.push(recipeKey);
+      console.log("flattenedrecipeIDsFromSelectedCookbook AFTER UPDATE =", flattenedrecipeIDsFromSelectedCookbook);
+    }
+
+    // Step 16 : Step 16 : Convert the flattened array back into an object prior to setting the list back into the database for the selected cookbook...
     const recipeIDsFromSelectedCookbookObject = {};
-    flattenedrecipeIDsFromSelectedCookbook.forEach((recipeIDEntry, recipeIDEntryIndex) => {
-      return Object.assign(recipeIDsFromSelectedCookbookObject, 
-            { [recipeIDEntryIndex]: recipeIDEntry }
-      );
-    });
+      flattenedrecipeIDsFromSelectedCookbook.forEach((recipeIDEntry, recipeIDEntryIndex) => {
+        return Object.assign(recipeIDsFromSelectedCookbookObject, 
+              { [recipeIDEntryIndex]: recipeIDEntry }
+        );
+      });
 
     // Step 17 : Set updated recipeIDs list back to the new/selected cookbook's 'recipesIDs' on the database...
     db.ref(`Cookbooks/${selectedCookbook}/recipeIDs`).set(recipeIDsFromSelectedCookbookObject);
   };
-
 
 
   addImage = async img => {
