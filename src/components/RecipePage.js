@@ -147,20 +147,26 @@ class RecipePage extends Component {
   };
 
   shareRecipe = () => {
+    // var config = {
+    //   u : `http://localhost:4004${this.props.location.pathname}`
+    //  };
+    //  const shareLink = ShareUrl.facebook(config);
+    //  window.open(shareLink);
+  
     const email = prompt('Please enter the email address to send to:');
     var config = {
       to : email,
       cc : "",
-      subject : "Recipe",
-      body : `http://localhost:4000${this.props.location.pathname}`
+      subject : this.state.recipeObject.recipe,
+      body : `${this.state.recipeObject.username} sent you a recipe : href="http://localhost:4004${this.props.location.pathname}"`
   };
   const mailLink = ShareUrl.email(config);
   console.log(mailLink);
-  window.location.href= mailLink;
+  window.open(mailLink);
   }
 
 
-
+  
   render() {
     console.log(this.props.location.pathname);
     return (

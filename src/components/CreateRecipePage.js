@@ -498,6 +498,10 @@ class CreateRecipePage extends Component {
     }
   };
 
+  removeImage = () => {
+    this.setAppState({ img: "" })
+  }
+
   render() {
     // About 'recipeEditMode' :
     // Defining whether we're in 'Edit' mode or in 'Creation' mode
@@ -626,10 +630,13 @@ class CreateRecipePage extends Component {
               />
             </label>
             {this.state.img !== "" && (
-              <img className="displayInlineBlock" src={this.state.img} alt="uploaded recipe img" />
+              <img src={this.state.img} alt="uploaded recipe img" />
             )}
-          </div>  
-          
+            
+          </div>
+          {this.state.img !== "" && (
+          <button className="removeImage" onClick={this.removeImage}>Remove image</button>
+          )}
           <label>
             Preparation time
             <input

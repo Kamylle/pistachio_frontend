@@ -216,6 +216,7 @@ html {
   left: 0; }
 
 .sk-chasing-dots {
+  display: block;
   margin: 40px auto;
   width: 40px;
   height: 40px;
@@ -1003,8 +1004,8 @@ form.createRecipe {
     box-shadow: none;
     border: none; }
   form.createRecipe img {
-    max-width: 4em;
-    max-height: 4em; }
+    max-width: 6em;
+    max-height: 6em; }
   form.createRecipe .close {
     background-color: #f4f3f2;
     -webkit-transition: all 0.2s ease;
