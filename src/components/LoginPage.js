@@ -44,16 +44,21 @@ class LoginPage extends Component {
       await firebaseUser.updateProfile({ displayName: username });
       await this.writeAccountData(firebaseUser.uid, username, firebaseUser.email);
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
-      db.ref(`Accounts/${firebaseUser.uid}/cookbooksList`).set({ 0: defaultCookbookKey });
-      db.ref(`Cookbooks/${defaultCookbookKey}`)
-      .set(
-        { ownerUserID: firebaseUser.uid,
-          recipeIDs: [],
-          title: {
-            value: "Favorites"
-          }
-        }
-      )
+
+      // // !!!
+
+      // db.ref(`Accounts/${firebaseUser.uid}/cookbooksList`).set({ 0: defaultCookbookKey });
+      // db.ref(`Cookbooks/${defaultCookbookKey}`)
+      // .set(
+      //   { ownerUserID: firebaseUser.uid,
+      //     recipeIDs: [],
+      //     title: {
+      //       value: "Favorites"
+      //     }
+      //   }
+      // )
+
+      // // !!!
     }
     catch (error) { this.setState({ error: error.message }); }
   }
@@ -64,7 +69,7 @@ class LoginPage extends Component {
       // var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      console.log(user)
+      //console.log(user)
       accountsRef
       .once("value")
       .then(snapshot => {
@@ -88,14 +93,20 @@ class LoginPage extends Component {
   }
 
   writeAccountData = async (userId, username, email) => {
-    // const key = firebase.database().ref('/').push().key;
+    // * Step 1 : Check if the user already has cookbooks, and save them to 'currentCookbooks'...
     const currentCookbooks = [];
-    firebase.database().ref(`Accounts/${userId}/cookbooksList`).on("value", snap => currentCookbooks.push(snap.val()));
-    const flattenedCookbooksList = [].concat.apply([], currentCookbooks);
-    if (flattenedCookbooksList.length < 1) { 
-      const defaultCookbookKey = await firebase.database().ref("Cookbooks/").push().key;
-      firebase.database().ref(`Accounts/${userId}/cookbooksList`).set({ 0: defaultCookbookKey });
-      firebase.database().ref(`Cookbooks/${defaultCookbookKey}`)
+    firebase.database().ref(`Accounts/${userId}/cookbooksList`)
+    .on("value", snap => currentCookbooks.push(snap.val())); // Gets the user's current cookbooks, if any exists.
+
+    const flattenedCookbooksList = [].concat.apply([], currentCookbooks); // Flattens the array, if/as required.
+
+    // * Step 2 : Check the length of the returned currentCookbooks array, and build a default cookbook if there are no cookbooks in the array :
+    // "BEGIN : If the user has no cookbooks"...
+    if (currentCookbooks.length < 1) {
+
+      const defaultCookbookKey = await firebase.database().ref("Cookbooks/").push().key; // Create a key for a new cookbook in Firebase...
+      firebase.database().ref(`Accounts/${userId}/cookbooksList`).set({ 0: defaultCookbookKey }); // Sets a new CookbookID/Key at array position 0.
+      firebase.database().ref(`Cookbooks/${defaultCookbookKey}`) // Sets the default cookbook's title to 'Favorites'...
       .set(
         { ownerUserID: userId,
           recipeIDs: [],
@@ -104,14 +115,25 @@ class LoginPage extends Component {
           }
         }
       )
-     }
-     const existingCookbooksList = {};
-     flattenedCookbooksList.forEach((cookbook, cookbookIdx) => {
+    }
+    // "END : If the user has no cookbooks"...
+
+     // Step 3 : Poll the DB again to make sure any new default cookbook is being taken into account in the next steps.
+     const potentialUpdatedCookbooks = [];
+     firebase.database().ref(`Accounts/${userId}/cookbooksList`)
+     .on("value", snap => potentialUpdatedCookbooks.push(snap.val()));
+
+     const flattenedUpdatedCookbooksList = [].concat.apply([], currentCookbooks); // Flattens the array, if/as required.
+
+     // Step 4 : Convert the flattened 'Updated' CookbooksList into an object that can be set on firebase, under the user's account Node ("cookbooksList"):
+    const existingCookbooksList = {};
+    flattenedUpdatedCookbooksList.forEach((cookbook, cookbookIdx) => {
       return Object.assign(existingCookbooksList, 
             { [cookbookIdx]: cookbook }
       );
     });
-    await firebase.database().ref('Accounts/' + userId).set({
+
+    await firebase.database().ref(`Accounts/${userId}`).set({
       username,
       email,
       cookbooksList: existingCookbooksList
