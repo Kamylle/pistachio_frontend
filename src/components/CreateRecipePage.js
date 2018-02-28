@@ -336,7 +336,7 @@ class CreateRecipePage extends Component {
       }
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
-            return <option value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
+            return <option key={cbIdx} value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
       });
 
       return defaultUnselectableOption

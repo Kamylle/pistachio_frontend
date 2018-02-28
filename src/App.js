@@ -94,6 +94,7 @@ class App extends Component {
               <HomePage
                 userID={this.state.userID}
                 username={this.state.username}
+                history={routeProps.history}
               />
             )}
           />

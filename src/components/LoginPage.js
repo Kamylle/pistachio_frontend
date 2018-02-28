@@ -29,6 +29,7 @@ class LoginPage extends Component {
     })
     .then(this.setState())
     .catch(error => { this.setState({ error: error.message }); });
+    // console.log(this.state.error)
   }
 
   signup = async (e) => {
