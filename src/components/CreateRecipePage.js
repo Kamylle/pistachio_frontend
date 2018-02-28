@@ -553,6 +553,7 @@ class CreateRecipePage extends Component {
                 placeholder={"Quantity"}
                 value={ingredient.qty}
                 key={idx}
+                className="ingredientQuantity"
                 onChange={this.handleIngredientChange(idx, "qty")}
               />
               <select
@@ -571,6 +572,7 @@ class CreateRecipePage extends Component {
                 type="text"
                 placeholder={`Ingredient #${idx + 1}`}
                 value={ingredient.ingr}
+                className="ingredientItem"
                 onChange={this.handleIngredientChange(idx, "ingr")}
               />
 
@@ -611,6 +613,22 @@ class CreateRecipePage extends Component {
           <button type="button" onClick={this.handleAddStep} className="small">
             Add Step
           </button>
+          <div>
+            <label className="displayInlineBlock">
+              Image
+              <input
+                name="image"
+                type="file"
+                className="selectImgInput"
+                // value={this.state.image}
+                onChange={this.handleImageInput}
+                // ref={r => this.img = r}
+              />
+            </label>
+            {this.state.img !== "" && (
+              <img className="displayInlineBlock" src={this.state.img} alt="uploaded recipe img" />
+            )}
+          </div>  
           
           <label>
             Preparation time
@@ -644,21 +662,6 @@ class CreateRecipePage extends Component {
               onChange={this.handleInputChange}
             />
           </label>
-
-          <label className="displayInlineBlock">
-            Image
-            <input
-              name="image"
-              type="file"
-              className="selectImgInput"
-              // value={this.state.image}
-              onChange={this.handleImageInput}
-              // ref={r => this.img = r}
-            />
-          </label>
-          {this.state.img !== "" && (
-            <img src={this.state.img} alt="uploaded recipe img" />
-          )}
 
           <h3>Notes</h3>
           {this.state.ownerNotes.map((ownerNotes, idx) => (
