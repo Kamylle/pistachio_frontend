@@ -42,6 +42,11 @@ a {
   display: inline-block !important;
 }
 
+.flexContain {
+  display: flex;
+  width: 100%;
+}
+
 .hideOnMobile {
   @include bp-mobileOnly {
     display: none !important;
@@ -119,6 +124,12 @@ button {
   min-height: 100vh;
   background-color: $whitish;
   display: flex;
+}
+
+.Home{
+  justify-content: center;
+  padding-left: $sidebar-width;
+  @include transition (all, 0.5s, ease)
 }
 
 .App > header {
@@ -300,17 +311,6 @@ button {
   }
 }
 
-.flexContain {
-  display: flex;
-  width: 100%;
-}
-
-.Home{
-  justify-content: center;
-  padding-left: $sidebar-width;
-  @include transition (all, 0.5s, ease)
-}
-
 //  ######  #### ########  ######## ########     ###    ########   ######
 // ##    ##  ##  ##     ## ##       ##     ##   ## ##   ##     ## ##    ##
 // ##        ##  ##     ## ##       ##     ##  ##   ##  ##     ## ##
@@ -418,30 +418,41 @@ aside {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: $primaryDark;
+  background-color: $grayLight;
   display: flex;
   justify-content: space-between;
   button {
     box-shadow: none;
     border-radius: 0;
     margin: 0;
-    background-color: $primaryDark;
+    background-color: $grayLight;
     color: $black;
     font-size: 1em;
     font-family: $serif-font;
     &.saveBtn {
       background-color: $black;
       color: $white;
+      &.disabled {
+        background-color: $black;
+        a {
+          color: $grayDark;
+        }
+        &:hover {
+          background-color: $black;
+          a {
+            color: $grayDark;
+          }
+        }
+      }
       &:hover {
-        color: $primaryLight;
+        color: $grayLight;
         background-color: $blackest;
       }
     }
     &:hover {
       color: $blackest;
-      background-color: $primaryMed;
+      background-color: $grayMed;
     }
-
   }
 }
 
@@ -465,12 +476,26 @@ aside {
     color: $white;
     padding: 6em 2em 4em;
     font-family: $serif-font;
+    h3 {
+      margin-top: 0.7em;
+      color: $black;
+    }
   }
   &.otherUser {
     header {
       background-color: $black;
       background-image: url("./img/bg-black.jpg");
     }
+  }
+}
+
+.recipeBy {
+  display: none;
+}
+
+.otherUser {
+  .recipeBy {
+    display: block;
   }
 }
 
@@ -492,7 +517,7 @@ aside {
   padding: 1em 0;
   font-size: 0.8em;
   &:hover {
-    color: $primaryLight;
+    opacity: 0.6;
   }
   i {
     position: relative;
@@ -531,6 +556,7 @@ aside {
      background-color: $white;
      display: inline-block;
      margin-bottom: 1em;
+     padding-bottom: 1em;
      width: 100%;
      border-radius: 0.2em;
      @include transition (all, 0.5s, ease)
@@ -546,15 +572,22 @@ aside {
      }
      .cardImg {
        width: 100%;
-       height: 5em;
+       height: 20vw;
+       min-height: 6em;
+       max-height: 12em;
        background-size: cover;
        background-position: center;
        border-radius: 0.2em 0.2em 0 0;
      }
      h2 {
        font-family: $sans-font;
-       padding: 1em;
+       padding: 1rem 1.5rem 0.3rem;
        line-height: 1.2em;
+     }
+     h4 {
+       padding: 0 1.5rem 0;
+       font-size: 0.8em;
+       color: $grayDark;
      }
   }
 }

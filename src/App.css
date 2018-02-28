@@ -308,6 +308,10 @@ a {
 .displayInlineBlock {
   display: inline-block !important; }
 
+.flexContain {
+  display: flex;
+  width: 100%; }
+
 @media only screen and (max-width: 30em) {
   .hideOnMobile {
     display: none !important; } }
@@ -358,6 +362,15 @@ button {
   min-height: 100vh;
   background-color: #f9f9f9;
   display: flex; }
+
+.Home {
+  justify-content: center;
+  padding-left: 15em;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
 
 .App > header {
   z-index: 100;
@@ -515,19 +528,6 @@ aside {
     #main {
       padding-top: 4em; } }
 
-.flexContain {
-  display: flex;
-  width: 100%; }
-
-.Home {
-  justify-content: center;
-  padding-left: 15em;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease; }
-
 aside.cookbookMarks {
   background-color: #ffffff;
   font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
@@ -610,26 +610,34 @@ aside.cookbookMarks {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #89a240;
+  background-color: #f4f3f2;
   display: flex;
   justify-content: space-between; }
   .bottomBar button {
     box-shadow: none;
     border-radius: 0;
     margin: 0;
-    background-color: #89a240;
+    background-color: #f4f3f2;
     color: #262424;
     font-size: 1em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
     .bottomBar button.saveBtn {
       background-color: #262424;
       color: #ffffff; }
+      .bottomBar button.saveBtn.disabled {
+        background-color: #262424; }
+        .bottomBar button.saveBtn.disabled a {
+          color: #8d8786; }
+        .bottomBar button.saveBtn.disabled:hover {
+          background-color: #262424; }
+          .bottomBar button.saveBtn.disabled:hover a {
+            color: #8d8786; }
       .bottomBar button.saveBtn:hover {
-        color: #cae47e;
+        color: #f4f3f2;
         background-color: #000000; }
     .bottomBar button:hover {
       color: #000000;
-      background-color: #acc85c; }
+      background-color: #d1cfcf; }
 
 .cookBookContainer {
   width: 100%;
@@ -642,9 +650,18 @@ aside.cookbookMarks {
     color: #ffffff;
     padding: 6em 2em 4em;
     font-family: "Source Serif Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif; }
+    .cookBookContainer header h3 {
+      margin-top: 0.7em;
+      color: #262424; }
   .cookBookContainer.otherUser header {
     background-color: #262424;
     background-image: url("./img/bg-black.jpg"); }
+
+.recipeBy {
+  display: none; }
+
+.otherUser .recipeBy {
+  display: block; }
 
 .Add {
   justify-content: left; }
@@ -661,7 +678,7 @@ aside.cookbookMarks {
   padding: 1em 0;
   font-size: 0.8em; }
   .addRecipe:hover {
-    color: #cae47e; }
+    opacity: 0.6; }
   .addRecipe i {
     position: relative;
     top: 0.2em;
@@ -694,6 +711,7 @@ aside.cookbookMarks {
     background-color: #ffffff;
     display: inline-block;
     margin-bottom: 1em;
+    padding-bottom: 1em;
     width: 100%;
     border-radius: 0.2em;
     -webkit-transition: all 0.5s ease;
@@ -714,14 +732,20 @@ aside.cookbookMarks {
         opacity: 0.85; }
     .cardContain .card .cardImg {
       width: 100%;
-      height: 5em;
+      height: 20vw;
+      min-height: 6em;
+      max-height: 12em;
       background-size: cover;
       background-position: center;
       border-radius: 0.2em 0.2em 0 0; }
     .cardContain .card h2 {
       font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      padding: 1em;
+      padding: 1rem 1.5rem 0.3rem;
       line-height: 1.2em; }
+    .cardContain .card h4 {
+      padding: 0 1.5rem 0;
+      font-size: 0.8em;
+      color: #8d8786; }
 
 .Recipe {
   background-color: #ffffff; }

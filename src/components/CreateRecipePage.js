@@ -623,7 +623,13 @@ class CreateRecipePage extends Component {
             <button type="button" onClick={this.deleteRecipe} className="deleteBtn">Delete</button>
             <div>
               <button type="reset" value="Cancel" onClick={this.cancelRecipe} className="cancelBtn">Cancel</button>     
-              { this.state.cookbook === "" ? <button disabled className="saveBtn"><a href="#cookbookSelection">Select A Cookbook First</a></button> : <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>}
+              { this.state.cookbook === "" ? 
+                <button disabled className="saveBtn disabled">
+                  <a href='#cookbookSelection'>Select A Cookbook First</a>
+                </button> 
+                : 
+                <button type="submit" value="Submit" className="saveBtn">Save Recipe</button>
+              }
             </div>
           </div>
         </form>
