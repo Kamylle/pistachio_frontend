@@ -14,7 +14,8 @@ class LoginPage extends Component {
       userID: undefined, 
       userName: undefined, 
       display: 'signin', 
-      error: '' 
+      error: '',
+      signInError: '' 
     }
   }
 
@@ -24,11 +25,12 @@ class LoginPage extends Component {
     const password = this.password.value;
     // const username = this.state.userName;
     const auth = firebase.auth();
-    auth.signInWithEmailAndPassword(email, password).then(firebaseUser => {
+    auth.signInWithEmailAndPassword(email, password)
+    .then(firebaseUser => {
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
     .then(this.setState())
-    .catch(error => { this.setState({ error: error.message }); });
+    .catch(error => { /*; this.setState({ error: error.message });*/ });
     // console.log(this.state.error)
   }
 
@@ -130,6 +132,52 @@ class LoginPage extends Component {
     this.setState({ display });
   }
 
+  validateInputEmail = (evt) => {
+    evt.preventDefault();
+    const value = evt.target.value;
+    const errMsgEmailTooShort = "Provided e-mail address is too short.";
+    const errMsgEmailFormatInvalid = "Invalid e-mail address format."
+
+    let signInUIDErrorMessage = this.state.signInError;
+
+    if (!value.includes("@") 
+     || !value.includes(".")
+     || value.split(".").pop().length < 2) {
+      signInUIDErrorMessage += errMsgEmailFormatInvalid
+    } else {
+      signInUIDErrorMessage = ""
+    }
+    if (value.length < 6) {
+      signInUIDErrorMessage += errMsgEmailTooShort
+    } else {
+      signInUIDErrorMessage = ""
+    } 
+    if (signInUIDErrorMessage === "" 
+      || !this.state.signInError.includes(errMsgEmailTooShort) 
+      && !this.state.signInError.includes(errMsgEmailFormatInvalid)) {
+      this.setState({ signInError : signInUIDErrorMessage});
+    }
+  }
+
+  validateInputPassword = (evt) => {
+    evt.preventDefault();
+    const value = evt.target.value;
+    const errMsgPasswordTooShort = "Provided password is too short.";
+
+    let signInPWDErrorMessage = this.state.signInError;
+
+    if (value.length < 6) {
+      signInPWDErrorMessage += errMsgPasswordTooShort
+    } else {
+      signInPWDErrorMessage = ""
+    }
+
+    if (signInPWDErrorMessage !== "" 
+    && !this.state.signInError.includes(errMsgPasswordTooShort)) {
+      this.setState({ signInError : signInPWDErrorMessage});
+    }
+  }
+
   render() {
     return (
       <div className="LoginPage">
@@ -138,7 +186,7 @@ class LoginPage extends Component {
             <h1>Pistach.io</h1>
             <p>Digital familial cookbook. <br/> Create, share and print your recipes.</p>
           </div>
-          {/* {this.state.error !== '' && <p className="error">Error occured: {this.state.error}</p>} */}
+          { this.state.signInError === "" ? null : <p className="error">Error : {this.state.signInError}</p> }
           {this.state.display === 'signin' ? (
             <div className="Login">
                 <div className="googleLogin">
@@ -162,7 +210,8 @@ class LoginPage extends Component {
                     id="txtEmail" 
                     type="email" 
                     placeholder="Email" 
-                    ref={r => this.email = r} 
+                    ref={r => this.email = r}
+                    onBlur={ this.validateInputEmail } 
                   />
                 </label>
                 <label>
@@ -172,6 +221,7 @@ class LoginPage extends Component {
                     type="password" 
                     placeholder="Password" 
                     ref={r => this.password = r} 
+                    onBlur={ this.validateInputPassword }
                   />
                 </label>
                 <button 
