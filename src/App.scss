@@ -23,11 +23,11 @@ html, body, #root{
 
 a, button {
   cursor: pointer;
-  @include transition (all, 0.4s, ease);
+  @include transition (all, 0.25s, ease);
 }
 
 input, textarea, select {
-  @include transition (all, 0.4s, ease);
+  @include transition (all, 0.25s, ease);
 }
 
 a {
@@ -35,6 +35,9 @@ a {
   text-decoration: none;
   &:hover {
     color: $blackest;
+  }
+  &:focus {
+    color: $black;
   }
 }
 
@@ -69,12 +72,15 @@ button {
   background-color: $primaryMed;
   color: $white;
   border: none;
-    &:hover {
+    &:hover, &:focus {
       background-color: $primaryDark;
       color: $grayLight;
     }
     &:active {
       box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
+    }
+    &:focus {
+      outline: $black !important;
     }
     &.secondaryBtn {
       background-color: $black;
@@ -84,12 +90,19 @@ button {
         background-color: $blackest;
         color: $grayLight;
       }
+      &:hover {
+        background-color: $blackest;
+        color: $white;
+      }
     }
     &.tertiaryBtn {
       background-color: $grayLight;
       color: $black;
       &:hover {
         background-color: $grayMed;
+      }
+      &:focus {
+        color: $blackest;
       }
     }
 }
@@ -108,6 +121,9 @@ button {
       background-color: $whitish;
       border: 1px solid rgba(51, 42, 29, 0.5);
       color: $blackest;
+  }
+  &:focus {
+    color: $grayDark;
   }
 }
 
@@ -234,6 +250,9 @@ button {
         &:hover {
           color: $primaryLight;
         }
+        &:focus {
+          color: $primaryMed;
+        }
       }
       p, a {
         display: none;
@@ -278,6 +297,9 @@ button {
       }
       &:hover {
         background-color: $primaryDark;
+      }
+      &:focus {
+        color: $grayLight;
       }
     }
   }
@@ -342,6 +364,9 @@ aside {
           background-color: $whitish;
           font-weight: 600;
           color: $primaryDark;
+        }
+        &:focus {
+          color: $primaryMed;
         }
       }
     }

@@ -108,7 +108,7 @@ class Cookbook extends Component {
       <div className={this.getClassName()}>
         <header>
           <h1>{this.state.cookbookTitle}</h1>
-          <button onClick={this.printCookbook}>Print cookbook</button>
+          {/* <button onClick={this.printCookbook}>Print cookbook</button> */}
           {this.state.recipeIDs === undefined ||
           this.state.recipeIDs.length <= 0 ? (
             <h3>
