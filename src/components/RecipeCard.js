@@ -43,31 +43,38 @@ class RecipeCard extends Component {
     return this.state.recipeObject.username;
   };
 
-  componentWillMount = () => {
-    let recipe = {};
-    // let creatorObject = {};
-
-    recipesRef
-      .child(this.state.recipeID)
-      .once("value")
-      .then(snapshot => {
-        recipe = snapshot.val();
-        return recipe.people.creatorID;
-      })
-      .then(userID => {
-        return accountsRef.child(userID).once("value");
-      })
-      .then(creatorObj => {
-        this.setState({
-          recipeObject: recipe,
-        //   creatorObject: creatorObj.val(),
-          loaded: true
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  componentDidMount() {
+    this.updateRecipeInfo(this.state.recipeID);
   };
+
+  componentWillReceiveProps(nextProps) {
+    this.updateRecipeInfo(nextProps.recipeID);
+  }
+
+  updateRecipeInfo = (recipeID) => {
+    console.log('update')
+    let recipe = {};
+    recipesRef
+    .child(recipeID)
+    .once("value")
+    .then(snapshot => {
+      recipe = snapshot.val();
+      return recipe.people.creatorID;
+    })
+    .then(userID => {
+      return accountsRef.child(userID).once("value");
+    })
+    .then(creatorObj => {
+      this.setState({
+        recipeObject: recipe,
+      //   creatorObject: creatorObj.val(),
+        loaded: true
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  } 
 
     render() {
       //console.log(this.props)

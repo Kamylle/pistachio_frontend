@@ -451,10 +451,10 @@ class CreateRecipePage extends Component {
     this.props.history.push("/")
   }
 
-  deleteRecipeFromCookbook = (recipeID) => {
+  deleteRecipeFromCookbook = async (recipeID) => {
     console.log("test1 should return recipe ID: ", recipeID )
     var temp;
-    cookbooksRef
+    await cookbooksRef
     .once("value")
     .then(snapshot => {
       // console.log(snapshot.val());
@@ -487,12 +487,12 @@ class CreateRecipePage extends Component {
 }
 
 
-  deleteRecipe = () => {
+  deleteRecipe = async () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("Recipes/" + this.state.recipeID).remove();
+      await db.ref("Recipes/" + this.state.recipeID).remove();
       // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
-      this.deleteRecipeFromCookbook(this.state.recipeID);
+      await this.deleteRecipeFromCookbook(this.state.recipeID);
       localStorage.removeItem('state')
       this.props.history.push("/");          
     }

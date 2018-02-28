@@ -20,7 +20,6 @@ class Cookbook extends Component {
   }
 
   componentWillMount = async () => {
-    // console.log(this.state.cookbookID)
     let cookbook = {};
     let cookbookRecipeIDs;
     let cookbookTtl;
@@ -30,7 +29,7 @@ class Cookbook extends Component {
       .once("value")
       .then(snapshot => {
         cookbook = snapshot.val();
-        //   console.log(cookbook)
+          console.log(cookbook)
         cookbookTtl = cookbook.title.value;
         cookbookRecipeIDs = cookbook.recipeIDs;
         return cookbook.ownerUserID;
@@ -58,11 +57,17 @@ class Cookbook extends Component {
     }`;
   };
 
+  // removeRecipeID = (recipeID) => {
+  //   this.setState({ recipeIDs : this.state.recipeIDs.filter(item => 
+  //     item !== recipeID
+  //   ) })
+  // }
+
   renderAllRecipe = () => {
     if (this.state.recipeIDs === undefined) return null;
     return this.state.recipeIDs.map((recipeID, idx) => (
       <RecipeCard
-        key={idx}
+        // key={idx}
         recipeID={recipeID}
         username={this.props.username}
         userID={this.props.userID}
@@ -70,32 +75,32 @@ class Cookbook extends Component {
     ));
   };
 
-  printCookbook = () => {
-    let cookbook = {};
-    cookbooksRef
-      .child(this.state.cookbookID)
-      .once("value")
-      .then(snapshot => {
-        cookbook = snapshot.val();
-        let recipesIDs = cookbook.recipeIDs;
-        console.log(recipesIDs);
-        return recipesIDs.map((recipeID, idx) => (
-          <RecipePage
-            key={idx}
-            recipeID={recipesIDs}
-            username={this.props.username}
-            userID={this.props.userID}
-          />
-        ));
-        this.props.history.push("/", {
-          recipeID: recipesIDs,
-          recipeObject: this.state.recipeObject
-      });
-    });
-  };
+  // printCookbook = () => {
+  //   let cookbook = {};
+  //   cookbooksRef
+  //     .child(this.state.cookbookID)
+  //     .once("value")
+  //     .then(snapshot => {
+  //       cookbook = snapshot.val();
+  //       let recipesIDs = cookbook.recipeIDs;
+  //       console.log(recipesIDs);
+  //       return recipesIDs.map((recipeID, idx) => (
+  //         <RecipePage
+  //           key={idx}
+  //           recipeID={recipesIDs}
+  //           username={this.props.username}
+  //           userID={this.props.userID}
+  //         />
+  //       ));
+  //       this.props.history.push("/", {
+  //         recipeID: recipesIDs,
+  //         recipeObject: this.state.recipeObject
+  //     });
+  //   });
+  // };
 
   render() {
-    console.log(this.props.history);
+    // console.log(this.props.history);
     // console.log("This state recipe IDs = " + this.state.recipeIDs);
     return !this.state.loaded ? (
       <LoadingAnimation />
