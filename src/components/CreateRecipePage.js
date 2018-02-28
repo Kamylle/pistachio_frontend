@@ -416,7 +416,7 @@ class CreateRecipePage extends Component {
       }
 
       const selectOptions = selectableCookbooks.map((cookbookTitle, cbIdx) => {
-            return <option value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
+            return <option key={cbIdx} value={this.state.cookbookIDs[cbIdx]}>{cookbookTitle}</option>
       });
 
       return defaultUnselectableOption
@@ -451,10 +451,10 @@ class CreateRecipePage extends Component {
     this.props.history.push("/")
   }
 
-  deleteRecipeFromCookbook = (recipeID) => {
+  deleteRecipeFromCookbook = async (recipeID) => {
     console.log("test1 should return recipe ID: ", recipeID )
     var temp;
-    cookbooksRef
+    await cookbooksRef
     .once("value")
     .then(snapshot => {
       // console.log(snapshot.val());
@@ -487,12 +487,12 @@ class CreateRecipePage extends Component {
 }
 
 
-  deleteRecipe = () => {
+  deleteRecipe = async () => {
      if (window.confirm("Are you sure you wish to delete this item?")) {
       const db = firebase.database();
-      db.ref("Recipes/" + this.state.recipeID).remove();
+      await db.ref("Recipes/" + this.state.recipeID).remove();
       // db.ref("Cookbooks/" + this.state.cookbook + "/" + this.state.recipeID).remove();
-      this.deleteRecipeFromCookbook(this.state.recipeID);
+      await this.deleteRecipeFromCookbook(this.state.recipeID);
       localStorage.removeItem('state')
       this.props.history.push("/");          
     }
@@ -553,6 +553,7 @@ class CreateRecipePage extends Component {
                 placeholder={"Quantity"}
                 value={ingredient.qty}
                 key={idx}
+                className="ingredientQuantity"
                 onChange={this.handleIngredientChange(idx, "qty")}
               />
               <select
@@ -571,6 +572,7 @@ class CreateRecipePage extends Component {
                 type="text"
                 placeholder={`Ingredient #${idx + 1}`}
                 value={ingredient.ingr}
+                className="ingredientItem"
                 onChange={this.handleIngredientChange(idx, "ingr")}
               />
 
@@ -611,6 +613,22 @@ class CreateRecipePage extends Component {
           <button type="button" onClick={this.handleAddStep} className="small">
             Add Step
           </button>
+          <div>
+            <label className="displayInlineBlock">
+              Image
+              <input
+                name="image"
+                type="file"
+                className="selectImgInput"
+                // value={this.state.image}
+                onChange={this.handleImageInput}
+                // ref={r => this.img = r}
+              />
+            </label>
+            {this.state.img !== "" && (
+              <img className="displayInlineBlock" src={this.state.img} alt="uploaded recipe img" />
+            )}
+          </div>  
           
           <label>
             Preparation time
@@ -644,21 +662,6 @@ class CreateRecipePage extends Component {
               onChange={this.handleInputChange}
             />
           </label>
-
-          <label className="displayInlineBlock">
-            Image
-            <input
-              name="image"
-              type="file"
-              className="selectImgInput"
-              // value={this.state.image}
-              onChange={this.handleImageInput}
-              // ref={r => this.img = r}
-            />
-          </label>
-          {this.state.img !== "" && (
-            <img src={this.state.img} alt="uploaded recipe img" />
-          )}
 
           <h3>Notes</h3>
           {this.state.ownerNotes.map((ownerNotes, idx) => (

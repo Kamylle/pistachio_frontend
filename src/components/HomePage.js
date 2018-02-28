@@ -39,6 +39,7 @@ class HomePage extends Component {
           this.state.cookbookIDs.map((cookbookID, idx) => (
             <Cookbook 
               cookbookID={cookbookID}
+              history={this.props.history}
               key={idx}
               
               isHidden={

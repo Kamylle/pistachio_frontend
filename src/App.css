@@ -286,24 +286,26 @@ html, body, #root {
 
 a, button {
   cursor: pointer;
-  -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease; }
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease; }
 
 input, textarea, select {
-  -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease; }
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease; }
 
 a {
   color: #262424;
   text-decoration: none; }
   a:hover {
     color: #000000; }
+  a:focus {
+    color: #262424; }
 
 .displayInlineBlock {
   display: inline-block !important; }
@@ -324,11 +326,13 @@ button {
   background-color: #acc85c;
   color: #ffffff;
   border: none; }
-  button:hover {
+  button:hover, button:focus {
     background-color: #89a240;
     color: #f4f3f2; }
   button:active {
     box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0); }
+  button:focus {
+    outline: #262424 !important; }
   button.secondaryBtn {
     background-color: #262424;
     display: block; }
@@ -336,11 +340,16 @@ button {
       box-shadow: 0 2px 4px 2px rgba(54, 39, 28, 0);
       background-color: #000000;
       color: #f4f3f2; }
+    button.secondaryBtn:hover {
+      background-color: #000000;
+      color: #ffffff; }
   button.tertiaryBtn {
     background-color: #f4f3f2;
     color: #262424; }
     button.tertiaryBtn:hover {
       background-color: #d1cfcf; }
+    button.tertiaryBtn:focus {
+      color: #000000; }
 
 .googleSignInBtn {
   display: flex;
@@ -356,6 +365,8 @@ button {
     background-color: #f9f9f9;
     border: 1px solid rgba(51, 42, 29, 0.5);
     color: #000000; }
+  .googleSignInBtn:focus {
+    color: #8d8786; }
 
 .App {
   width: 100%;
@@ -461,6 +472,8 @@ button {
       color: #89a240; }
       .App > header .accountLinks a:hover {
         color: #cae47e; }
+      .App > header .accountLinks a:focus {
+        color: #acc85c; }
     .App > header .accountLinks p, .App > header .accountLinks a {
       display: none; }
       @media only screen and (min-width: 60em) {
@@ -498,6 +511,8 @@ button {
           display: inline-block; } }
     .App > header .newRecipeBtn:hover {
       background-color: #89a240; }
+    .App > header .newRecipeBtn:focus {
+      color: #f4f3f2; }
 
 aside {
   width: 15em;
@@ -552,6 +567,8 @@ aside.cookbookMarks {
         background-color: #f9f9f9;
         font-weight: 600;
         color: #89a240; }
+      aside.cookbookMarks ul li:focus {
+        color: #acc85c; }
   aside.cookbookMarks a {
     padding: 1em 1em;
     margin: 1em 0;
@@ -977,6 +994,10 @@ form.createRecipe {
       @media only screen and (min-width: 40em) {
         form.createRecipe .ingredient input, form.createRecipe .ingredient textarea, form.createRecipe .ingredient select, form.createRecipe .ingredient label, form.createRecipe .step input, form.createRecipe .step textarea, form.createRecipe .step select, form.createRecipe .step label, form.createRecipe .notes input, form.createRecipe .notes textarea, form.createRecipe .notes select, form.createRecipe .notes label {
           display: inline-block; } }
+    form.createRecipe .ingredient .ingredientQuantity, form.createRecipe .step .ingredientQuantity, form.createRecipe .notes .ingredientQuantity {
+      max-width: 6em; }
+    form.createRecipe .ingredient .ingredientItem, form.createRecipe .step .ingredientItem, form.createRecipe .notes .ingredientItem {
+      min-width: 18em; }
   form.createRecipe .selectImgInput {
     background-color: #ffffff;
     box-shadow: none;
