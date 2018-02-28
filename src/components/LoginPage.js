@@ -45,21 +45,6 @@ class LoginPage extends Component {
       await firebaseUser.updateProfile({ displayName: username });
       await this.writeAccountData(firebaseUser.uid, username, firebaseUser.email);
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
-
-      // // !!!
-
-      // db.ref(`Accounts/${firebaseUser.uid}/cookbooksList`).set({ 0: defaultCookbookKey });
-      // db.ref(`Cookbooks/${defaultCookbookKey}`)
-      // .set(
-      //   { ownerUserID: firebaseUser.uid,
-      //     recipeIDs: [],
-      //     title: {
-      //       value: "Favorites"
-      //     }
-      //   }
-      // )
-
-      // // !!!
     }
     catch (error) { this.setState({ error: error.message }); }
   }
