@@ -15,7 +15,8 @@ class Cookbook extends Component {
       creatorObject: {}, // Required Anywhere ? Remove Later If Not
       cookbookTitle: null,
       recipeIDs: [],
-      loaded: false
+      loaded: false,
+      // recipeToPrint: []
     };
   }
 
@@ -43,7 +44,8 @@ class Cookbook extends Component {
           cookbookTitle: cookbookTtl,
           creatorObject: creatorObj.val(),
           recipeIDs: cookbookRecipeIDs,
-          loaded: true
+          loaded: true, 
+          // recipeToPrint: ""
         });
       })
       .catch(err => {
@@ -67,7 +69,7 @@ class Cookbook extends Component {
     if (this.state.recipeIDs === undefined) return null;
     return this.state.recipeIDs.map((recipeID, idx) => (
       <RecipeCard
-        // key={idx}
+        key={idx}
         recipeID={recipeID}
         username={this.props.username}
         userID={this.props.userID}
@@ -75,16 +77,18 @@ class Cookbook extends Component {
     ));
   };
 
-  // printCookbook = () => {
+  // printCookbook = async () => {
   //   let cookbook = {};
-  //   cookbooksRef
+  //   await cookbooksRef
   //     .child(this.state.cookbookID)
   //     .once("value")
   //     .then(snapshot => {
   //       cookbook = snapshot.val();
   //       let recipesIDs = cookbook.recipeIDs;
+        
   //       console.log(recipesIDs);
-  //       return recipesIDs.map((recipeID, idx) => (
+  //       if(this.state.recipeToPrint === "") null
+  //       recipesIDs.map((recipeID, idx) => (
   //         <RecipePage
   //           key={idx}
   //           recipeID={recipesIDs}
@@ -92,23 +96,23 @@ class Cookbook extends Component {
   //           userID={this.props.userID}
   //         />
   //       ));
-  //       this.props.history.push("/", {
-  //         recipeID: recipesIDs,
-  //         recipeObject: this.state.recipeObject
-  //     });
+  //       this.setState({ recipeToPrint: recipesIDs })
   //   });
   // };
 
   render() {
     // console.log(this.props.history);
-    // console.log("This state recipe IDs = " + this.state.recipeIDs);
-    return !this.state.loaded ? (
+    console.log(this.state.recipeToPrint);
+    return (!this.state.loaded ? (
       <LoadingAnimation />
-    ) : (
+    ) : 
+    // this.state.recipeToPrint !== "" ?
+    // this.printCookbook() :  
+    (
       <div className={this.getClassName()}>
         <header>
           <h1>{this.state.cookbookTitle}</h1>
-          <button onClick={this.printCookbook}>Print cookbook</button>
+          {/* <button onClick={this.printCookbook}>Print cookbook</button> */}
           {this.state.recipeIDs === undefined ||
           this.state.recipeIDs.length <= 0 ? (
             <h3>
@@ -121,7 +125,7 @@ class Cookbook extends Component {
         </header>
         <div className="cardContain">{this.renderAllRecipe()}</div>
       </div>
-    );
+    ));
   }
 }
 
