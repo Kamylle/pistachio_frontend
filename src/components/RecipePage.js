@@ -6,6 +6,7 @@ import { recipesRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from "../img/bg-green.jpg";
 import LoadingAnimation from './LoadingAnimation';
+import ShareUrl from "share-url"
 
 class RecipePage extends Component {
   constructor(props) {
@@ -145,9 +146,29 @@ class RecipePage extends Component {
     });
   };
 
+  shareRecipe = () => {
+    // var config = {
+    //   u : `http://localhost:4004${this.props.location.pathname}`
+    //  };
+    //  const shareLink = ShareUrl.facebook(config);
+    //  window.open(shareLink);
+  
+    const email = prompt('Please enter the email address to send to:');
+    var config = {
+      to : email,
+      cc : "",
+      subject : this.state.recipeObject.recipe,
+      body : `${this.state.recipeObject.username} sent you a recipe : href="http://localhost:4004${this.props.location.pathname}"`
+  };
+  const mailLink = ShareUrl.email(config);
+  console.log(mailLink);
+  window.open(mailLink);
+  }
 
+
+  
   render() {
-    console.log(this.state);
+    console.log(this.props.location.pathname);
     return (
       <div id="main" className="Recipe">
         {!this.state.loaded ? (
@@ -207,7 +228,7 @@ class RecipePage extends Component {
               ) : null}
             </div>
             <div className="sideTools">
-              <i className="icon send i24" />
+              <i onClick={this.shareRecipe} className="icon send i24" />
               {this.props.username === this.state.recipeObject.username && (
                 <i onClick={this.editRecipe} className="icon edit i24" />
               )}
