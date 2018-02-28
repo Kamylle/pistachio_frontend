@@ -477,7 +477,7 @@ class CreateRecipePage extends Component {
               >
                 <option value="unit">Unit</option>
                 <option value="cups">cups</option>
-                <option value="tbs">tbs</option>
+                <option value="tbsp">tbsp</option>
                 <option value="tsp">tsp</option>
                 <option value="ml">ml</option>
                 <option value="g">g</option>
