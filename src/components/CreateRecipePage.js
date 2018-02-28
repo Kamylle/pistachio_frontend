@@ -193,11 +193,13 @@ class CreateRecipePage extends Component {
 
 
   addImage = async img => {
-    // console.log(img)
+    try {// console.log(img)
     const storageRef = firebase.storage().ref("images/" + img.name);
     const snapshot = await storageRef.put(img);
     // console.log('Uploaded a blob or file!', snapshot);
     this.setAppState({ img: snapshot.downloadURL });
+    } 
+    catch(err) {}
   };
 
   handleNewCookbookInputChange = event => {

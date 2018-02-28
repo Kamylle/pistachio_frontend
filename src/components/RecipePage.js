@@ -158,7 +158,7 @@ class RecipePage extends Component {
       to : email,
       cc : "",
       subject : this.state.recipeObject.recipe,
-      body : `${this.state.recipeObject.username} sent you a recipe : href="http://localhost:4004${this.props.location.pathname}"`
+      body : `href="http://localhost:4004${this.props.location.pathname}"`
   };
   const mailLink = ShareUrl.email(config);
   console.log(mailLink);
