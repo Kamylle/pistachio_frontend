@@ -548,6 +548,7 @@ class CreateRecipePage extends Component {
                 placeholder={"Quantity"}
                 value={ingredient.qty}
                 key={idx}
+                className="ingredientQuantity"
                 onChange={this.handleIngredientChange(idx, "qty")}
               />
               <select
@@ -566,6 +567,7 @@ class CreateRecipePage extends Component {
                 type="text"
                 placeholder={`Ingredient #${idx + 1}`}
                 value={ingredient.ingr}
+                className="ingredientItem"
                 onChange={this.handleIngredientChange(idx, "ingr")}
               />
 

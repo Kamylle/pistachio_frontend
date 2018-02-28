@@ -918,6 +918,12 @@ form.createRecipe {
           display: inline-block;
         }
       }
+      .ingredientQuantity {
+        max-width: 6em;
+      }
+      .ingredientItem {
+        min-width: 18em;
+      }
     }
     .selectImgInput {
       background-color: $white;

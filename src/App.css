@@ -977,6 +977,10 @@ form.createRecipe {
       @media only screen and (min-width: 40em) {
         form.createRecipe .ingredient input, form.createRecipe .ingredient textarea, form.createRecipe .ingredient select, form.createRecipe .ingredient label, form.createRecipe .step input, form.createRecipe .step textarea, form.createRecipe .step select, form.createRecipe .step label, form.createRecipe .notes input, form.createRecipe .notes textarea, form.createRecipe .notes select, form.createRecipe .notes label {
           display: inline-block; } }
+    form.createRecipe .ingredient .ingredientQuantity, form.createRecipe .step .ingredientQuantity, form.createRecipe .notes .ingredientQuantity {
+      max-width: 6em; }
+    form.createRecipe .ingredient .ingredientItem, form.createRecipe .step .ingredientItem, form.createRecipe .notes .ingredientItem {
+      min-width: 18em; }
   form.createRecipe .selectImgInput {
     background-color: #ffffff;
     box-shadow: none;
