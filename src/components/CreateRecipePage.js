@@ -613,6 +613,21 @@ class CreateRecipePage extends Component {
           <button type="button" onClick={this.handleAddStep} className="small">
             Add Step
           </button>
+
+          <label className="displayInlineBlock">
+            Image
+            <input
+              name="image"
+              type="file"
+              className="selectImgInput"
+              // value={this.state.image}
+              onChange={this.handleImageInput}
+              // ref={r => this.img = r}
+            />
+          </label>
+          {this.state.img !== "" && (
+            <img src={this.state.img} alt="uploaded recipe img" />
+          )}
           
           <label>
             Preparation time
@@ -646,21 +661,6 @@ class CreateRecipePage extends Component {
               onChange={this.handleInputChange}
             />
           </label>
-
-          <label className="displayInlineBlock">
-            Image
-            <input
-              name="image"
-              type="file"
-              className="selectImgInput"
-              // value={this.state.image}
-              onChange={this.handleImageInput}
-              // ref={r => this.img = r}
-            />
-          </label>
-          {this.state.img !== "" && (
-            <img src={this.state.img} alt="uploaded recipe img" />
-          )}
 
           <h3>Notes</h3>
           {this.state.ownerNotes.map((ownerNotes, idx) => (
