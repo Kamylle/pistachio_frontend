@@ -160,7 +160,7 @@ class RecipePage extends Component {
       body : `${this.props.username} sent you a recipe: <a href="https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}">${this.state.recipeObject.recipe}</a>`
   };
   const mailLink = ShareUrl.email(config);
-  console.log(mailLink);
+  // console.log(mailLink);
   window.open(mailLink);
   }
 

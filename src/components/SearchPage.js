@@ -58,16 +58,24 @@ class SearchPage extends Component {
 
   performSearch = searchTerm => {
     console.log(searchTerm, this.state)
-    let wordSearch = searchTerm;
+    let wordSearch = searchTerm.toLowerCase();
     let allRecipes = this.state.recipeObject;
+    console.log(allRecipes)
     var recipesFound = Object.values(allRecipes).filter(item =>
-      item.recipe.toLowerCase().includes(wordSearch) &&
-      !item.username.includes(this.props.username)
+      !item.username.includes(this.props.username) && (
+      item.recipe.toLowerCase().includes(wordSearch) ||
+      (item.ingredients.filter(ingredient => 
+        ingredient.ingr.toLowerCase().includes(wordSearch)
+      ).length !== 0))
     );
     var myRecipesFound = Object.values(allRecipes).filter(item =>
-      item.username.includes(this.props.username) &&
-      item.recipe.toLowerCase().includes(wordSearch)
+      item.username.includes(this.props.username) && (
+      item.recipe.toLowerCase().includes(wordSearch) ||
+      (item.ingredients.filter(ingredient => 
+        ingredient.ingr.toLowerCase().includes(wordSearch)
+      ).length !== 0))
     );
+
     console.log(recipesFound)
     console.log(myRecipesFound)
     // console.log(recipesFound);

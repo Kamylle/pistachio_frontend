@@ -4,7 +4,7 @@ import RecipeCard from "./RecipeCard";
 // import { firebase } from '../scripts/firebase';
 import { cookbooksRef, usersRef } from "../scripts/db";
 import LoadingAnimation from "./LoadingAnimation";
-import RecipePage from "./RecipePage";
+// import RecipePage from "./RecipePage";
 
 class Cookbook extends Component {
   constructor(props) {
