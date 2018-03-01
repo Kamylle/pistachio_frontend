@@ -8,8 +8,6 @@ import backgroundImgPattern from "../img/bg-green.jpg";
 import LoadingAnimation from './LoadingAnimation';
 import ShareUrl from "share-url";
 
-export const routedRecipePage = withRouter(RecipePage);
-
 class RecipePage extends Component {
   constructor(props) {
     super(props);
@@ -244,4 +242,5 @@ class RecipePage extends Component {
   }
 }
 
-export default RecipePage;
+var routedRecipePage = withRouter(RecipePage);
+//export default RecipePage;
