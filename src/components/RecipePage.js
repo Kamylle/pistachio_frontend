@@ -153,12 +153,11 @@ class RecipePage extends Component {
     //  const shareLink = ShareUrl.facebook(config);
     //  window.open(shareLink);
   
-    const email = prompt('Please enter the email address to send to:');
+    const email = prompt('Please enter the email recipient to send your recipe to:');
     var config = {
       to : email,
-      cc : "",
       subject : this.state.recipeObject.recipe,
-      body : `${this.state.recipeObject.username} sent you a recipe : https://pistachio-decodemtl.firebaseapp.com/${this.props.location.pathname}`
+      body : `${this.state.recipeObject.username} sent you a recipe : <a href="https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}">${this.state.recipeObject.recipe}</a>`
   };
   const mailLink = ShareUrl.email(config);
   console.log(mailLink);
