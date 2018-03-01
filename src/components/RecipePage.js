@@ -161,7 +161,7 @@ class RecipePage extends Component {
       body : `href="http://localhost:4004${this.props.location.pathname}"`
   };
   const mailLink = ShareUrl.email(config);
-  console.log(mailLink);
+  // console.log(mailLink);
   window.open(mailLink);
   }
 
