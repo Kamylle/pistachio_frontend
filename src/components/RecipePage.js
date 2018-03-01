@@ -153,7 +153,7 @@ class RecipePage extends Component {
     //  const shareLink = ShareUrl.facebook(config);
     //  window.open(shareLink);
   
-    const email = prompt('Please enter the email recipient to send your recipe to:');
+    const email = prompt('Please enter the email recipient(s) to send your recipe to.\nEach address should be separated by a semicolon (;):');
     var config;
     if (this.props.username !== undefined) {
       config = {
