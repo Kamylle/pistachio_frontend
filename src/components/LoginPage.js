@@ -234,7 +234,7 @@ class LoginPage extends Component {
                 <a 
                   id="btnSignUp"  
                   onClick={() => this.setDisplay('signup')}>
-                  <h5>You don't have an account ? </h5>
+                  <h5>Don't have an account ? </h5>
                   <span>Signup</span>
                 </a>
               </div>

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 // import firebase from "../scripts/firebase";
 //import { Route } from "react-router"; "TO REMOVE WARNING : 'Route' is defined but never used"
-// import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { recipesRef } from "../scripts/db";
 // import CreateRecipePage from "./CreateRecipePage"; "TO REMOVE WARNING : 'CreateRecipePage' is defined but never used"
 import backgroundImgPattern from "../img/bg-green.jpg";
 import LoadingAnimation from './LoadingAnimation';
-import ShareUrl from "share-url"
+import ShareUrl from "share-url";
 
 class RecipePage extends Component {
   constructor(props) {
@@ -153,12 +153,15 @@ class RecipePage extends Component {
     //  const shareLink = ShareUrl.facebook(config);
     //  window.open(shareLink);
   
-    const email = prompt('Please enter the email address to send to:');
+    const email = prompt('Please enter the email recipient to send your recipe to:');
     var config = {
       to : email,
-      cc : "",
       subject : this.state.recipeObject.recipe,
+<<<<<<< HEAD
       body : `href="http://localhost:4004${this.props.location.pathname}"`
+=======
+      body : `${this.state.recipeObject.username} sent you a recipe: https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}`
+>>>>>>> e0036776a958cc503288f301587173cdb3ac44d2
   };
   const mailLink = ShareUrl.email(config);
   // console.log(mailLink);
@@ -241,4 +244,7 @@ class RecipePage extends Component {
     );
   }
 }
-export default RecipePage;
+
+var routedRecipePage = withRouter(RecipePage);
+export default routedRecipePage;
+//export default RecipePage;
