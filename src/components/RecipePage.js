@@ -154,11 +154,20 @@ class RecipePage extends Component {
     //  window.open(shareLink);
   
     const email = prompt('Please enter the email recipient to send your recipe to:');
-    var config = {
-      to : email,
-      subject : this.state.recipeObject.recipe,
-      body : `${this.props.username} sent you a recipe: https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}`
-  };
+    var config;
+    if (this.props.username !== undefined) {
+      config = {
+        to : email,
+        subject : this.state.recipeObject.recipe,
+        body : `${this.props.username} has sent you a recipe: https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}`
+      };
+    } else {
+      config = {
+        to : email,
+        subject : this.state.recipeObject.recipe,
+        body : `The above sender has sent you a recipe: https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}`
+      };
+    }
   const mailLink = ShareUrl.email(config);
   // console.log(mailLink);
   window.open(mailLink);
