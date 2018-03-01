@@ -157,7 +157,7 @@ class RecipePage extends Component {
     var config = {
       to : email,
       subject : this.state.recipeObject.recipe,
-      body : `${this.state.recipeObject.username} sent you a recipe : <a href="https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}">${this.state.recipeObject.recipe}</a>`
+      body : `${this.state.recipeObject.username}Sent you a recipe: https://pistachio-decodemtl.firebaseapp.com${this.props.location.pathname}`
   };
   const mailLink = ShareUrl.email(config);
   console.log(mailLink);
