@@ -243,4 +243,5 @@ class RecipePage extends Component {
 }
 
 var routedRecipePage = withRouter(RecipePage);
+export default routedRecipePage;
 //export default RecipePage;
