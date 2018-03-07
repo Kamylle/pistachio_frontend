@@ -21,6 +21,8 @@ class LoginPage extends Component {
 
   login = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    this.setState(() => { return { signInError: '' } })
     const email = this.email.value;
     const password = this.password.value;
     // const username = this.state.userName;
@@ -29,9 +31,25 @@ class LoginPage extends Component {
     .then(firebaseUser => {
       this.props.setUsernameAndID(firebaseUser.displayName, firebaseUser.uid);
     })
-    .then(this.setState())
-    .catch(error => { /*; this.setState({ error: error.message });*/ });
-    // console.log(this.state.error)
+    //.then(this.setState())
+    .catch(error => { 
+      switch (error.message) {
+        case "The email address is badly formatted.":
+          this.setState(() => { return { signInError: "" } } );
+          break;
+        case "The password is invalid or the user does not have a password.":
+          this.setState(() => { return { signInError: "Password is incorrect." } } );
+          break;
+        case "There is no user record corresponding to this identifier. The user may have been deleted.":
+          this.setState(() => { return { signInError: "User does not exist. You may want to log in with your Google account or, alternatively, sign up using the link below." } } );
+          break;
+        case "We have blocked all requests from this device due to unusual activity. Try again later.":
+          this.setState(() => { return { signInError: "Too many unsuccessful login attempts detected. Try again later." } } );
+          break;
+        default:
+          this.setState(() => { return { signInError: "Login failed." } } );
+      }
+     } );
   }
 
   signup = async (e) => {
@@ -226,7 +244,8 @@ class LoginPage extends Component {
                 </label>
                 <button 
                   id="btnSignIn" 
-                  className="secondaryBtn">
+                  className="secondaryBtn"
+                  onClick={ this.login }>
                   Sign in
                 </button>
               </form>
